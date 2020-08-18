@@ -18,37 +18,46 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "mainwindow.hpp"
+#include "awzwidget.hpp"
+#include "ui_awzwidget.h"
 
-#include <QApplication>
-#include <QLibraryInfo>
-#include <QTranslator>
-
-int main(int argc, char *argv[])
+AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
+: QWidget(parent), Database(Db), ui(new Ui::AwzWidget)
 {
-	QApplication a(argc, argv);
+	ui->setupUi(this);
 
-	qRegisterMetaType<QMap<ROLES,int>>("QMap<ROLES,int>");
+	connect(ui->searchEdit, &QLineEdit::textChanged,
+		   this, &AwzWidget::searchEditChanged);
 
-	a.setApplicationName("Multimap-AWZ");
-	a.setOrganizationName("Łukasz \"Kuszki\" Dróżdż");
-	a.setOrganizationDomain("https://github.com/Kuszki");
-	a.setApplicationVersion("1.0");
+	QSqlTableModel* model = new QSqlTableModel(this, Db);
 
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&qtTranslator);
+	model->setTable("dokumenty");
+	model->setHeaderData(0, Qt::Horizontal, tr("ID"));
+	model->setHeaderData(1, Qt::Horizontal, tr("Name"));
+	model->select();
 
-	QTranslator baseTranslator;
-	baseTranslator.load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&baseTranslator);
+	ui->listView->setModel(model);
+	ui->listView->setModelColumn(1);
+}
 
-	QTranslator appTranslator;
-	appTranslator.load("awz_" + QLocale::system().name());
-	a.installTranslator(&appTranslator);
+AwzWidget::~AwzWidget(void)
+{
+	delete ui;
+}
 
-	MainWindow w;
-	w.show();
+void AwzWidget::reloadList(void)
+{
+	QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->listView->model());
 
-	return a.exec();
+	model->select();
+}
+
+void AwzWidget::filterList(const QSet<int>& List)
+{
+
+}
+
+void AwzWidget::searchEditChanged(const QString& Text)
+{
+	QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->listView->model());
 }

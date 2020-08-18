@@ -18,37 +18,51 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "mainwindow.hpp"
+#ifndef IMPORTDIALOG_HPP
+#define IMPORTDIALOG_HPP
 
-#include <QApplication>
-#include <QLibraryInfo>
-#include <QTranslator>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QPushButton>
+#include <QSet>
+#include <QFileDialog>
 
-int main(int argc, char *argv[])
+#include "commonh.hpp"
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class ImportDialog; }
+QT_END_NAMESPACE
+
+class ImportDialog : public QDialog
 {
-	QApplication a(argc, argv);
 
-	qRegisterMetaType<QMap<ROLES,int>>("QMap<ROLES,int>");
+		Q_OBJECT
 
-	a.setApplicationName("Multimap-AWZ");
-	a.setOrganizationName("Łukasz \"Kuszki\" Dróżdż");
-	a.setOrganizationDomain("https://github.com/Kuszki");
-	a.setApplicationVersion("1.0");
+	private:
 
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&qtTranslator);
+		Ui::ImportDialog *ui;
 
-	QTranslator baseTranslator;
-	baseTranslator.load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&baseTranslator);
+	public:
 
-	QTranslator appTranslator;
-	appTranslator.load("awz_" + QLocale::system().name());
-	a.installTranslator(&appTranslator);
+		explicit ImportDialog(QWidget* parent = nullptr);
+		virtual ~ImportDialog(void) override;
 
-	MainWindow w;
-	w.show();
+	public slots:
 
-	return a.exec();
-}
+		virtual void accept(void) override;
+
+	private slots:
+
+		void checkData(void);
+
+		void openDocument(void);
+		void openFile(void);
+
+	signals:
+
+		void onAccept(const QString&, const QString&, const QString&,
+				    const QMap<ROLES, int>&, const QString&, const QString&);
+
+};
+
+#endif // IMPORTDIALOG_HPP

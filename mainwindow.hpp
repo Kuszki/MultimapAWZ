@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                         *
  *  {description}                                                          *
- *  Copyright (C) 2018  Łukasz "Kuszki" Dróżdż  l.drozdz@openmailbox.org   *
+ *  Copyright (C) 2020  Łukasz "Kuszki" Dróżdż  lukasz.kuszki@gmail.com    *
  *                                                                         *
  *  This program is free software: you can redistribute it and/or modify   *
  *  it under the terms of the GNU General Public License as published by   *
@@ -17,10 +17,17 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-#include <QMainWindow>
+#include <QtWidgets>
+#include <QtSql>
+
+#include "commonh.hpp"
+#include "connectdialog.hpp"
+#include "importdialog.hpp"
+#include "importworker.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,13 +35,39 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
+
 		Q_OBJECT
 
-	public:
-		MainWindow(QWidget *parent = nullptr);
-		~MainWindow();
-
 	private:
+
 		Ui::MainWindow *ui;
+
+		ImportWorker* Worker;
+
+		QSqlDatabase Database;
+		QThread Thread;
+
+	public:
+
+		explicit MainWindow(QWidget* parent = nullptr);
+		virtual ~MainWindow(void) override;
+
+	private slots:
+
+		void connectActionClicked(void);
+		void importActionClicked(void);
+
+		void openDatabase(const QString& Server, const QString& Base,
+					   const QString& User, const QString& Pass);
+
+		void closeDatabase(void);
+
+		void importDocuments(void);
+
+	signals:
+
+		void onLogin(bool);
+		void onError(const QString&);
+
 };
 #endif // MAINWINDOW_HPP

@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                         *
- *  {description}                                                          *
- *  Copyright (C) 2020  Łukasz "Kuszki" Dróżdż  lukasz.kuszki@gmail.com    *
+ *  Firebird database editor                                               *
+ *  Copyright (C) 2016  Łukasz "Kuszki" Dróżdż  lukasz.kuszki@gmail.com    *
  *                                                                         *
  *  This program is free software: you can redistribute it and/or modify   *
  *  it under the terms of the GNU General Public License as published by   *
@@ -18,37 +18,49 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "mainwindow.hpp"
+#ifndef CONNECTDIALOG_HPP
+#define CONNECTDIALOG_HPP
 
-#include <QApplication>
-#include <QLibraryInfo>
-#include <QTranslator>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSettings>
+#include <QDialog>
 
-int main(int argc, char *argv[])
+QT_BEGIN_NAMESPACE
+namespace Ui { class ConnectDialog; }
+QT_END_NAMESPACE
+
+class ConnectDialog : public QDialog
 {
-	QApplication a(argc, argv);
 
-	qRegisterMetaType<QMap<ROLES,int>>("QMap<ROLES,int>");
+		Q_OBJECT
 
-	a.setApplicationName("Multimap-AWZ");
-	a.setOrganizationName("Łukasz \"Kuszki\" Dróżdż");
-	a.setOrganizationDomain("https://github.com/Kuszki");
-	a.setApplicationVersion("1.0");
+	private:
 
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&qtTranslator);
+		Ui::ConnectDialog* ui;
 
-	QTranslator baseTranslator;
-	baseTranslator.load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&baseTranslator);
+	public:
 
-	QTranslator appTranslator;
-	appTranslator.load("awz_" + QLocale::system().name());
-	a.installTranslator(&appTranslator);
+		explicit ConnectDialog(QWidget* Parent = nullptr);
+		virtual ~ConnectDialog(void) override;
 
-	MainWindow w;
-	w.show();
+	private slots:
 
-	return a.exec();
-}
+		void edited(void);
+
+	public slots:
+
+		virtual void accept(void) override;
+		virtual void reject(void) override;
+
+		void refused(const QString& Error);
+		void connected(bool OK);
+
+	signals:
+
+		void onAccept(const QString&, const QString&,
+				    const QString&, const QString&);
+
+};
+
+#endif // CONNECTDIALOG_HPP

@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ImportDialog</class>
+ <widget class="QDialog" name="ImportDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>597</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_4">
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="fseparatorEdit">
+     <property name="placeholderText">
+      <string>Field separator (default &quot;;&quot;)</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::West</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="documentMode">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="docsTab">
+      <attribute name="title">
+       <string>Import documents</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="1" column="0">
+        <widget class="QLabel" name="nameLabel">
+         <property name="text">
+          <string>Document name index</string>
+         </property>
+         <property name="buddy">
+          <cstring>nameSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="documentsLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="documentEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Path to documents list</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="documentButton">
+           <property name="text">
+            <string>Open</string>
+           </property>
+           <property name="icon">
+            <iconset theme="document-open">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="precinctLabel">
+         <property name="text">
+          <string>Precinct index</string>
+         </property>
+         <property name="buddy">
+          <cstring>precinctSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="commentSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="communitySpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="commentLabel">
+         <property name="text">
+          <string>Comments index</string>
+         </property>
+         <property name="buddy">
+          <cstring>commentSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="ownerSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>6</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="communityLabel">
+         <property name="text">
+          <string>Community index</string>
+         </property>
+         <property name="buddy">
+          <cstring>communitySpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="lootSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="nameSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="lotLabel">
+         <property name="text">
+          <string>Lots index</string>
+         </property>
+         <property name="buddy">
+          <cstring>lootSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="precinctSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="ownerLabel">
+         <property name="text">
+          <string>Owners start index</string>
+         </property>
+         <property name="buddy">
+          <cstring>ownerSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="lseparatorLabel">
+         <property name="text">
+          <string>Lot separator</string>
+         </property>
+         <property name="buddy">
+          <cstring>lseparatorEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="lseparatorEdit">
+         <property name="placeholderText">
+          <string>Default (&quot;,&quot;)</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0" colspan="2">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="filesTab">
+      <attribute name="title">
+       <string>Import scans</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Document index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Path index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Comments index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="spinBox">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="spinBox_2">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="spinBox_3">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="filesLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="fileEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Path to scan files list</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="fileButton">
+           <property name="text">
+            <string>Open</string>
+           </property>
+           <property name="icon">
+            <iconset theme="document-open">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="dictTab">
+      <attribute name="title">
+       <string>Import dictionary</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="spinBox_4"/>
+       </item>
+       <item row="5" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="spinBox_5"/>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="dictLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLineEdit" name="dictEdit">
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="placeholderText">
+            <string>Path to scan files list</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="dictButton">
+           <property name="text">
+            <string>Open</string>
+           </property>
+           <property name="icon">
+            <iconset theme="document-open">
+             <normaloff>.</normaloff>.</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Name index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>ID index</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QRadioButton" name="radioButton">
+         <property name="text">
+          <string>Import ID</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QRadioButton" name="radioButton_2">
+         <property name="text">
+          <string>Generate new ID</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>documentEdit</tabstop>
+  <tabstop>documentButton</tabstop>
+  <tabstop>fileEdit</tabstop>
+  <tabstop>fileButton</tabstop>
+  <tabstop>nameSpin</tabstop>
+  <tabstop>communitySpin</tabstop>
+  <tabstop>precinctSpin</tabstop>
+  <tabstop>lootSpin</tabstop>
+  <tabstop>commentSpin</tabstop>
+  <tabstop>ownerSpin</tabstop>
+  <tabstop>fseparatorEdit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>491</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>documentEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>424</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>58</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>communitySpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>138</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>precinctSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lootSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>163</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commentSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ownerSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>239</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fseparatorEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>588</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>268</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lseparatorEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>documentButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>openDocument()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>25</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>openFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dictButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>openDict()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>482</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>687</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dictEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>417</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>753</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tabWidget</sender>
+   <signal>currentChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>14</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>776</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>checkData()</slot>
+  <slot>openDocument()</slot>
+  <slot>openFile()</slot>
+  <slot>openDict()</slot>
+ </slots>
+</ui>

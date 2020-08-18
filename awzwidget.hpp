@@ -17,38 +17,44 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+#ifndef AWZWIDGET_HPP
+#define AWZWIDGET_HPP
 
-#include "mainwindow.hpp"
+#include <QWidget>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlTableModel>
 
-#include <QApplication>
-#include <QLibraryInfo>
-#include <QTranslator>
+QT_BEGIN_NAMESPACE
+namespace Ui { class AwzWidget; }
+QT_END_NAMESPACE
 
-int main(int argc, char *argv[])
+class AwzWidget : public QWidget
 {
-	QApplication a(argc, argv);
 
-	qRegisterMetaType<QMap<ROLES,int>>("QMap<ROLES,int>");
+		Q_OBJECT
 
-	a.setApplicationName("Multimap-AWZ");
-	a.setOrganizationName("Łukasz \"Kuszki\" Dróżdż");
-	a.setOrganizationDomain("https://github.com/Kuszki");
-	a.setApplicationVersion("1.0");
+	private:
 
-	QTranslator qtTranslator;
-	qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&qtTranslator);
+		QSqlDatabase& Database;
 
-	QTranslator baseTranslator;
-	baseTranslator.load("qtbase_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-	a.installTranslator(&baseTranslator);
+		Ui::AwzWidget *ui;
 
-	QTranslator appTranslator;
-	appTranslator.load("awz_" + QLocale::system().name());
-	a.installTranslator(&appTranslator);
+	public:
 
-	MainWindow w;
-	w.show();
+		explicit AwzWidget(QSqlDatabase& Db,
+					    QWidget *parent = nullptr);
+		virtual ~AwzWidget(void) override;
 
-	return a.exec();
-}
+	public slots:
+
+		void reloadList(void);
+		void filterList(const QSet<int>& List);
+
+	private slots:
+
+		void searchEditChanged(const QString& Text);
+
+};
+
+#endif // AWZWIDGET_HPP
