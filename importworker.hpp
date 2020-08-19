@@ -22,6 +22,7 @@
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QObject>
 #include <QVariant>
 #include <QHash>
@@ -68,7 +69,7 @@ class ImportWorker : public QObject
 		int appendFiles(const QList<PLIKI>& List);
 		int appendRoles(const QList<RODZAJEDOK>& List);
 
-	private:
+	public slots:
 
 		int importSheets(const QString& Path,
 					  const QMap<ROLES, int>& Roles,
@@ -76,19 +77,12 @@ class ImportWorker : public QObject
 					  const QString& Lsep = ",");
 
 		int importScans(const QString& Path,
+					 const QMap<ROLES, int>& Roles,
 					 const QString& Fsep = ";");
 
 		int importDict(const QString& Path,
+					const QMap<ROLES, int>& Roles,
 					const QString& Fsep = ";");
-
-	public slots:
-
-		void importDocuments(const QString& DocPath,
-						 const QString& FilesPath,
-						 const QString& DictPath,
-						 const QMap<ROLES, int>& Roles,
-						 const QString& Fsep = ";",
-						 const QString& Lsep = ",");
 
 	signals:
 
@@ -97,10 +91,10 @@ class ImportWorker : public QObject
 		void onProgressStart(int, int);
 		void onProgressUpdate(int);
 
-		void onImportFinish(int, int);
-
 		void onSubprocessStart(int, int);
 		void onSubprocessUpdate(int);
+
+		void onJobEnd(const QString&);
 
 };
 

@@ -17,9 +17,44 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #include "modelfilter.hpp"
 
-ModelFilter::ModelFilter()
+ModelFilter::ModelFilter(QObject* parent)
+: QSortFilterProxyModel(parent)
 {
+	this->setFilterCaseSensitivity(Qt::CaseInsensitive);
+}
 
+ModelFilter::~ModelFilter(void) {}
+
+void ModelFilter::setSearchedColumns(const QSet<int>& Set)
+{
+	Columns = Set;
+
+	invalidateFilter();
+}
+
+void ModelFilter::setFilterIndexes(const QSet<int>& Set)
+{
+	Indexes = Set;
+
+	invalidateFilter();
+}
+
+bool ModelFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
+{
+	QModelIndex idIndex = sourceModel()->index(sourceRow, 0, sourceParent);
+
+	const bool isID = Indexes.isEmpty() || Indexes.contains(sourceModel()->data(idIndex).toInt());
+	bool isAny = Columns.isEmpty();
+
+	for (const auto& i : Columns)
+	{
+		QModelIndex fIndex = sourceModel()->index(sourceRow, i, sourceParent);
+
+		isAny = isAny || sourceModel()->data(fIndex).toString().contains(filterRegExp());
+	}
+
+	return isID && isAny;
 }

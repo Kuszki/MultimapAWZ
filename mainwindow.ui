@@ -32,7 +32,7 @@
          <x>0</x>
          <y>0</y>
          <width>784</width>
-         <height>538</height>
+         <height>561</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="scroolLayout">
@@ -81,7 +81,6 @@
     <addaction name="actionDisconnect"/>
     <addaction name="separator"/>
     <addaction name="actionSettings"/>
-    <addaction name="actionImport"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -91,11 +90,12 @@
     </property>
     <addaction name="actionFind"/>
     <addaction name="actionEditenable"/>
+    <addaction name="separator"/>
+    <addaction name="actionImport"/>
    </widget>
    <addaction name="menuServer"/>
    <addaction name="menuData"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionConnect">
    <property name="icon">
     <iconset theme="network-wired">
@@ -155,7 +155,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="tools-check-spelling"/>
+    <iconset theme="tools-check-spelling">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Enable edit</string>
@@ -163,7 +164,8 @@
   </action>
   <action name="actionSettings">
    <property name="icon">
-    <iconset theme="preferences-system"/>
+    <iconset theme="preferences-system">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Settings</string>
@@ -171,7 +173,8 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="exit"/>
+    <iconset theme="exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>

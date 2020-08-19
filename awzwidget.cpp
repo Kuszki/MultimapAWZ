@@ -26,18 +26,18 @@ AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 {
 	ui->setupUi(this);
 
+	filter = new ModelFilter(this);
+	filter->setSearchedColumns({ 1, 2 });
+
+	ui->tableView->model()->deleteLater();
+	ui->tableView->setModel(filter);
+
 	connect(ui->searchEdit, &QLineEdit::textChanged,
-		   this, &AwzWidget::searchEditChanged);
+		   filter, &ModelFilter::setFilterFixedString);
 
-	QSqlTableModel* model = new QSqlTableModel(this, Db);
-
-	model->setTable("dokumenty");
-	model->setHeaderData(0, Qt::Horizontal, tr("ID"));
-	model->setHeaderData(1, Qt::Horizontal, tr("Name"));
-	model->select();
-
-	ui->listView->setModel(model);
-	ui->listView->setModelColumn(1);
+	connect(ui->tableView->selectionModel(),
+		   &QItemSelectionModel::currentRowChanged,
+		   this, &AwzWidget::rowSelected);
 }
 
 AwzWidget::~AwzWidget(void)
@@ -45,19 +45,61 @@ AwzWidget::~AwzWidget(void)
 	delete ui;
 }
 
-void AwzWidget::reloadList(void)
+void AwzWidget::setTitleWidget(TitleWidget* W)
 {
-	QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->listView->model());
-
-	model->select();
+	ui->horizontalLayout->removeWidget(ui->reloadButton);
+	W->addRightWidget(ui->reloadButton);
 }
 
 void AwzWidget::filterList(const QSet<int>& List)
 {
-
+	if (model) filter->setFilterIndexes(List);
 }
 
-void AwzWidget::searchEditChanged(const QString& Text)
+void AwzWidget::reloadList(void)
 {
-	QSqlTableModel* model = dynamic_cast<QSqlTableModel*>(ui->listView->model());
+	if (model) model->select();
 }
+
+void AwzWidget::setStatus(bool Enabled)
+{
+	setEnabled(Enabled);
+
+	if (Enabled)
+	{
+		model = new QSqlTableModel(this, Database);
+
+		model->setTable("DOKUMENTY");
+
+		model->setHeaderData(0, Qt::Horizontal, tr("ID"));
+		model->setHeaderData(1, Qt::Horizontal, tr("Name"));
+		model->setHeaderData(2, Qt::Horizontal, tr("Comments"));
+
+		model->setEditStrategy(QSqlTableModel::OnFieldChange);
+
+		model->select();
+
+		filter->setSourceModel(model);
+
+		ui->tableView->hideColumn(0);
+		ui->tableView->hideColumn(2);
+	}
+	else if (model)
+	{
+		filter->setSourceModel(nullptr);
+
+		model->deleteLater();
+		model = nullptr;
+	}
+}
+
+void AwzWidget::rowSelected(const QModelIndex& Index)
+{
+	if (!model) return;
+
+	const auto i = ui->tableView->model()->index(Index.row(), 0, Index.parent());
+	const int id = ui->tableView->model()->data(i).toInt();
+
+	emit onIndexChange(id);
+}
+

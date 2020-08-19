@@ -25,13 +25,15 @@
 
 enum class ROLES
 {
-	EMPTY,
+	ID,
+	PLIK,
 	GMINA,
 	OBREB,
 	NUMER,
 	DZIALKI,
 	UWAGI,
-	OSOBY
+	OSOBY,
+	ROLA
 };
 
 struct DOKUMENTY

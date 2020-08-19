@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                                                         *
- *  {description}                                                          *
- *  Copyright (C) 2020  Łukasz "Kuszki" Dróżdż  lukasz.kuszki@gmail.com    *
+ *  Title bar widget for dock widgets in GTK3 Titlebat style               *
+ *  Copyright (C) 2016  Łukasz "Kuszki" Dróżdż  l.drozdz@openmailbox.org   *
  *                                                                         *
  *  This program is free software: you can redistribute it and/or modify   *
  *  it under the terms of the GNU General Public License as published by   *
@@ -18,46 +18,61 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef PROGRESSDIALOG_HPP
-#define PROGRESSDIALOG_HPP
+#ifndef TITLEWIDGET_HPP
+#define TITLEWIDGET_HPP
 
-#include <QPushButton>
-#include <QDialog>
+#include <QDesktopWidget>
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QDockWidget>
+#include <QPixmap>
+#include <QWidget>
+#include <QLabel>
 
-QT_BEGIN_NAMESPACE
-namespace Ui {	class ProgressDialog; }
-QT_END_NAMESPACE
-
-class ProgressDialog : public QDialog
+namespace Ui
 {
+	class TitleWidget;
+}
+
+class TitleWidget : public QWidget
+{
+
 		Q_OBJECT
 
 	private:
 
-		Ui::ProgressDialog *ui;
-
-		bool isAction = false;
+		Ui::TitleWidget* ui;
 
 	public:
 
-		explicit ProgressDialog(QWidget *parent = nullptr);
-		virtual ~ProgressDialog(void) override;
+		explicit TitleWidget(QDockWidget* Parent = nullptr);
+		virtual ~TitleWidget(void) override;
+
+		void addLeftWidget(QWidget* Widget, int Stretch = 0, Qt::Alignment Alignment = Qt::Alignment());
+		void addRightWidget(QWidget* Widget, int Stretch = 0, Qt::Alignment Alignment = Qt::Alignment());
+
+		void addLeftLayout(QLayout* Layout, int Stretch = 0);
+		void addRightLayout(QLayout* Layout, int Stretch = 0);
+
+		void addLeftSpacer(QSpacerItem* Spacer);
+		void addRightSpacer(QSpacerItem* Spacer);
+
+		void addLeftItem(QLayoutItem* Item);
+		void addRightItem(QLayoutItem* Item);
+
+		QHBoxLayout* getLeftLayout(void);
+		QHBoxLayout* getRightLayout(void);
 
 	public slots:
 
-		virtual void accept(void) override;
-		virtual void reject(void) override;
-		virtual void open(void) override;
+		void setWindowTitle(const QString& Title);
+		void setWindowIcon(const QIcon& Icon);
 
-		void startAction(const QString& Action);
+	private slots:
 
-		void startProcess(int a, int b);
-		void updateProcess(int n);
+		void CloseButtonClicked(void);
+		void ViewButtonClicked(void);
 
-		void startSubprocess(int a, int b);
-		void updateSubprocess(int n);
-
-		void endJob(const QString& Msg);
 };
 
-#endif // PROGRESSDIALOG_HPP
+#endif // TITLEWIDGET_HPP

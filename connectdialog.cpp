@@ -28,7 +28,7 @@ ConnectDialog::ConnectDialog(QWidget *Parent)
 
 	ui->buttonBox->button(QDialogButtonBox::Open)->setEnabled(false);
 
-	QSettings Settings("Multimap-AWZ");
+	QSettings Settings("Multimap", "AWZ");
 
 	Settings.beginGroup("History");
 	ui->Server->addItems(Settings.value("server").toStringList());
@@ -88,7 +88,7 @@ void ConnectDialog::connected(bool OK)
 {
 	if (!OK) return;
 
-	QSettings Settings("Multimap-AWZ");
+	QSettings Settings("Multimap", "AWZ");
 
 	Settings.beginGroup("Database");
 	Settings.setValue("server", ui->Server->currentText());

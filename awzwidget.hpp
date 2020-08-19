@@ -17,6 +17,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef AWZWIDGET_HPP
 #define AWZWIDGET_HPP
 
@@ -24,6 +25,10 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
+#include <QSqlError>
+
+#include "modelfilter.hpp"
+#include "titlewidget.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class AwzWidget; }
@@ -38,6 +43,9 @@ class AwzWidget : public QWidget
 
 		QSqlDatabase& Database;
 
+		ModelFilter* filter = nullptr;
+		QSqlTableModel* model = nullptr;
+
 		Ui::AwzWidget *ui;
 
 	public:
@@ -46,14 +54,23 @@ class AwzWidget : public QWidget
 					    QWidget *parent = nullptr);
 		virtual ~AwzWidget(void) override;
 
+		void setTitleWidget(TitleWidget* W);
+
 	public slots:
 
-		void reloadList(void);
 		void filterList(const QSet<int>& List);
+
+		void reloadList(void);
+
+		void setStatus(bool Enabled);
 
 	private slots:
 
-		void searchEditChanged(const QString& Text);
+		void rowSelected(const QModelIndex& Index);
+
+	signals:
+
+		void onIndexChange(int);
 
 };
 

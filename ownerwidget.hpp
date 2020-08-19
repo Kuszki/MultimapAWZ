@@ -17,25 +17,63 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef OWNERWIDGET_HPP
 #define OWNERWIDGET_HPP
 
 #include <QWidget>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlTableModel>
 
-namespace Ui {
-	class OwnerWidget;
-}
+#include "modelfilter.hpp"
+#include "modeldelegate.hpp"
+#include "titlewidget.hpp"
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class OwnerWidget; }
+QT_END_NAMESPACE
 
 class OwnerWidget : public QWidget
 {
+
 		Q_OBJECT
 
-	public:
-		explicit OwnerWidget(QWidget *parent = nullptr);
-		~OwnerWidget();
-
 	private:
+
+		static const QString filterStr;
+
+		QSqlDatabase& Database;
+
+		ModelFilter* filter = nullptr;
+		QSqlTableModel* model = nullptr;
+
 		Ui::OwnerWidget *ui;
+
+	public:
+
+		explicit OwnerWidget(QSqlDatabase& Db,
+						 QWidget *parent = nullptr);
+		virtual ~OwnerWidget(void) override;
+
+		void setTitleWidget(TitleWidget* W);
+
+	public slots:
+
+		void filterList(int ID);
+
+		void reloadList(void);
+
+		void setStatus(bool Enabled);
+
+	private slots:
+
+		void rowSelected(const QModelIndex& Index);
+
+	signals:
+
+		void onIndexChange(int);
+
 };
 
 #endif // OWNERWIDGET_HPP

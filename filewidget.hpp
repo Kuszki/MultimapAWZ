@@ -17,25 +17,64 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef FILEWIDGET_HPP
 #define FILEWIDGET_HPP
 
 #include <QWidget>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlRelationalDelegate>
+#include <QSqlRelationalTableModel>
 
-namespace Ui {
-	class FileWidget;
-}
+#include "modelfilter.hpp"
+#include "modeldelegate.hpp"
+#include "titlewidget.hpp"
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class FileWidget; }
+QT_END_NAMESPACE
 
 class FileWidget : public QWidget
 {
+
 		Q_OBJECT
 
-	public:
-		explicit FileWidget(QWidget *parent = nullptr);
-		~FileWidget();
-
 	private:
+
+		static const QString filterStr;
+
+		QSqlDatabase& Database;
+
+		ModelFilter* filter = nullptr;
+		QSqlRelationalTableModel* model = nullptr;
+
 		Ui::FileWidget *ui;
+
+	public:
+
+		explicit FileWidget(QSqlDatabase& Db,
+						QWidget *parent = nullptr);
+		virtual ~FileWidget(void) override;
+
+		void setTitleWidget(TitleWidget* W);
+
+	public slots:
+
+		void filterList(int ID);
+
+		void reloadList(void);
+
+		void setStatus(bool Enabled);
+
+	private slots:
+
+		void rowSelected(const QModelIndex& Index);
+
+	signals:
+
+		void onIndexChange(int);
+
 };
 
 #endif // FILEWIDGET_HPP

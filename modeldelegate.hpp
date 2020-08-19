@@ -17,9 +17,28 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#include "modeldelegare.hpp"
 
-ModelDelegare::ModelDelegare()
+#ifndef MODELDELEGATE_HPP
+#define MODELDELEGATE_HPP
+
+#include <QObject>
+#include <QSortFilterProxyModel>
+#include <QSqlRelationalDelegate>
+
+class ModelDelegate : public QSqlRelationalDelegate
 {
 
-}
+		Q_OBJECT
+
+	public:
+
+		explicit ModelDelegate(QObject *parent = nullptr);
+		virtual ~ModelDelegate(void) override;
+
+		QWidget* createEditor(QWidget *aParent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+		void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override;
+		void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+
+};
+
+#endif // MODELDELEGATE_HPP

@@ -28,6 +28,11 @@
 #include "connectdialog.hpp"
 #include "importdialog.hpp"
 #include "importworker.hpp"
+#include "progressdialog.hpp"
+#include "awzwidget.hpp"
+#include "filewidget.hpp"
+#include "ownerwidget.hpp"
+#include "titlewidget.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,6 +48,15 @@ class MainWindow : public QMainWindow
 		Ui::MainWindow *ui;
 
 		ImportWorker* Worker;
+
+		QDockWidget* awzd;
+		AwzWidget* awzw;
+
+		QDockWidget* filed;
+		FileWidget* filew;
+
+		QDockWidget* ownd;
+		OwnerWidget* ownw;
 
 		QSqlDatabase Database;
 		QThread Thread;
@@ -62,7 +76,8 @@ class MainWindow : public QMainWindow
 
 		void closeDatabase(void);
 
-		void importDocuments(void);
+		void startJob(void);
+		void endJob(void);
 
 	signals:
 

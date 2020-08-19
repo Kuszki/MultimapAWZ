@@ -57,11 +57,18 @@ class ImportDialog : public QDialog
 
 		void openDocument(void);
 		void openFile(void);
+		void openDict(void);
 
 	signals:
 
-		void onAccept(const QString&, const QString&, const QString&,
-				    const QMap<ROLES, int>&, const QString&, const QString&);
+		void onDocAccept(const QString&, const QMap<ROLES, int>&,
+					  const QString&, const QString&);
+
+		void onFileAccept(const QString&, const QMap<ROLES, int>&,
+					   const QString&);
+
+		void onDictAccept(const QString&, const QMap<ROLES, int>&,
+					   const QString&);
 
 };
 

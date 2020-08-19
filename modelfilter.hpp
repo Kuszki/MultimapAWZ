@@ -17,16 +17,37 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 #ifndef MODELFILTER_HPP
 #define MODELFILTER_HPP
 
+#include <QSortFilterProxyModel>
+#include <QModelIndex>
 #include <QObject>
+#include <QSet>
 
 class ModelFilter : public QSortFilterProxyModel
 {
+
 		Q_OBJECT
+
+	private:
+
+		QSet<int> Columns;
+		QSet<int> Indexes;
+
 	public:
-		ModelFilter();
+
+		explicit ModelFilter(QObject* parent = nullptr);
+		virtual ~ModelFilter(void) override;
+
+		void setSearchedColumns(const QSet<int>& Set);
+		void setFilterIndexes(const QSet<int>& Set);
+
+	protected:
+
+		virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+
 };
 
 #endif // MODELFILTER_HPP

@@ -443,7 +443,7 @@ int ImportWorker::appendFiles(const QList<PLIKI>& List)
 
 	QSqlQuery Query(Database); int Count(0);
 
-	Query.prepare("INSERT INTO pliki (id, nazwa, id_rodzaju, opis) VALUES (?, ?, ?)");
+	Query.prepare("INSERT INTO pliki (id, nazwa, id_rodzaju, opis) VALUES (?, ?, ?, ?)");
 
 	for (const auto& i : List)
 	{
@@ -484,7 +484,8 @@ int ImportWorker::appendRoles(const QList<RODZAJEDOK>& List)
 int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Roles, const QString& Fsep, const QString& Lsep)
 {
 	emit onActionStart(tr("Preparing queries"));
-	emit onProgressStart(0, 6);
+	emit onProgressStart(0, 8);
+	emit onSubprocessStart(0, 0);
 
 	QSqlQuery genDocId(Database); genDocId.prepare("SELECT GEN_ID(GEN_DOKUMENTY_ID, 1) FROM RDB$DATABASE");
 	QSqlQuery genLotId(Database); genLotId.prepare("SELECT GEN_ID(GEN_DZIALKI_ID, 1) FROM RDB$DATABASE");
@@ -496,37 +497,42 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 	QSqlQuery genDocOwnId(Database); genDocOwnId.prepare("SELECT GEN_ID(GEN_DOK_OSOBY_ID, 1) FROM RDB$DATABASE");
 
 	QList<DOKUMENTY> addDocs; QList<DZIALKI> addLots; QList<OSOBY> addOwns;
+	QList<GMINY> addComms; QList<OBREBY> addPrecs;
 	QList<DOK_DZIALKI> addDocLot; QList<DOK_OSOBY> addDocOwn;
+
+	const auto minRowCt = std::max_element(Roles.constBegin(), Roles.constEnd()).value();
 
 	auto oldDocs = loadDocs();
 	auto oldLots = loadLots();
 	auto oldOwns = loadOwns();
+	auto oldComms = loadComms();
+	auto oldPrecs = loadPrecs();
 
 	auto oldDocLot = loadDocLot();
 	auto oldDocOwn = loadDocOwn();
 
-	const auto dictComms = loadComms();
-	const auto dictPrecs = loadPrecs();
-
 	QFile File(Path);
 	File.open(QFile::ReadOnly | QFile::Text);
 
-	// FIXME: add return if fail
+	emit onSubprocessStart(0, int(File.size()));
 
 	const QRegExp fExp(QString("\\s*%1\\s*").arg(Fsep));
 	const QRegExp lExp(QString("\\s*%1\\s*").arg(Lsep));
 
 	while (!File.atEnd())
 	{
-		const QStringList List = QString::fromLocal8Bit(File.readLine()).split(fExp);
+		const QStringList List = QString::fromLocal8Bit(File.readLine().trimmed()).split(fExp);
 		const QStringList Lots = List.value(Roles[ROLES::DZIALKI]).split(lExp);
+
+		if (List.size() < minRowCt) continue;
 
 		int commID(0), precID(0), owCol(Roles[ROLES::OSOBY]);
 
 		DOKUMENTY Dk = { 0, List[Roles[ROLES::NUMER]], List[Roles[ROLES::UWAGI]] };
 
 		const auto isDoc = hasItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa) ?
-			getItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa).id : 0;
+			getItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa).id :
+			Dk.nazwa.toInt();
 
 		if (isDoc) Dk.id = isDoc;
 		else
@@ -536,12 +542,42 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 			oldDocs.append(Dk);
 		}
 
-		commID = hasItemByField(dictComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa) ?
-			getItemByField(dictComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa).id : 0;
+		commID = hasItemByField(oldComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa) ?
+			getItemByField(oldComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa).id :
+			List[Roles[ROLES::GMINA]].toInt();
 
-		for (const auto& i : dictPrecs)
+		if (!commID)
+		{
+			GMINY Gmn =
+			{
+				getID(genCommId).toInt(),
+				List[Roles[ROLES::GMINA]]
+			};
+
+			commID = Gmn.id;
+
+			oldComms.append(Gmn);
+			addComms.append(Gmn);
+		}
+
+		for (const auto& i : oldPrecs)
 			if (i.id_gminy == commID && i.nazwa == List[Roles[ROLES::OBREB]])
 				precID = i.id;
+
+		if (!precID)
+		{
+			OBREBY Obr =
+			{
+				getID(genPrecId).toInt(),
+				List[Roles[ROLES::OBREB]],
+				commID
+			};
+
+			precID = Obr.id;
+
+			oldPrecs.append(Obr);
+			addPrecs.append(Obr);
+		}
 
 		for (const auto& i : Lots)
 		{
@@ -577,7 +613,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 			}
 		}
 
-		while (owCol + 4 < List.size())
+		while (owCol + 4 <= List.size())
 		{
 			OSOBY Os =
 			{
@@ -614,35 +650,57 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 				oldDocOwn.append(Do);
 			}
 		}
+
+		emit onSubprocessUpdate(int(File.pos()));
 	}
+
+	emit onSubprocessStart(0, 0);
 
 	emit onProgressUpdate(1);
 	emit onActionStart(tr("Uploading documents"));
-	int Count = appendDocs(addDocs);
+	int C1 = appendDocs(addDocs);
 
 	emit onProgressUpdate(2);
-	emit onActionStart(tr("Uploading lots"));
-	appendLots(addLots);
+	emit onActionStart(tr("Uploading communities"));
+	int C2 = appendComms(addComms);
 
 	emit onProgressUpdate(3);
-	emit onActionStart(tr("Uploading owners"));
-	appendOwns(addOwns);
+	emit onActionStart(tr("Uploading precincts"));
+	int C3 = appendPrecs(addPrecs);
 
 	emit onProgressUpdate(4);
-	emit onActionStart(tr("Uploading relations"));
-	appendDocLot(addDocLot);
+	emit onActionStart(tr("Uploading lots"));
+	int C4 = appendLots(addLots);
 
 	emit onProgressUpdate(5);
-	emit onActionStart(tr("Uploading relations"));
-	appendDocOwn(addDocOwn);
+	emit onActionStart(tr("Uploading owners"));
+	int C5 = appendOwns(addOwns);
 
-	return Count;
+	emit onProgressUpdate(6);
+	emit onActionStart(tr("Uploading lots relations"));
+	int C6 = appendDocLot(addDocLot);
+
+	emit onProgressUpdate(7);
+	emit onActionStart(tr("Uploading owners relations"));
+	int C7 = appendDocOwn(addDocOwn);
+
+	emit onJobEnd(tr("Imported:") + '\n' +
+			    tr("%n new ducuments(s)", nullptr, C1) + '\n' +
+			    tr("%n new communitie(s)", nullptr, C2) + '\n' +
+			    tr("%n new precinct(s)", nullptr, C3)  + '\n' +
+			    tr("%n new lot(s)", nullptr, C4)  + '\n' +
+			    tr("%n new owner(s)", nullptr, C5)  + '\n' +
+			    tr("%n new lot(s) relations", nullptr, C6)  + '\n' +
+			    tr("%n new owner(s) relations", nullptr, C7));
+
+	return C1;
 }
 
-int ImportWorker::importScans(const QString& Path, const QString& Fsep)
+int ImportWorker::importScans(const QString& Path, const QMap<ROLES, int>& Roles, const QString& Fsep)
 {
 	emit onActionStart(tr("Preparing queries"));
 	emit onProgressStart(0, 3);
+	emit onSubprocessStart(0, 0);
 
 	QSqlQuery genFileId(Database); genFileId.prepare("SELECT GEN_ID(GEN_PLIKI_ID, 1) FROM RDB$DATABASE");
 
@@ -650,6 +708,8 @@ int ImportWorker::importScans(const QString& Path, const QString& Fsep)
 
 	QList<PLIKI> addFiles;
 	QList<DOK_PLIKI> addDocFil;
+
+	const auto minRowCt = std::max_element(Roles.constBegin(), Roles.constEnd()).value();
 
 	auto oldFiles = loadFiles();
 
@@ -661,19 +721,29 @@ int ImportWorker::importScans(const QString& Path, const QString& Fsep)
 	QFile File(Path);
 	File.open(QFile::ReadOnly | QFile::Text);
 
+	emit onSubprocessStart(0, int(File.size()));
+
 	const QRegExp fExp(QString("\\s*%1\\s*").arg(Fsep));
 
 	while (!File.atEnd())
 	{
-		const QStringList List = QString::fromLocal8Bit(File.readLine()).split(fExp);
+		const QStringList List = QString::fromLocal8Bit(File.readLine().trimmed()).split(fExp);
 
-		const auto Doc = hasItemByField(dictDocs, List[0], &DOKUMENTY::nazwa) ?
-			getItemByField(dictDocs, List[0], &DOKUMENTY::nazwa).id : 0;
+		if (List.size() < minRowCt) continue;
 
-		const auto filID = hasItemByField(oldFiles, List[1], &PLIKI::nazwa) ?
-			getItemByField(oldFiles, List[1], &PLIKI::nazwa).id : 0;
+		const auto docID = hasItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa) ?
+			getItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa).id :
+			List[Roles[ROLES::NUMER]].toInt();
 
-		PLIKI Pl = { filID, List[1], Doc };
+		const auto filID = hasItemByField(oldFiles, List[Roles[ROLES::PLIK]], &PLIKI::nazwa) ?
+			getItemByField(oldFiles, List[Roles[ROLES::PLIK]], &PLIKI::nazwa).id :
+			List[Roles[ROLES::PLIK]].toInt();
+
+		const auto rolID = hasItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa) ?
+			getItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa).id :
+			List[Roles[ROLES::ROLA]].toInt();
+
+		PLIKI Pl = { filID, List[Roles[ROLES::PLIK]], rolID, List[Roles[ROLES::UWAGI]] };
 
 		if (!Pl.id)
 		{
@@ -682,7 +752,7 @@ int ImportWorker::importScans(const QString& Path, const QString& Fsep)
 			oldFiles.append(Pl);
 		}
 
-		DOK_PLIKI Dp = { 0, Doc, Pl.id };
+		DOK_PLIKI Dp = { 0, docID, Pl.id };
 
 		for (const auto& l : oldDocFil) if (Dp.id_dok == l.id_dok &&
 									 Dp.id_pli == l.id_pli)
@@ -694,46 +764,64 @@ int ImportWorker::importScans(const QString& Path, const QString& Fsep)
 			addDocFil.append(Dp);
 			oldDocFil.append(Dp);
 		}
+
+		emit onSubprocessUpdate(int(File.pos()));
 	}
+
+	emit onSubprocessStart(0, 0);
 
 	emit onProgressUpdate(1);
 	emit onActionStart(tr("Uploading files"));
-	int Count = appendFiles(addFiles);
+	int C1 = appendFiles(addFiles);
 
 	emit onProgressUpdate(2);
 	emit onActionStart(tr("Uploading relations"));
-	appendDocFiles(addDocFil);
+	int C2 = appendDocFiles(addDocFil);
 
-	return Count;
+	emit onJobEnd(tr("Imported:") + '\n' +
+			    tr("%n new file(s)", nullptr, C1) + '\n' +
+			    tr("%n new file(s) relation(s)", nullptr, C2));
+
+	return C1;
 }
 
-int ImportWorker::importDict(const QString& Path, const QString& Fsep)
+int ImportWorker::importDict(const QString& Path, const QMap<ROLES, int>& Roles,const QString& Fsep)
 {
 	emit onActionStart(tr("Preparing queries"));
 	emit onProgressStart(0, 2);
+	emit onSubprocessStart(0, 0);
 
 	QList<RODZAJEDOK> addDict;
 
+	const auto minRowCt = std::max_element(Roles.constBegin(), Roles.constEnd()).value();
+
 	QFile File(Path);
 	File.open(QFile::ReadOnly | QFile::Text);
+
+	emit onSubprocessStart(0, int(File.size()));
 
 	const QRegExp fExp(QString("\\s*%1\\s*").arg(Fsep));
 
 	while (!File.atEnd())
 	{
-		const QStringList List = QString::fromLocal8Bit(File.readLine()).split(fExp);
+		const QStringList List = QString::fromLocal8Bit(File.readLine().trimmed()).split(fExp);
 
-		addDict.append({ List[0].toInt(), List[1] });
+		if (List.size() < minRowCt) continue;
+
+		addDict.append({ List[Roles[ROLES::ID]].toInt(), List[Roles[ROLES::NUMER]] });
+
+		emit onSubprocessUpdate(int(File.pos()));
 	}
+
+	emit onSubprocessStart(0, 0);
 
 	emit onProgressUpdate(1);
 	emit onActionStart(tr("Uploading dictionary"));
-	int Count = appendRoles(addDict);
+	int C1 = appendRoles(addDict);
 
-	return Count;
+	emit onJobEnd(tr("Imported:") + '\n' +
+			    tr("%n row(s)", nullptr, C1));
+
+	return C1;
 }
 
-void ImportWorker::importDocuments(const QString& DocPath, const QString& FilesPath, const QString& DictPath, const QMap<ROLES, int>& Roles, const QString& Fsep, const QString& Lsep)
-{
-
-}

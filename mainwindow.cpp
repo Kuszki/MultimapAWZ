@@ -26,6 +26,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	Database = QSqlDatabase::addDatabase("QIBASE");
 
+	QSettings Settings("Multimap", "AWZ");
+
 	ui->setupUi(this);
 
 	ui->actionConnect->setEnabled(true);
@@ -33,22 +35,85 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->actionFind->setEnabled(false);
 	ui->actionImport->setEnabled(false);
 
-	Worker = new ImportWorker(Database, this);
+	Worker = new ImportWorker(Database);
 	Worker->moveToThread(&Thread);
 	Thread.start();
+
+	awzw = new AwzWidget(Database, this);
+	awzd = new QDockWidget(tr("Documents"), this);
+	awzd->setWindowIcon(awzw->windowIcon());
+	awzd->setObjectName("Documents");
+	awzw->setEnabled(false);
+	awzd->setWidget(awzw);
+
+	filew = new FileWidget(Database, this);
+	filed = new QDockWidget(tr("Files"), this);
+	filed->setWindowIcon(filew->windowIcon());
+	filed->setObjectName("Files");
+	filew->setEnabled(false);
+	filed->setWidget(filew);
+
+	ownw = new OwnerWidget(Database, this);
+	ownd = new QDockWidget(tr("Owners"), this);
+	ownd->setWindowIcon(ownw->windowIcon());
+	ownd->setObjectName("Owners");
+	ownw->setEnabled(false);
+	ownd->setWidget(ownw);
+
+	awzw->setTitleWidget(new TitleWidget(awzd));
+	filew->setTitleWidget(new TitleWidget(filed));
+	ownw->setTitleWidget(new TitleWidget(ownd));
+
+	addDockWidget(Qt::LeftDockWidgetArea, awzd);
+	addDockWidget(Qt::RightDockWidgetArea, filed);
+	addDockWidget(Qt::RightDockWidgetArea, ownd);
+
+	Settings.beginGroup("Window");
+	restoreGeometry(Settings.value("geometry").toByteArray());
+	restoreState(Settings.value("state").toByteArray());
+	Settings.endGroup();
 
 	connect(ui->actionConnect, &QAction::triggered,
 		   this, &MainWindow::connectActionClicked);
 
+	connect(ui->actionDisconnect, &QAction::triggered,
+		   this, &MainWindow::closeDatabase);
+
 	connect(ui->actionImport, &QAction::triggered,
 		   this, &MainWindow::importActionClicked);
+
+	connect(Worker, &ImportWorker::onJobEnd,
+		   this, &MainWindow::endJob);
+
+	connect(this, &MainWindow::onLogin,
+		   awzw, &AwzWidget::setStatus);
+
+	connect(this, &MainWindow::onLogin,
+		   filew, &FileWidget::setStatus);
+
+	connect(this, &MainWindow::onLogin,
+		   ownw, &OwnerWidget::setStatus);
+
+	connect(awzw, &AwzWidget::onIndexChange,
+		   filew, &FileWidget::filterList);
+
+	connect(awzw, &AwzWidget::onIndexChange,
+		   ownw, &OwnerWidget::filterList);
 }
 
 MainWindow::~MainWindow(void)
 {
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Window");
+	Settings.setValue("state", saveState());
+	Settings.setValue("geometry", saveGeometry());
+	Settings.endGroup();
+
 	Thread.exit();
 	Thread.wait();
 
+	delete Worker;
 	delete ui;
 }
 
@@ -67,11 +132,29 @@ void MainWindow::connectActionClicked(void)
 void MainWindow::importActionClicked(void)
 {
 	ImportDialog* Dialog = new ImportDialog(this); Dialog->open();
+	ProgressDialog* Progress = new ProgressDialog(this);
 
-	connect(Dialog, &ImportDialog::onAccept, this, &MainWindow::importDocuments);
-	connect(Dialog, &ImportDialog::onAccept, Worker, &ImportWorker::importDocuments);
+	connect(Dialog, &ImportDialog::accepted, this, &MainWindow::startJob);
+
+	connect(Dialog, &ImportDialog::onDocAccept, Worker, &ImportWorker::importSheets);
+	connect(Dialog, &ImportDialog::onFileAccept, Worker, &ImportWorker::importScans);
+	connect(Dialog, &ImportDialog::onDictAccept, Worker, &ImportWorker::importDict);
+
 	connect(Dialog, &ImportDialog::accepted, Dialog, &ImportDialog::deleteLater);
 	connect(Dialog, &ImportDialog::rejected, Dialog, &ImportDialog::deleteLater);
+
+	connect(Dialog, &ImportDialog::accepted, Progress, &ProgressDialog::open);
+	connect(Dialog, &ImportDialog::rejected, Progress, &ProgressDialog::deleteLater);
+
+	connect(Worker, &ImportWorker::onActionStart, Progress, &ProgressDialog::startAction);
+	connect(Worker, &ImportWorker::onProgressStart, Progress, &ProgressDialog::startProcess);
+	connect(Worker, &ImportWorker::onSubprocessStart, Progress, &ProgressDialog::startSubprocess);
+	connect(Worker, &ImportWorker::onProgressUpdate, Progress, &ProgressDialog::updateProcess);
+	connect(Worker, &ImportWorker::onSubprocessUpdate, Progress, &ProgressDialog::updateSubprocess);
+	connect(Worker, &ImportWorker::onJobEnd, Progress, &ProgressDialog::endJob);
+
+	connect(Progress, &ProgressDialog::accepted, Progress, &ProgressDialog::deleteLater);
+	connect(Progress, &ProgressDialog::rejected, Progress, &ProgressDialog::deleteLater);
 }
 
 void MainWindow::openDatabase(const QString& Server, const QString& Base, const QString& User, const QString& Pass)
@@ -106,10 +189,17 @@ void MainWindow::closeDatabase(void)
 	ui->actionConnect->setEnabled(true);
 	ui->actionDisconnect->setEnabled(false);
 	ui->actionFind->setEnabled(false);
+
+	emit onLogin(false);
 }
 
-void MainWindow::importDocuments(void)
+void MainWindow::startJob(void)
 {
-	// TODO: lock actions and parts of UI
+	setEnabled(false);
+}
+
+void MainWindow::endJob(void)
+{
+	setEnabled(true);
 }
 
