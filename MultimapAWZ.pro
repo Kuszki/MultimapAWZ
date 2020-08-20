@@ -8,6 +8,7 @@ CONFIG		+=	c++19
 SOURCES += \
 	awzwidget.cpp \
 	connectdialog.cpp \
+	editdialog.cpp \
 	filewidget.cpp \
 	importdialog.cpp \
 	importworker.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
 	awzwidget.hpp \
 	commonh.hpp \
 	connectdialog.hpp \
+	editdialog.hpp \
 	filewidget.hpp \
 	importdialog.hpp \
 	importworker.hpp \
@@ -42,6 +44,7 @@ HEADERS += \
 FORMS += \
 	awzwidget.ui \
 	connectdialog.ui \
+	editdialog.ui \
 	filewidget.ui \
 	importdialog.ui \
 	lotwidget.ui \
