@@ -197,7 +197,7 @@ QList<PLIKI> ImportWorker::loadFiles(void)
 	QSqlQuery Query(Database);
 
 	Query.setForwardOnly(true);
-	Query.prepare("SELECT id, nazwa, id_rodzaju, opis FROM pliki");
+	Query.prepare("SELECT id, katalog, nazwa, id_rodzaju, opis FROM pliki");
 
 	if (Query.exec()) while (Query.next())
 	{
@@ -205,8 +205,9 @@ QList<PLIKI> ImportWorker::loadFiles(void)
 		{
 			Query.value(0).toInt(),
 			Query.value(1).toString(),
-			Query.value(2).toInt(),
-			Query.value(3).toString()
+			Query.value(2).toString(),
+			Query.value(3).toInt(),
+			Query.value(4).toString()
 		});
 	}
 
@@ -443,11 +444,12 @@ int ImportWorker::appendFiles(const QList<PLIKI>& List)
 
 	QSqlQuery Query(Database); int Count(0);
 
-	Query.prepare("INSERT INTO pliki (id, nazwa, id_rodzaju, opis) VALUES (?, ?, ?, ?)");
+	Query.prepare("INSERT INTO pliki (id, katalog, nazwa, id_rodzaju, opis) VALUES (?, ?, ?, ?, ?)");
 
 	for (const auto& i : List)
 	{
 		Query.addBindValue(i.id ? i.id : QVariant());
+		Query.addBindValue(i.katalog.isEmpty() ? QVariant() : i.katalog);
 		Query.addBindValue(i.nazwa.isEmpty() ? QVariant() : i.nazwa);
 		Query.addBindValue(i.id_rodzaju ? i.id_rodzaju : QVariant());
 		Query.addBindValue(i.opis.isEmpty() ? QVariant() : i.opis);
@@ -731,19 +733,22 @@ int ImportWorker::importScans(const QString& Path, const QMap<ROLES, int>& Roles
 
 		if (List.size() < minRowCt) continue;
 
+		QFileInfo Info(QString(List[Roles[ROLES::PLIK]]).replace("\\", "/"));
+
 		const auto docID = hasItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa) ?
 			getItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa).id :
 			List[Roles[ROLES::NUMER]].toInt();
-
-		const auto filID = hasItemByField(oldFiles, List[Roles[ROLES::PLIK]], &PLIKI::nazwa) ?
-			getItemByField(oldFiles, List[Roles[ROLES::PLIK]], &PLIKI::nazwa).id :
-			List[Roles[ROLES::PLIK]].toInt();
 
 		const auto rolID = hasItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa) ?
 			getItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa).id :
 			List[Roles[ROLES::ROLA]].toInt();
 
-		PLIKI Pl = { filID, List[Roles[ROLES::PLIK]], rolID, List[Roles[ROLES::UWAGI]] };
+		PLIKI Pl = { 0, Info.path(), Info.fileName(), rolID, List[Roles[ROLES::UWAGI]] };
+
+		for (const auto& l : oldFiles) if (Pl.nazwa == l.nazwa &&
+									Pl.katalog == l.katalog &&
+									Pl.id_rodzaju == l.id_rodzaju)
+			Pl.id = l.id;
 
 		if (!Pl.id)
 		{

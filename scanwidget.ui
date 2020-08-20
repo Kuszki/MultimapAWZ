@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ScanWidget</class>
+ <widget class="QWidget" name="ScanWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="scanner"/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>384</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="scroolLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Login into database</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="fitButton">
+       <property name="text">
+        <string>Fit zoom</string>
+       </property>
+       <property name="icon">
+        <iconset theme="zoom-fit-best">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="orgButton">
+       <property name="text">
+        <string>Original size</string>
+       </property>
+       <property name="icon">
+        <iconset theme="zoom-original">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="zominButton">
+       <property name="text">
+        <string>Zoom in</string>
+       </property>
+       <property name="icon">
+        <iconset theme="zoom-in">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="zomoutButton">
+       <property name="text">
+        <string>Zoom out</string>
+       </property>
+       <property name="icon">
+        <iconset theme="zoom-out">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="rotleftButton">
+       <property name="text">
+        <string>Rotate left</string>
+       </property>
+       <property name="icon">
+        <iconset theme="object-rotate-left">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="rotrightButton">
+       <property name="text">
+        <string>Rotate right</string>
+       </property>
+       <property name="icon">
+        <iconset theme="object-rotate-right">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="printButton">
+       <property name="text">
+        <string>Print</string>
+       </property>
+       <property name="icon">
+        <iconset theme="document-print">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="saveButton">
+       <property name="text">
+        <string>Save changes</string>
+       </property>
+       <property name="icon">
+        <iconset theme="document-save">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="opendirButton">
+       <property name="text">
+        <string>Open directory</string>
+       </property>
+       <property name="icon">
+        <iconset theme="document-open">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>fitButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>zoomFitClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>29</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>429</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>orgButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>zoomOrgClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>80</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>104</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zominButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>zoomInClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>152</x>
+     <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zomoutButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>zoomOutClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>159</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>173</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rotleftButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>rotateLeftClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>196</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>rotrightButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>rotateRightClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>254</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>printButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>printDocClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>216</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>318</x>
+     <y>447</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>saveRotClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>224</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>opendirButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ScanWidget</receiver>
+   <slot>openDirClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>359</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>392</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>zoomInClicked()</slot>
+  <slot>zoomOutClicked()</slot>
+  <slot>zoomOrgClicked()</slot>
+  <slot>zoomFitClicked()</slot>
+  <slot>rotateLeftClicked()</slot>
+  <slot>rotateRightClicked()</slot>
+  <slot>saveRotClicked()</slot>
+  <slot>openDirClicked()</slot>
+  <slot>printDocClicked()</slot>
+ </slots>
+</ui>

@@ -51,6 +51,17 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="editButton">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+       <property name="icon">
+        <iconset theme="tools-check-spelling">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="searchEdit">
        <property name="placeholderText">
         <string>Quick search</string>
@@ -65,5 +76,42 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>reloadButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OwnerWidget</receiver>
+   <slot>reloadList()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>15</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>15</x>
+     <y>491</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OwnerWidget</receiver>
+   <slot>editClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>43</x>
+     <y>282</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>44</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>reloadList()</slot>
+  <slot>editClicked()</slot>
+ </slots>
 </ui>

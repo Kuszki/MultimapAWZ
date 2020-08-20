@@ -18,66 +18,29 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "modelfilter.hpp"
+#ifndef SETTINGSDIALOG_HPP
+#define SETTINGSDIALOG_HPP
 
-ModelFilter::ModelFilter(QObject* parent)
-	: QSortFilterProxyModel(parent)
+#include <QDialog>
+
+QT_BEGIN_NAMESPACE
+namespace Ui {	class SettingsDialog; }
+QT_END_NAMESPACE
+
+class SettingsDialog : public QDialog
 {
-	this->setFilterCaseSensitivity(Qt::CaseInsensitive);
-}
 
-ModelFilter::~ModelFilter(void) {}
+		Q_OBJECT
 
-void ModelFilter::setSearchedColumns(const QSet<int>& Set)
-{
-	Columns = Set;
+	private:
 
-	invalidateFilter();
-}
+		Ui::SettingsDialog *ui;
 
-void ModelFilter::setFilterIndexes(const QSet<int>& Set)
-{
-	Indexes = Set;
+	public:
 
-	invalidateFilter();
-}
+		explicit SettingsDialog(QWidget* parent = nullptr);
+		virtual ~SettingsDialog(void) override;
 
-QSet<int> ModelFilter::getReadonlyColumns(void) const
-{
-	return Readonly;
-}
+};
 
-void ModelFilter::setReadonlyColumns(const QSet<int>& R)
-{
-	Readonly = R;
-}
-
-bool ModelFilter::setData(const QModelIndex& Index, const QVariant& Value, int Role)
-{
-	if (Readonly.contains(Index.column())) return false;
-
-	const QVariant Old = data(Index);
-	const bool OK = QSortFilterProxyModel::setData(Index, Value, Role);
-
-	if (OK) emit onRecordUpdate(Index, Old, Value);
-	else QSortFilterProxyModel::setData(Index, Old, Role);
-
-	return OK;
-}
-
-bool ModelFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{
-	QModelIndex idIndex = sourceModel()->index(sourceRow, 0, sourceParent);
-
-	const bool isID = Indexes.isEmpty() || Indexes.contains(sourceModel()->data(idIndex).toInt());
-	bool isAny = Columns.isEmpty();
-
-	for (const auto& i : Columns)
-	{
-		QModelIndex fIndex = sourceModel()->index(sourceRow, i, sourceParent);
-
-		isAny = isAny || sourceModel()->data(fIndex).toString().contains(filterRegExp());
-	}
-
-	return isID && isAny;
-}
+#endif // SETTINGSDIALOG_HPP

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsDialog</class>
+ <widget class="QDialog" name="SettingsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>View settings</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="view-sort-ascending"/>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::West</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="documentMode">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="docTab">
+      <attribute name="icon">
+       <iconset theme="document">
+        <normaloff>.</normaloff>.</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Documents</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="docLayout">
+       <item>
+        <widget class="QCheckBox" name="docCommentCheck">
+         <property name="text">
+          <string>Show comments</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="docSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>406</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="fileTab">
+      <attribute name="icon">
+       <iconset theme="document-new">
+        <normaloff>.</normaloff>.</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Files</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="fileLayout">
+       <item>
+        <widget class="QCheckBox" name="filePathCheck">
+         <property name="text">
+          <string>Show path</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="fileRoleCheck">
+         <property name="text">
+          <string>Show role</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="fileCommentCheck">
+         <property name="text">
+          <string>Show comments</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="fileSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>348</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="lotTab">
+      <attribute name="icon">
+       <iconset theme="mail-send">
+        <normaloff>.</normaloff>.</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Lots</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="lotLayout">
+       <item>
+        <widget class="QCheckBox" name="lotSheetCheck">
+         <property name="text">
+          <string>Show sheet</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="lotSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>406</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="ownTab">
+      <attribute name="icon">
+       <iconset theme="user-info">
+        <normaloff>.</normaloff>.</iconset>
+      </attribute>
+      <attribute name="title">
+       <string>Owners</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="ownLayout">
+       <item>
+        <widget class="QCheckBox" name="ownFatherCheck">
+         <property name="text">
+          <string>Show father name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="ownMatherCheck">
+         <property name="text">
+          <string>Show mother name</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="ownSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>377</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="sumTab">
+      <attribute name="icon">
+       <iconset theme="document-print-preview"/>
+      </attribute>
+      <attribute name="title">
+       <string>Summary</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Discard|QDialogButtonBox::RestoreDefaults|QDialogButtonBox::Save</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>docCommentCheck</tabstop>
+  <tabstop>filePathCheck</tabstop>
+  <tabstop>fileRoleCheck</tabstop>
+  <tabstop>fileCommentCheck</tabstop>
+  <tabstop>lotSheetCheck</tabstop>
+  <tabstop>ownFatherCheck</tabstop>
+  <tabstop>ownMatherCheck</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SettingsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

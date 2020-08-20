@@ -97,6 +97,7 @@ struct OSOBY
 struct PLIKI
 {
 	qint32 id;
+	QString katalog;
 	QString nazwa;
 	qint32 id_rodzaju;
 	QString opis;

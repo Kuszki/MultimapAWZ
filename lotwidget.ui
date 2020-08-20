@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AwzWidget</class>
- <widget class="QWidget" name="AwzWidget">
+ <class>LotWidget</class>
+ <widget class="QWidget" name="LotWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="document">
+   <iconset theme="mail-send">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QTableView" name="tableView">
      <property name="selectionMode">
       <enum>QAbstractItemView::SingleSelection</enum>
@@ -34,7 +34,7 @@
      </attribute>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="reloadButton">
@@ -70,44 +70,58 @@
      </item>
     </layout>
    </item>
+   <item row="0" column="0">
+    <widget class="QComboBox" name="placeCombo"/>
+   </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>tableView</tabstop>
-  <tabstop>reloadButton</tabstop>
-  <tabstop>searchEdit</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>
    <sender>reloadButton</sender>
    <signal>clicked()</signal>
-   <receiver>AwzWidget</receiver>
+   <receiver>LotWidget</receiver>
    <slot>reloadList()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>18</x>
-     <y>278</y>
+     <x>21</x>
+     <y>285</y>
     </hint>
     <hint type="destinationlabel">
-     <x>38</x>
-     <y>441</y>
+     <x>21</x>
+     <y>427</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>placeCombo</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>LotWidget</receiver>
+   <slot>selectComm(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>79</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>374</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>editButton</sender>
    <signal>clicked()</signal>
-   <receiver>AwzWidget</receiver>
+   <receiver>LotWidget</receiver>
    <slot>editClicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>49</x>
-     <y>279</y>
+     <y>276</y>
     </hint>
     <hint type="destinationlabel">
-     <x>69</x>
-     <y>406</y>
+     <x>67</x>
+     <y>439</y>
     </hint>
    </hints>
   </connection>
@@ -115,5 +129,6 @@
  <slots>
   <slot>reloadList()</slot>
   <slot>editClicked()</slot>
+  <slot>selectComm(int)</slot>
  </slots>
 </ui>

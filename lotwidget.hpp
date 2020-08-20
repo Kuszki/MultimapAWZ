@@ -18,66 +18,71 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+#ifndef LOTWIDGET_HPP
+#define LOTWIDGET_HPP
+
+#include <QWidget>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlTableModel>
+
 #include "modelfilter.hpp"
+#include "modeldelegate.hpp"
+#include "titlewidget.hpp"
 
-ModelFilter::ModelFilter(QObject* parent)
-	: QSortFilterProxyModel(parent)
+QT_BEGIN_NAMESPACE
+namespace Ui { class LotWidget; }
+QT_END_NAMESPACE
+
+class LotWidget : public QWidget
 {
-	this->setFilterCaseSensitivity(Qt::CaseInsensitive);
-}
 
-ModelFilter::~ModelFilter(void) {}
+		Q_OBJECT
 
-void ModelFilter::setSearchedColumns(const QSet<int>& Set)
-{
-	Columns = Set;
+	private:
 
-	invalidateFilter();
-}
+		static const QString filterStr;
 
-void ModelFilter::setFilterIndexes(const QSet<int>& Set)
-{
-	Indexes = Set;
+		QSqlDatabase& Database;
 
-	invalidateFilter();
-}
+		ModelFilter* filter = nullptr;
+		QSqlTableModel* model = nullptr;
 
-QSet<int> ModelFilter::getReadonlyColumns(void) const
-{
-	return Readonly;
-}
+		int lastIndex = 0;
 
-void ModelFilter::setReadonlyColumns(const QSet<int>& R)
-{
-	Readonly = R;
-}
+		Ui::LotWidget *ui;
 
-bool ModelFilter::setData(const QModelIndex& Index, const QVariant& Value, int Role)
-{
-	if (Readonly.contains(Index.column())) return false;
+	public:
 
-	const QVariant Old = data(Index);
-	const bool OK = QSortFilterProxyModel::setData(Index, Value, Role);
+		explicit LotWidget(QSqlDatabase& Db,
+					    QWidget* parent = nullptr);
+		virtual ~LotWidget(void) override;
 
-	if (OK) emit onRecordUpdate(Index, Old, Value);
-	else QSortFilterProxyModel::setData(Index, Old, Role);
+		void setTitleWidget(TitleWidget* W);
 
-	return OK;
-}
+	private:
 
-bool ModelFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{
-	QModelIndex idIndex = sourceModel()->index(sourceRow, 0, sourceParent);
+		void prepareList(int ID);
 
-	const bool isID = Indexes.isEmpty() || Indexes.contains(sourceModel()->data(idIndex).toInt());
-	bool isAny = Columns.isEmpty();
+	public slots:
 
-	for (const auto& i : Columns)
-	{
-		QModelIndex fIndex = sourceModel()->index(sourceRow, i, sourceParent);
+		void filterList(int ID);
 
-		isAny = isAny || sourceModel()->data(fIndex).toString().contains(filterRegExp());
-	}
+		void reloadList(void);
 
-	return isID && isAny;
-}
+		void selectComm(int Index);
+		void setStatus(bool Enabled);
+
+	private slots:
+
+		void rowSelected(const QModelIndex& Index);
+
+		void editClicked(void);
+
+	signals:
+
+		void onIndexChange(int);
+
+};
+
+#endif // LOTWIDGET_HPP

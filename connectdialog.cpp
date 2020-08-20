@@ -28,6 +28,9 @@ ConnectDialog::ConnectDialog(QWidget *Parent)
 
 	ui->buttonBox->button(QDialogButtonBox::Open)->setEnabled(false);
 
+	ui->pathButton->setFixedSize(ui->Path->sizeHint().height(),
+						    ui->Path->sizeHint().height());
+
 	QSettings Settings("Multimap", "AWZ");
 
 	Settings.beginGroup("History");
@@ -39,6 +42,10 @@ ConnectDialog::ConnectDialog(QWidget *Parent)
 	ui->Server->setCurrentText(Settings.value("server").toString());
 	ui->Database->setCurrentText(Settings.value("path").toString());
 	ui->User->setText(Settings.value("user").toString());
+	Settings.endGroup();
+
+	Settings.beginGroup("Documents");
+	ui->Path->setText(Settings.value("path").toString());
 	Settings.endGroup();
 
 	if (!ui->Server->currentText().isEmpty() &&
@@ -63,7 +70,15 @@ void ConnectDialog::edited(void)
 				!ui->Server->currentText().isEmpty() &&
 				!ui->Database->currentText().isEmpty() &&
 				!ui->User->text().isEmpty() &&
-				!ui->Password->text().isEmpty());
+				!ui->Password->text().isEmpty() &&
+				!ui->Path->text().isEmpty());
+}
+
+void ConnectDialog::openpath(void)
+{
+	const QString Path = QFileDialog::getExistingDirectory(this, tr("Select scans directory"));
+
+	if (!Path.isEmpty()) ui->Path->setText(Path);
 }
 
 void ConnectDialog::accept(void)
@@ -71,7 +86,7 @@ void ConnectDialog::accept(void)
 	setEnabled(false);
 
 	emit onAccept(ui->Server->currentText(), ui->Database->currentText(),
-			    ui->User->text(), ui->Password->text());
+			    ui->User->text(), ui->Password->text(), ui->Path->text());
 }
 
 void ConnectDialog::reject(void)
@@ -94,6 +109,10 @@ void ConnectDialog::connected(bool OK)
 	Settings.setValue("server", ui->Server->currentText());
 	Settings.setValue("path", ui->Database->currentText());
 	Settings.setValue("user", ui->User->text());
+	Settings.endGroup();
+
+	Settings.beginGroup("Documents");
+	Settings.setValue("path", ui->Path->text());
 	Settings.endGroup();
 
 	Settings.beginGroup("History");

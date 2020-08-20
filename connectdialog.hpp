@@ -21,6 +21,7 @@
 #ifndef CONNECTDIALOG_HPP
 #define CONNECTDIALOG_HPP
 
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>
@@ -48,6 +49,8 @@ class ConnectDialog : public QDialog
 
 		void edited(void);
 
+		void openpath(void);
+
 	public slots:
 
 		virtual void accept(void) override;
@@ -59,7 +62,8 @@ class ConnectDialog : public QDialog
 	signals:
 
 		void onAccept(const QString&, const QString&,
-				    const QString&, const QString&);
+				    const QString&, const QString&,
+				    const QString&);
 
 };
 

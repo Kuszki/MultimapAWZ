@@ -28,6 +28,7 @@ AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 1, 2 });
+	filter->setReadonlyColumns({ 0 });
 
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
@@ -49,6 +50,9 @@ void AwzWidget::setTitleWidget(TitleWidget* W)
 {
 	ui->horizontalLayout->removeWidget(ui->reloadButton);
 	W->addRightWidget(ui->reloadButton);
+
+	ui->horizontalLayout->removeWidget(ui->editButton);
+	W->addRightWidget(ui->editButton);
 }
 
 void AwzWidget::filterList(const QSet<int>& List)
@@ -63,7 +67,10 @@ void AwzWidget::reloadList(void)
 
 void AwzWidget::setStatus(bool Enabled)
 {
-	setEnabled(Enabled);
+	ui->tableView->setEnabled(Enabled);
+	ui->editButton->setEnabled(Enabled);
+	ui->reloadButton->setEnabled(Enabled);
+	ui->searchEdit->setEnabled(Enabled);
 
 	if (Enabled)
 	{
@@ -101,5 +108,10 @@ void AwzWidget::rowSelected(const QModelIndex& Index)
 	const int id = ui->tableView->model()->data(i).toInt();
 
 	emit onIndexChange(id);
+}
+
+void AwzWidget::editClicked(void)
+{
+	// TODO implement me
 }
 

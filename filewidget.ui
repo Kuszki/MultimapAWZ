@@ -36,9 +36,6 @@
    </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
      <item>
       <widget class="QToolButton" name="reloadButton">
        <property name="text">
@@ -46,6 +43,17 @@
        </property>
        <property name="icon">
         <iconset theme="reload">
+         <normaloff>.</normaloff>.</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="editButton">
+       <property name="text">
+        <string>Edit</string>
+       </property>
+       <property name="icon">
+        <iconset theme="tools-check-spelling">
          <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
@@ -83,24 +91,24 @@
    </hints>
   </connection>
   <connection>
-   <sender>searchEdit</sender>
-   <signal>textChanged(QString)</signal>
+   <sender>editButton</sender>
+   <signal>clicked()</signal>
    <receiver>FileWidget</receiver>
-   <slot>filterChanged(QString)</slot>
+   <slot>editClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
+     <x>57</x>
      <y>278</y>
     </hint>
     <hint type="destinationlabel">
-     <x>197</x>
-     <y>414</y>
+     <x>62</x>
+     <y>516</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>reloadList()</slot>
-  <slot>filterChanged(QString)</slot>
+  <slot>editClicked()</slot>
  </slots>
 </ui>

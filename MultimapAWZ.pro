@@ -11,12 +11,15 @@ SOURCES += \
 	filewidget.cpp \
 	importdialog.cpp \
 	importworker.cpp \
+	lotwidget.cpp \
 	main.cpp \
 	mainwindow.cpp \
 	modeldelegate.cpp \
 	modelfilter.cpp \
 	ownerwidget.cpp \
 	progressdialog.cpp \
+	scanwidget.cpp \
+	settingsdialog.cpp \
 	titlewidget.cpp
 
 HEADERS += \
@@ -26,11 +29,14 @@ HEADERS += \
 	filewidget.hpp \
 	importdialog.hpp \
 	importworker.hpp \
+	lotwidget.hpp \
 	mainwindow.hpp \
 	modeldelegate.hpp \
 	modelfilter.hpp \
 	ownerwidget.hpp \
 	progressdialog.hpp \
+	scanwidget.hpp \
+	settingsdialog.hpp \
 	titlewidget.hpp
 
 FORMS += \
@@ -38,9 +44,12 @@ FORMS += \
 	connectdialog.ui \
 	filewidget.ui \
 	importdialog.ui \
+	lotwidget.ui \
 	mainwindow.ui \
 	ownerwidget.ui \
 	progressdialog.ui \
+	scanwidget.ui \
+	settingsdialog.ui \
 	titlewidget.ui
 
 TRANSLATIONS += \

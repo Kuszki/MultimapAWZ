@@ -24,6 +24,7 @@
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlRecord>
 #include <QSqlRelationalDelegate>
 #include <QSqlRelationalTableModel>
 
@@ -71,9 +72,20 @@ class FileWidget : public QWidget
 
 		void rowSelected(const QModelIndex& Index);
 
+		void rowUpdated(const QModelIndex& Index,
+					 const QVariant& Old,
+					 const QVariant& New);
+
+		void editClicked(void);
+
 	signals:
 
 		void onIndexChange(int);
+
+		void onFilepathChange(const QString&);
+
+		void onFileRename(const QString&,
+					   const QString&);
 
 };
 

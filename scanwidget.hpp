@@ -18,66 +18,69 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#include "modelfilter.hpp"
+#ifndef SCANWIDGET_HPP
+#define SCANWIDGET_HPP
 
-ModelFilter::ModelFilter(QObject* parent)
-	: QSortFilterProxyModel(parent)
+#include <QWidget>
+#include <QPixmap>
+#include <QWheelEvent>
+
+#include "titlewidget.hpp"
+
+QT_BEGIN_NAMESPACE
+namespace Ui {	class ScanWidget; }
+QT_END_NAMESPACE
+
+class ScanWidget : public QWidget
 {
-	this->setFilterCaseSensitivity(Qt::CaseInsensitive);
-}
 
-ModelFilter::~ModelFilter(void) {}
+		Q_OBJECT
 
-void ModelFilter::setSearchedColumns(const QSet<int>& Set)
-{
-	Columns = Set;
+	private:
 
-	invalidateFilter();
-}
+		QString Path;
+		QPixmap Image;
 
-void ModelFilter::setFilterIndexes(const QSet<int>& Set)
-{
-	Indexes = Set;
+		double Scale = 1.0;
+		int Rotation = 0;
 
-	invalidateFilter();
-}
+		Ui::ScanWidget *ui;
 
-QSet<int> ModelFilter::getReadonlyColumns(void) const
-{
-	return Readonly;
-}
+	public:
 
-void ModelFilter::setReadonlyColumns(const QSet<int>& R)
-{
-	Readonly = R;
-}
+		explicit ScanWidget(const QString& path = QString(),
+						QWidget *parent = nullptr);
+		virtual ~ScanWidget(void) override;
 
-bool ModelFilter::setData(const QModelIndex& Index, const QVariant& Value, int Role)
-{
-	if (Readonly.contains(Index.column())) return false;
+		void setTitleWidget(TitleWidget* W);
 
-	const QVariant Old = data(Index);
-	const bool OK = QSortFilterProxyModel::setData(Index, Value, Role);
+	public slots:
 
-	if (OK) emit onRecordUpdate(Index, Old, Value);
-	else QSortFilterProxyModel::setData(Index, Old, Role);
+		void updateImage(const QString& Src);
 
-	return OK;
-}
+		void setPath(const QString& P);
 
-bool ModelFilter::filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const
-{
-	QModelIndex idIndex = sourceModel()->index(sourceRow, 0, sourceParent);
+		void setStatus(bool Enabled);
 
-	const bool isID = Indexes.isEmpty() || Indexes.contains(sourceModel()->data(idIndex).toInt());
-	bool isAny = Columns.isEmpty();
+	protected:
 
-	for (const auto& i : Columns)
-	{
-		QModelIndex fIndex = sourceModel()->index(sourceRow, i, sourceParent);
+		virtual void wheelEvent(QWheelEvent* Event) override;
 
-		isAny = isAny || sourceModel()->data(fIndex).toString().contains(filterRegExp());
-	}
+	private slots:
 
-	return isID && isAny;
-}
+		void zoomInClicked(void);
+		void zoomOutClicked(void);
+		void zoomOrgClicked(void);
+		void zoomFitClicked(void);
+
+		void rotateLeftClicked(void);
+		void rotateRightClicked(void);
+		void saveRotClicked(void);
+
+		void printDocClicked(void);
+
+		void openDirClicked(void);
+
+};
+
+#endif // SCANWIDGET_HPP

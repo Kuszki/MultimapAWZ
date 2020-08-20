@@ -70,6 +70,8 @@ class OwnerWidget : public QWidget
 
 		void rowSelected(const QModelIndex& Index);
 
+		void editClicked(void);
+
 	signals:
 
 		void onIndexChange(int);

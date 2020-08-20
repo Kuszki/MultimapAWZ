@@ -33,6 +33,8 @@
 #include "filewidget.hpp"
 #include "ownerwidget.hpp"
 #include "titlewidget.hpp"
+#include "lotwidget.hpp"
+#include "scanwidget.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -58,8 +60,16 @@ class MainWindow : public QMainWindow
 		QDockWidget* ownd;
 		OwnerWidget* ownw;
 
+		QDockWidget* lotd;
+		LotWidget* lotw;
+
+		QDockWidget* scand;
+		ScanWidget* scanw;
+
 		QSqlDatabase Database;
 		QThread Thread;
+
+		QString treePath;
 
 	public:
 
@@ -72,9 +82,13 @@ class MainWindow : public QMainWindow
 		void importActionClicked(void);
 
 		void openDatabase(const QString& Server, const QString& Base,
-					   const QString& User, const QString& Pass);
+					   const QString& User, const QString& Pass,
+					   const QString& Scanpath);
 
 		void closeDatabase(void);
+
+		void renameFile(const QString& Old,
+					 const QString& Name);
 
 		void startJob(void);
 		void endJob(void);

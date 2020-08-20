@@ -26,6 +26,8 @@
 #include <QObject>
 #include <QSet>
 
+#include <QDebug>
+
 class ModelFilter : public QSortFilterProxyModel
 {
 
@@ -36,6 +38,8 @@ class ModelFilter : public QSortFilterProxyModel
 		QSet<int> Columns;
 		QSet<int> Indexes;
 
+		QSet<int> Readonly;
+
 	public:
 
 		explicit ModelFilter(QObject* parent = nullptr);
@@ -44,9 +48,23 @@ class ModelFilter : public QSortFilterProxyModel
 		void setSearchedColumns(const QSet<int>& Set);
 		void setFilterIndexes(const QSet<int>& Set);
 
+		QSet<int> getReadonlyColumns(void) const;
+		void setReadonlyColumns(const QSet<int>& R);
+
+	public slots:
+
+		virtual bool setData(const QModelIndex &Index,
+						 const QVariant &Value, int Role) override;
+
 	protected:
 
 		virtual bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;
+
+	signals:
+
+		void onRecordUpdate(const QModelIndex&,
+						const QVariant&,
+						const QVariant&);
 
 };
 

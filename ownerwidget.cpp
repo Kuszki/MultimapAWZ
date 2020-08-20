@@ -30,6 +30,7 @@ OwnerWidget::OwnerWidget(QSqlDatabase& Db, QWidget *parent)
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 1, 2 });
+	filter->setReadonlyColumns({ 0 });
 
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
@@ -51,6 +52,9 @@ void OwnerWidget::setTitleWidget(TitleWidget* W)
 {
 	ui->horizontalLayout->removeWidget(ui->reloadButton);
 	W->addRightWidget(ui->reloadButton);
+
+	ui->horizontalLayout->removeWidget(ui->editButton);
+	W->addRightWidget(ui->editButton);
 }
 
 void OwnerWidget::filterList(int ID)
@@ -66,7 +70,10 @@ void OwnerWidget::reloadList(void)
 
 void OwnerWidget::setStatus(bool Enabled)
 {
-	setEnabled(Enabled);
+	ui->tableView->setEnabled(Enabled);
+	ui->editButton->setEnabled(Enabled);
+	ui->reloadButton->setEnabled(Enabled);
+	ui->searchEdit->setEnabled(Enabled);
 
 	if (Enabled)
 	{
@@ -103,4 +110,9 @@ void OwnerWidget::rowSelected(const QModelIndex& Index)
 	const int id = ui->tableView->model()->data(i).toInt();
 
 	emit onIndexChange(id);
+}
+
+void OwnerWidget::editClicked(void)
+{
+
 }
