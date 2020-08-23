@@ -59,6 +59,26 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="addButton">
+       <property name="text">
+        <string>Add</string>
+       </property>
+       <property name="icon">
+        <iconset theme="list-add"/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="remButton">
+       <property name="text">
+        <string>Remove</string>
+       </property>
+       <property name="icon">
+        <iconset theme="list-remove"/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLineEdit" name="searchEdit">
        <property name="placeholderText">
         <string>Quick search</string>
@@ -75,6 +95,9 @@
  <tabstops>
   <tabstop>tableView</tabstop>
   <tabstop>reloadButton</tabstop>
+  <tabstop>editButton</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>remButton</tabstop>
   <tabstop>searchEdit</tabstop>
  </tabstops>
  <resources/>
@@ -111,9 +134,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AwzWidget</receiver>
+   <slot>addClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>81</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>105</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>remButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AwzWidget</receiver>
+   <slot>remClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>127</x>
+     <y>425</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>reloadList()</slot>
   <slot>editClicked()</slot>
+  <slot>addClicked()</slot>
+  <slot>remClicked()</slot>
  </slots>
 </ui>

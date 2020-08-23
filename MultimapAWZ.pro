@@ -20,6 +20,7 @@ SOURCES += \
 	ownerwidget.cpp \
 	progressdialog.cpp \
 	scanwidget.cpp \
+	searchdialog.cpp \
 	settingsdialog.cpp \
 	titlewidget.cpp
 
@@ -38,6 +39,7 @@ HEADERS += \
 	ownerwidget.hpp \
 	progressdialog.hpp \
 	scanwidget.hpp \
+	searchdialog.hpp \
 	settingsdialog.hpp \
 	titlewidget.hpp
 
@@ -52,6 +54,7 @@ FORMS += \
 	ownerwidget.ui \
 	progressdialog.ui \
 	scanwidget.ui \
+	searchdialog.ui \
 	settingsdialog.ui \
 	titlewidget.ui
 

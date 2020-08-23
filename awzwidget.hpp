@@ -25,10 +25,12 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlTableModel>
-#include <QSqlError>
 
 #include "modelfilter.hpp"
 #include "titlewidget.hpp"
+#include "editdialog.hpp"
+
+#include "commonh.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class AwzWidget; }
@@ -66,13 +68,22 @@ class AwzWidget : public QWidget
 
 	private slots:
 
+		void editData(const QVariantMap& Map);
+		void appendData(const QVariantMap& Map);
+
 		void rowSelected(const QModelIndex& Index);
+		void itemSelected(const QItemSelection& Index);
 
 		void editClicked(void);
+		void addClicked(void);
+		void remClicked(void);
 
 	signals:
 
 		void onIndexChange(int);
+
+		void onAddRow(const DOKUMENTY&);
+		void onRemRow(int);
 
 };
 

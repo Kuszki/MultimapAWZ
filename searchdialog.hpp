@@ -18,76 +18,53 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef OWNERWIDGET_HPP
-#define OWNERWIDGET_HPP
+#ifndef SEARCHDIALOG_HPP
+#define SEARCHDIALOG_HPP
 
-#include <QWidget>
+#include <QPushButton>
+#include <QVariant>
+#include <QDialog>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QSqlTableModel>
-
-#include "modelfilter.hpp"
-#include "modeldelegate.hpp"
-#include "titlewidget.hpp"
-#include "editdialog.hpp"
-
-#include "commonh.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class OwnerWidget; }
+namespace Ui { class SearchDialog; }
 QT_END_NAMESPACE
 
-class OwnerWidget : public QWidget
+class SearchDialog : public QDialog
 {
 
 		Q_OBJECT
 
 	private:
 
-		static const QString filterStr;
-
 		QSqlDatabase& Database;
 
-		ModelFilter* filter = nullptr;
-		QSqlTableModel* model = nullptr;
-
-		Ui::OwnerWidget *ui;
+		Ui::SearchDialog *ui;
 
 	public:
 
-		explicit OwnerWidget(QSqlDatabase& Db,
-						 QWidget *parent = nullptr);
-		virtual ~OwnerWidget(void) override;
-
-		void setTitleWidget(TitleWidget* W);
+		explicit SearchDialog(QSqlDatabase& Db, QWidget *parent = nullptr);
+		virtual ~SearchDialog(void) override;
 
 	public slots:
 
-		void filterList(int ID);
-
-		void reloadList(void);
-
-		void setStatus(bool Enabled);
+		virtual void open(void) override;
+		virtual void accept(void) override;
 
 	private slots:
 
-		void editData(const QVariantMap& Map);
-		void appendData(const QVariantMap& Map);
+		void commIndexChanged(int Index);
+		void precCheckToggled(bool Enable);
+		void commCheckToggled(bool Enable);
 
-		void rowSelected(const QModelIndex& Index);
-		void itemSelected(const QItemSelection& Index);
-
-		void editClicked(void);
-		void addClicked(void);
-		void remClicked(void);
+		void validateData(void);
 
 	signals:
 
-		void onIndexChange(int);
-
-		void onAddRow(const OSOBY&);
-		void onRemRow(int);
+		void onAccept(const QVariantMap&);
+		void onReset(void);
 
 };
 
-#endif // OWNERWIDGET_HPP
+#endif // SEARCHDIALOG_HPP

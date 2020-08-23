@@ -30,6 +30,11 @@ int main(int argc, char *argv[])
 
 	qRegisterMetaType<QMap<ROLES,int>>("QMap<ROLES,int>");
 
+	qRegisterMetaType<DOKUMENTY>("DOKUMENTY");
+	qRegisterMetaType<DZIALKI>("DZIALKI");
+	qRegisterMetaType<OSOBY>("OSOBY");
+	qRegisterMetaType<PLIKI>("PLIKI");
+
 	a.setApplicationName("Multimap-AWZ");
 	a.setOrganizationName("Łukasz \"Kuszki\" Dróżdż");
 	a.setOrganizationDomain("https://github.com/Kuszki");

@@ -36,6 +36,20 @@ class ImportWorker : public QObject
 
 		Q_OBJECT
 
+	public: enum TabName
+		{
+			Doc,
+			Doc_Lot,
+			Doc_Own,
+			Doc_Fil,
+			Lot,
+			Com,
+			Pre,
+			Own,
+			Fil,
+			Fil_Rol
+		};
+
 	private:
 
 		static QVariant (*getID) (QSqlQuery&);
@@ -58,6 +72,17 @@ class ImportWorker : public QObject
 		QList<PLIKI> loadFiles(void);
 		QList<RODZAJEDOK> loadRoles(void);
 
+		int findDocs(const DOKUMENTY& List);
+		int findDocLots(const DOK_DZIALKI& List);
+		int findDocOwns(const DOK_OSOBY& List);
+		int findDocFiles(const DOK_PLIKI& List);
+		int findLots(const DZIALKI& List);
+		int findComms(const GMINY& List);
+		int findPrecs(const OBREBY& List);
+		int findOwns(const OSOBY& List);
+		int findFiles(const PLIKI& List);
+		int findRoles(const RODZAJEDOK& List);
+
 		int appendDocs(const QList<DOKUMENTY>& List);
 		int appendDocLot(const QList<DOK_DZIALKI>& List);
 		int appendDocOwn(const QList<DOK_OSOBY>& List);
@@ -68,6 +93,24 @@ class ImportWorker : public QObject
 		int appendOwns(const QList<OSOBY>& List);
 		int appendFiles(const QList<PLIKI>& List);
 		int appendRoles(const QList<RODZAJEDOK>& List);
+
+		int removeDocs(const QSet<int>& List);
+		int removeLots(const QSet<int>& List);
+		int removeComms(const QSet<int>& List);
+		int removePrecs(const QSet<int>& List);
+		int removeOwns(const QSet<int>& List);
+		int removeFiles(const QSet<int>& List);
+		int removeRoles(const QSet<int>& List);
+
+		int removeDocLots(const QSet<int>& List, bool Rel = false);
+		int removeDocOwns(const QSet<int>& List, bool Rel = false);
+		int removeDocFiles(const QSet<int>& List, bool Rel = false);
+
+		bool removeDocLot(int dID, int fID);
+		bool removeDocOwn(int dID, int fID);
+		bool removeDocFile(int dID, int fID);
+
+		int generateId(TabName Tab);
 
 	public slots:
 

@@ -35,6 +35,10 @@ FileWidget::FileWidget(QSqlDatabase& Db, QWidget *parent)
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
 
+	ui->reloadButton->setFixedSize(
+		ui->searchEdit->sizeHint().height(),
+		ui->searchEdit->sizeHint().height());
+
 	connect(filter, &ModelFilter::onRecordUpdate,
 		   this, &FileWidget::rowUpdated);
 
@@ -44,6 +48,10 @@ FileWidget::FileWidget(QSqlDatabase& Db, QWidget *parent)
 	connect(ui->tableView->selectionModel(),
 		   &QItemSelectionModel::currentRowChanged,
 		   this, &FileWidget::rowSelected);
+
+	connect(ui->tableView->selectionModel(),
+		   &QItemSelectionModel::selectionChanged,
+		   this, &FileWidget::itemSelected);
 }
 
 FileWidget::~FileWidget(void)
@@ -53,30 +61,46 @@ FileWidget::~FileWidget(void)
 
 void FileWidget::setTitleWidget(TitleWidget* W)
 {
-	ui->horizontalLayout->removeWidget(ui->reloadButton);
-	W->addRightWidget(ui->reloadButton);
-
 	ui->horizontalLayout->removeWidget(ui->editButton);
 	W->addRightWidget(ui->editButton);
+
+	ui->horizontalLayout->removeWidget(ui->addButton);
+	W->addRightWidget(ui->addButton);
+
+	ui->horizontalLayout->removeWidget(ui->remButton);
+	W->addRightWidget(ui->remButton);
 }
 
 void FileWidget::filterList(int ID)
 {
+	ui->addButton->setEnabled(ID != -1);
+
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) model->setFilter(filterStr.arg(ID));
 	if (model && !model->rowCount()) model->select();
 }
 
 void FileWidget::reloadList(void)
 {
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) model->select();
+
+	emit onIndexChange(-1);
 }
 
 void FileWidget::setStatus(bool Enabled)
 {
 	ui->tableView->setEnabled(Enabled);
-	ui->editButton->setEnabled(Enabled);
 	ui->reloadButton->setEnabled(Enabled);
 	ui->searchEdit->setEnabled(Enabled);
+
+	ui->editButton->setEnabled(false);
+	ui->addButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
 
 	if (Enabled)
 	{
@@ -91,7 +115,7 @@ void FileWidget::setStatus(bool Enabled)
 		model->setHeaderData(1, Qt::Horizontal, tr("Path"));
 		model->setHeaderData(2, Qt::Horizontal, tr("Name"));
 		model->setHeaderData(3, Qt::Horizontal, tr("Role"));
-		model->setHeaderData(4, Qt::Horizontal, tr("Comments"));
+		model->setHeaderData(4, Qt::Horizontal, tr("Comment"));
 
 		model->setEditStrategy(QSqlRelationalTableModel::OnFieldChange);
 
@@ -110,6 +134,32 @@ void FileWidget::setStatus(bool Enabled)
 	}
 }
 
+void FileWidget::editData(const QVariantMap& Map)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	model->setEditStrategy(QSqlRelationalTableModel::OnManualSubmit);
+
+	filter->setData(filter->index(S.row(), 2, S.parent()), Map[tr("Name")]);
+	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Role")]);
+	filter->setData(filter->index(S.row(), 4, S.parent()), Map[tr("Comment")]);
+
+	model->setEditStrategy(QSqlRelationalTableModel::OnFieldChange);
+	model->submitAll();
+}
+
+void FileWidget::appendData(const QVariantMap& Map)
+{
+	emit onAddRow(
+	{
+		0,
+		Map[tr("Path")].toString().simplified().replace("\\", "/"),
+		Map[tr("Name")].toString().simplified(),
+		Map[tr("Role")].toInt(),
+		Map[tr("Comment")].toString().simplified()
+	});
+}
+
 void FileWidget::rowSelected(const QModelIndex& Index)
 {
 	if (!model) return;
@@ -118,15 +168,19 @@ void FileWidget::rowSelected(const QModelIndex& Index)
 	const auto p = filter->index(Index.row(), 1, Index.parent());
 	const auto f = filter->index(Index.row(), 2, Index.parent());
 
-	qDebug() << i.data().toInt() << p.data().toString() + "/" + f.data().toString();
-
 	emit onIndexChange(i.data().toInt());
 	emit onFilepathChange(p.data().toString() + "/" + f.data().toString());
 }
 
+void FileWidget::itemSelected(const QItemSelection& Index)
+{
+	ui->editButton->setEnabled(!Index.isEmpty());
+	ui->remButton->setEnabled(!Index.isEmpty());
+}
+
 void FileWidget::rowUpdated(const QModelIndex& Index, const QVariant& Old, const QVariant& New)
 {
-	if (Index.column() != 2) return;
+	if (Index.column() != 2 || Old == New) return;
 
 	const auto i = filter->index(Index.row(), 1, Index.parent());
 	const QString p = filter->data(i).toString();
@@ -136,5 +190,73 @@ void FileWidget::rowUpdated(const QModelIndex& Index, const QVariant& Old, const
 
 void FileWidget::editClicked(void)
 {
-	// TODO implement me
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	EditDialog* Dialog = new EditDialog(this);
+	QSqlQuery Query(Database);
+	QVariantMap Map;
+
+	Query.prepare("SELECT nazwa, id "
+			    "FROM rodzajedok "
+			    "ORDER BY nazwa ASC");
+
+	if (Query.exec()) while (Query.next())
+	{
+		Map.insert(Query.value(0).toString(), Query.value(1));
+	}
+
+	Dialog->appendEdit(tr("Name"), filter->index(S.row(), 2, S.parent()).data().toString());
+	Dialog->appendCombo(tr("Role"), Map, filter->index(S.row(), 3, S.parent()).data());
+	Dialog->appendEdit(tr("Comment"), filter->index(S.row(), 4, S.parent()).data().toString());
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return !Map.value(tr("Name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &FileWidget::editData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void FileWidget::addClicked(void)
+{
+	EditDialog* Dialog = new EditDialog(this);
+	QSqlQuery Query(Database);
+	QVariantMap Map;
+
+	Query.prepare("SELECT nazwa, id "
+			    "FROM rodzajedok "
+			    "ORDER BY nazwa ASC");
+
+	if (Query.exec()) while (Query.next())
+	{
+		Map.insert(Query.value(0).toString(), Query.value(1));
+	}
+
+	Dialog->appendEdit(tr("Path"));
+	Dialog->appendEdit(tr("Name"));
+	Dialog->appendCombo(tr("Role"), Map);
+	Dialog->appendEdit(tr("Comment"));
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return
+			!Map.value(tr("Path")).toString().simplified().isEmpty() &&
+			!Map.value(tr("Name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &FileWidget::appendData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void FileWidget::remClicked(void)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+	emit onRemRow(filter->index(S.row(), 0, S.parent()).data().toInt());
 }

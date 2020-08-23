@@ -260,6 +260,148 @@ QList<RODZAJEDOK> ImportWorker::loadRoles(void)
 	return Dict;
 }
 
+int ImportWorker::findDocs(const DOKUMENTY& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM dokumenty "
+			    "WHERE nazwa = ?");
+	Query.addBindValue(List.nazwa);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findDocLots(const DOK_DZIALKI& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM dok_dzialki "
+			    "WHERE id_dok = ? AND id_dzi = ?");
+	Query.addBindValue(List.id_dok);
+	Query.addBindValue(List.id_dzi);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findDocOwns(const DOK_OSOBY& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM dok_osoby "
+			    "WHERE id_dok = ? AND id_oso = ?");
+	Query.addBindValue(List.id_dok);
+	Query.addBindValue(List.id_oso);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findDocFiles(const DOK_PLIKI& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM dok_pliki "
+			    "WHERE id_dok = ? AND id_pli = ?");
+	Query.addBindValue(List.id_dok);
+	Query.addBindValue(List.id_pli);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findLots(const DZIALKI& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM dzialki "
+			    "WHERE numer = ? AND arkusz = ? AND id_obrebu = ?");
+	Query.addBindValue(List.numer);
+	Query.addBindValue(List.arkusz);
+	Query.addBindValue(List.id_obrebu);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findComms(const GMINY& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM gminy "
+			    "WHERE nazwa = ?");
+	Query.addBindValue(List.nazwa);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findPrecs(const OBREBY& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM obreby "
+			    "WHERE nazwa = ? AND id_gminy = ?");
+	Query.addBindValue(List.nazwa);
+	Query.addBindValue(List.id_gminy);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findOwns(const OSOBY& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM osoby "
+			    "WHERE imie = ? AND nazwisko = ? "
+			    "AND im_ojca = ? AND im_matki = ?");
+	Query.addBindValue(List.imie);
+	Query.addBindValue(List.nazwisko);
+	Query.addBindValue(List.im_ojca);
+	Query.addBindValue(List.im_matki);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findFiles(const PLIKI& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM pliki "
+			    "WHERE katalog = ? AND nazwa = ? AND id_rodzaju = ?");
+	Query.addBindValue(List.katalog);
+	Query.addBindValue(List.nazwa);
+	Query.addBindValue(List.id_rodzaju);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
+int ImportWorker::findRoles(const RODZAJEDOK& List)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("SELECT id FROM rodzajedok "
+			    "WHERE nazwa = ?");
+	Query.addBindValue(List.nazwa);
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toInt();
+	else return -1;
+}
+
 int ImportWorker::appendDocs(const QList<DOKUMENTY>& List)
 {
 	emit onSubprocessStart(0, List.count()); int Step(0);
@@ -481,6 +623,287 @@ int ImportWorker::appendRoles(const QList<RODZAJEDOK>& List)
 	}
 
 	return Count;
+}
+
+int ImportWorker::removeDocs(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM dokumenty WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeLots(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM dzialki WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeComms(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM dzialki WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removePrecs(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM obreby WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeOwns(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM osoby WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeFiles(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM pliki WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeRoles(const QSet<int>& List)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare("DELETE FROM rodzajedok WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeDocLots(const QSet<int>& List, bool Rel)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare(Rel ?
+				"DELETE FROM dok_dzialki WHERE id_dzi = ?" :
+				"DELETE FROM dok_dzialki WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeDocOwns(const QSet<int>& List, bool Rel)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare(Rel ?
+				"DELETE FROM dok_osoby WHERE id_oso = ?" :
+				"DELETE FROM dok_osoby WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+int ImportWorker::removeDocFiles(const QSet<int>& List, bool Rel)
+{
+	emit onSubprocessStart(0, List.count()); int Step(0);
+
+	QSqlQuery Query(Database); int Count(0);
+
+	Query.prepare(Rel ?
+				"DELETE FROM dok_pliki WHERE id_pli = ?" :
+				"DELETE FROM dok_pliki WHERE id = ?");
+
+	for (const auto& i : List)
+	{
+		Query.addBindValue(i);
+
+		if (Query.exec()) ++Count;
+
+		emit onSubprocessUpdate(++Step);
+	}
+
+	return Count;
+}
+
+bool ImportWorker::removeDocLot(int dID, int fID)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("DELETE FROM dok_dzialki WHERE id_dok = ? AND id_dzi = ?");
+	Query.addBindValue(dID);
+	Query.addBindValue(fID);
+
+	return Query.exec();
+}
+
+bool ImportWorker::removeDocOwn(int dID, int fID)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("DELETE FROM dok_osoby WHERE id_dok = ? AND id_oso = ?");
+	Query.addBindValue(dID);
+	Query.addBindValue(fID);
+
+	return Query.exec();
+}
+
+bool ImportWorker::removeDocFile(int dID, int fID)
+{
+	QSqlQuery Query(Database);
+
+	Query.prepare("DELETE FROM dok_pliki WHERE id_dok = ? AND id_pli = ?");
+	Query.addBindValue(dID);
+	Query.addBindValue(fID);
+
+	return Query.exec();
+}
+
+int ImportWorker::generateId(ImportWorker::TabName Tab)
+{
+	QSqlQuery Query(Database);
+
+	switch (Tab)
+	{
+		case Doc:
+			Query.prepare("SELECT GEN_ID(GEN_DOKUMENTY_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Doc_Lot:
+			Query.prepare("SELECT GEN_ID(GEN_DOK_DZIALKI_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Doc_Own:
+			Query.prepare("SELECT GEN_ID(GEN_DOK_OSOBY_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Doc_Fil:
+			Query.prepare("SELECT GEN_ID(GEN_DOK_PLIKI_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Lot:
+			Query.prepare("SELECT GEN_ID(GEN_DZIALKI_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Com:
+			Query.prepare("SELECT GEN_ID(GEN_GMINY_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Pre:
+			Query.prepare("SELECT GEN_ID(GEN_OBREBY_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Own:
+			Query.prepare("SELECT GEN_ID(GEN_OSOBY_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Fil:
+			Query.prepare("SELECT GEN_ID(GEN_PLIKI_ID, 1) FROM RDB$DATABASE");
+		break;
+		case Fil_Rol:
+			Query.prepare("SELECT GEN_ID(GEN_RODZAJEDOK_ID, 1) FROM RDB$DATABASE");
+		break;
+	}
+
+	if (Query.exec() && Query.next()) return Query.value(0).toInt();
+	else return 0;
 }
 
 int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Roles, const QString& Fsep, const QString& Lsep)

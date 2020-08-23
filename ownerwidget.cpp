@@ -35,12 +35,20 @@ OwnerWidget::OwnerWidget(QSqlDatabase& Db, QWidget *parent)
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
 
+	ui->reloadButton->setFixedSize(
+		ui->searchEdit->sizeHint().height(),
+		ui->searchEdit->sizeHint().height());
+
 	connect(ui->searchEdit, &QLineEdit::textChanged,
 		   filter, &ModelFilter::setFilterFixedString);
 
 	connect(ui->tableView->selectionModel(),
 		   &QItemSelectionModel::currentRowChanged,
 		   this, &OwnerWidget::rowSelected);
+
+	connect(ui->tableView->selectionModel(),
+		   &QItemSelectionModel::selectionChanged,
+		   this, &OwnerWidget::itemSelected);
 }
 
 OwnerWidget::~OwnerWidget(void)
@@ -50,30 +58,48 @@ OwnerWidget::~OwnerWidget(void)
 
 void OwnerWidget::setTitleWidget(TitleWidget* W)
 {
-	ui->horizontalLayout->removeWidget(ui->reloadButton);
-	W->addRightWidget(ui->reloadButton);
-
 	ui->horizontalLayout->removeWidget(ui->editButton);
 	W->addRightWidget(ui->editButton);
+
+	ui->horizontalLayout->removeWidget(ui->addButton);
+	W->addRightWidget(ui->addButton);
+
+	ui->horizontalLayout->removeWidget(ui->remButton);
+	W->addRightWidget(ui->remButton);
 }
 
 void OwnerWidget::filterList(int ID)
 {
+	ui->addButton->setEnabled(ID != -1);
+
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) model->setFilter(filterStr.arg(ID));
 	if (model && !model->rowCount()) model->select();
 }
 
 void OwnerWidget::reloadList(void)
 {
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) model->select();
+
+	emit onIndexChange(-1);
 }
 
 void OwnerWidget::setStatus(bool Enabled)
 {
 	ui->tableView->setEnabled(Enabled);
-	ui->editButton->setEnabled(Enabled);
 	ui->reloadButton->setEnabled(Enabled);
 	ui->searchEdit->setEnabled(Enabled);
+
+	ui->editButton->setEnabled(false);
+	ui->addButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
+	void editData(const QVariantMap& Map);
 
 	if (Enabled)
 	{
@@ -87,7 +113,7 @@ void OwnerWidget::setStatus(bool Enabled)
 		model->setHeaderData(3, Qt::Horizontal, tr("Father name"));
 		model->setHeaderData(4, Qt::Horizontal, tr("Mother name"));
 
-		model->setEditStrategy(QSqlRelationalTableModel::OnFieldChange);
+		model->setEditStrategy(QSqlTableModel::OnFieldChange);
 
 		filter->setSourceModel(model);
 
@@ -102,17 +128,102 @@ void OwnerWidget::setStatus(bool Enabled)
 	}
 }
 
+void OwnerWidget::editData(const QVariantMap& Map)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+	filter->setData(filter->index(S.row(), 1, S.parent()), Map[tr("Name")]);
+	filter->setData(filter->index(S.row(), 2, S.parent()), Map[tr("Surname")]);
+	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Father name")]);
+	filter->setData(filter->index(S.row(), 4, S.parent()), Map[tr("Mother name")]);
+
+	model->setEditStrategy(QSqlTableModel::OnFieldChange);
+	model->submitAll();
+}
+
+void OwnerWidget::appendData(const QVariantMap& Map)
+{
+	emit onAddRow(
+	{
+		0,
+		Map[tr("Name")].toString().simplified(),
+		Map[tr("Surname")].toString().simplified(),
+		Map[tr("Father name")].toString().simplified(),
+		Map[tr("Mother name")].toString().simplified()
+	});
+}
+
 void OwnerWidget::rowSelected(const QModelIndex& Index)
 {
 	if (!model) return;
 
-	const auto i = ui->tableView->model()->index(Index.row(), 0, Index.parent());
-	const int id = ui->tableView->model()->data(i).toInt();
+	const auto i = filter->index(Index.row(), 0, Index.parent());
 
-	emit onIndexChange(id);
+	emit onIndexChange(i.data().toInt());
+}
+
+void OwnerWidget::itemSelected(const QItemSelection& Index)
+{
+	ui->editButton->setEnabled(!Index.isEmpty());
+	ui->remButton->setEnabled(!Index.isEmpty());
 }
 
 void OwnerWidget::editClicked(void)
 {
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
 
+	EditDialog* Dialog = new EditDialog(this);
+
+	Dialog->appendEdit(tr("Name"), filter->index(S.row(), 1, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Surname"), filter->index(S.row(), 2, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Father name"), filter->index(S.row(), 3, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Mother name"), filter->index(S.row(), 4, S.parent()).data().toString());
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return
+				!Map.value(tr("Name")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Surname")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Father name")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Mother name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &OwnerWidget::editData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void OwnerWidget::addClicked(void)
+{
+	EditDialog* Dialog = new EditDialog(this);
+
+	Dialog->appendEdit(tr("Name"));
+	Dialog->appendEdit(tr("Surname"));
+	Dialog->appendEdit(tr("Father name"));
+	Dialog->appendEdit(tr("Mother name"));
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return
+				!Map.value(tr("Name")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Surname")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Father name")).toString().simplified().isEmpty() &&
+				!Map.value(tr("Mother name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &OwnerWidget::appendData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void OwnerWidget::remClicked(void)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+	emit onRemRow(filter->index(S.row(), 0, S.parent()).data().toInt());
 }

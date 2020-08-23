@@ -35,12 +35,20 @@ LotWidget::LotWidget(QSqlDatabase& Db, QWidget *parent)
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
 
+	ui->reloadButton->setFixedSize(
+		ui->searchEdit->sizeHint().height(),
+		ui->searchEdit->sizeHint().height());
+
 	connect(ui->searchEdit, &QLineEdit::textChanged,
 		   filter, &ModelFilter::setFilterFixedString);
 
 	connect(ui->tableView->selectionModel(),
 		   &QItemSelectionModel::currentRowChanged,
 		   this, &LotWidget::rowSelected);
+
+	connect(ui->tableView->selectionModel(),
+		   &QItemSelectionModel::selectionChanged,
+		   this, &LotWidget::itemSelected);
 }
 
 LotWidget::~LotWidget()
@@ -50,11 +58,14 @@ LotWidget::~LotWidget()
 
 void LotWidget::setTitleWidget(TitleWidget* W)
 {
-	ui->horizontalLayout->removeWidget(ui->reloadButton);
-	W->addRightWidget(ui->reloadButton);
-
 	ui->horizontalLayout->removeWidget(ui->editButton);
 	W->addRightWidget(ui->editButton);
+
+	ui->horizontalLayout->removeWidget(ui->addButton);
+	W->addRightWidget(ui->addButton);
+
+	ui->horizontalLayout->removeWidget(ui->remButton);
+	W->addRightWidget(ui->remButton);
 }
 
 void LotWidget::prepareList(int ID)
@@ -89,6 +100,11 @@ void LotWidget::prepareList(int ID)
 
 void LotWidget::filterList(int ID)
 {
+	ui->addButton->setEnabled(ID != -1);
+
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	prepareList(lastIndex = ID);
 
 	if (model) model->setFilter(filterStr.arg(ID));
@@ -97,11 +113,16 @@ void LotWidget::filterList(int ID)
 
 void LotWidget::reloadList(void)
 {
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model)
 	{
 		prepareList(lastIndex);
 		model->select();
 	}
+
+	emit onIndexChange(-1);
 }
 
 void LotWidget::selectComm(int Index)
@@ -116,10 +137,13 @@ void LotWidget::selectComm(int Index)
 void LotWidget::setStatus(bool Enabled)
 {
 	ui->tableView->setEnabled(Enabled);
-	ui->editButton->setEnabled(Enabled);
 	ui->reloadButton->setEnabled(Enabled);
 	ui->searchEdit->setEnabled(Enabled);
 	ui->placeCombo->setEnabled(Enabled);
+
+	ui->editButton->setEnabled(false);
+	ui->addButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
 
 	if (Enabled)
 	{
@@ -149,12 +173,118 @@ void LotWidget::setStatus(bool Enabled)
 	}
 }
 
+void LotWidget::editData(const QVariantMap& Map)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	const auto lastP = filter->index(S.row(), 3, S.parent()).data();
+
+	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+	filter->setData(filter->index(S.row(), 1, S.parent()), Map[tr("Number")]);
+	filter->setData(filter->index(S.row(), 2, S.parent()), Map[tr("Sheet")]);
+	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Precinct")]);
+
+	model->setEditStrategy(QSqlTableModel::OnFieldChange);
+	model->submitAll();
+
+	if (lastP != Map[tr("Precinct")]) reloadList();
+}
+
+void LotWidget::appendData(const QVariantMap& Map)
+{
+	emit onAddRow(
+	{
+		0,
+		Map[tr("Number")].toString().simplified(),
+		Map[tr("Sheet")].toString().simplified(),
+		Map[tr("Precinct")].toInt()
+	});
+}
+
 void LotWidget::rowSelected(const QModelIndex& Index)
 {
+	if (!model) return;
 
+	const auto i = filter->index(Index.row(), 0, Index.parent());
+
+	emit onIndexChange(i.data().toInt());
+}
+
+void LotWidget::itemSelected(const QItemSelection& Index)
+{
+	ui->editButton->setEnabled(!Index.isEmpty());
+	ui->remButton->setEnabled(!Index.isEmpty());
 }
 
 void LotWidget::editClicked(void)
 {
-	// TODO Implement me
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	EditDialog* Dialog = new EditDialog(this);
+	QSqlQuery Query(Database);
+	QVariantMap Map;
+
+	Query.prepare("SELECT g.nazwa || '/' || o.nazwa, o.id "
+			    "FROM gminy g "
+			    "INNER JOIN obreby o ON o.id_gminy = g.id "
+			    "ORDER BY g.nazwa ASC, o.nazwa ASC");
+
+	if (Query.exec()) while (Query.next())
+	{
+		Map.insert(Query.value(0).toString(), Query.value(1));
+	}
+
+	Dialog->appendEdit(tr("Number"), filter->index(S.row(), 1, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Sheet"), filter->index(S.row(), 2, S.parent()).data().toString());
+	Dialog->appendCombo(tr("Precinct"), Map, filter->index(S.row(), 3, S.parent()).data());
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return !Map.value(tr("Number")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &LotWidget::editData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void LotWidget::addClicked(void)
+{
+	EditDialog* Dialog = new EditDialog(this);
+	QSqlQuery Query(Database);
+	QVariantMap Map;
+
+	Query.prepare("SELECT g.nazwa || '/' || o.nazwa, o.id "
+			    "FROM gminy g "
+			    "INNER JOIN obreby o ON o.id_gminy = g.id "
+			    "ORDER BY g.nazwa ASC, o.nazwa ASC");
+
+	if (Query.exec()) while (Query.next())
+	{
+		Map.insert(Query.value(0).toString(), Query.value(1));
+	}
+
+	Dialog->appendEdit(tr("Number"));
+	Dialog->appendEdit(tr("Sheet"));
+	Dialog->appendCombo(tr("Precinct"), Map);
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return !Map.value(tr("Number")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &LotWidget::appendData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void LotWidget::remClicked(void)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+	emit onRemRow(filter->index(S.row(), 0, S.parent()).data().toInt());
 }

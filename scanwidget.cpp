@@ -92,7 +92,8 @@ void ScanWidget::updateImage(const QString& Src)
 		Image = QPixmap();
 
 		ui->label->clear();
-		ui->label->setText(tr("Select document"));
+		ui->label->setText(tr("File %1 doesn't exist")
+					    .arg(File));
 	}
 
 	ui->fitButton->setEnabled(Img);

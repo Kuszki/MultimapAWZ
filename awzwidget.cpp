@@ -33,12 +33,20 @@ AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 	ui->tableView->model()->deleteLater();
 	ui->tableView->setModel(filter);
 
+	ui->reloadButton->setFixedSize(
+		ui->searchEdit->sizeHint().height(),
+		ui->searchEdit->sizeHint().height());
+
 	connect(ui->searchEdit, &QLineEdit::textChanged,
 		   filter, &ModelFilter::setFilterFixedString);
 
 	connect(ui->tableView->selectionModel(),
 		   &QItemSelectionModel::currentRowChanged,
 		   this, &AwzWidget::rowSelected);
+
+	connect(ui->tableView->selectionModel(),
+		   &QItemSelectionModel::selectionChanged,
+		   this, &AwzWidget::itemSelected);
 }
 
 AwzWidget::~AwzWidget(void)
@@ -48,29 +56,44 @@ AwzWidget::~AwzWidget(void)
 
 void AwzWidget::setTitleWidget(TitleWidget* W)
 {
-	ui->horizontalLayout->removeWidget(ui->reloadButton);
-	W->addRightWidget(ui->reloadButton);
-
 	ui->horizontalLayout->removeWidget(ui->editButton);
 	W->addRightWidget(ui->editButton);
+
+	ui->horizontalLayout->removeWidget(ui->addButton);
+	W->addRightWidget(ui->addButton);
+
+	ui->horizontalLayout->removeWidget(ui->remButton);
+	W->addRightWidget(ui->remButton);
 }
 
 void AwzWidget::filterList(const QSet<int>& List)
 {
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) filter->setFilterIndexes(List);
+	if (model && !model->rowCount()) model->select();
 }
 
 void AwzWidget::reloadList(void)
 {
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
+
 	if (model) model->select();
+
+	emit onIndexChange(-1);
 }
 
 void AwzWidget::setStatus(bool Enabled)
 {
 	ui->tableView->setEnabled(Enabled);
-	ui->editButton->setEnabled(Enabled);
 	ui->reloadButton->setEnabled(Enabled);
+	ui->addButton->setEnabled(Enabled);
 	ui->searchEdit->setEnabled(Enabled);
+
+	ui->editButton->setEnabled(false);
+	ui->remButton->setEnabled(false);
 
 	if (Enabled)
 	{
@@ -100,18 +123,86 @@ void AwzWidget::setStatus(bool Enabled)
 	}
 }
 
+void AwzWidget::editData(const QVariantMap& Map)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
+	filter->setData(filter->index(S.row(), 1, S.parent()), Map[tr("Name")]);
+	filter->setData(filter->index(S.row(), 2, S.parent()), Map[tr("Comment")]);
+
+	model->setEditStrategy(QSqlTableModel::OnFieldChange);
+	model->submitAll();
+}
+
+void AwzWidget::appendData(const QVariantMap& Map)
+{
+	emit onAddRow(
+	{
+		0,
+		Map[tr("Name")].toString().simplified(),
+		Map[tr("Comment")].toString().simplified()
+	});
+}
+
 void AwzWidget::rowSelected(const QModelIndex& Index)
 {
 	if (!model) return;
 
-	const auto i = ui->tableView->model()->index(Index.row(), 0, Index.parent());
-	const int id = ui->tableView->model()->data(i).toInt();
+	const auto id = filter->index(Index.row(), 0, Index.parent()).data();
 
-	emit onIndexChange(id);
+	emit onIndexChange(id.toInt());
+}
+
+void AwzWidget::itemSelected(const QItemSelection& Index)
+{
+	ui->editButton->setEnabled(!Index.isEmpty());
+	ui->remButton->setEnabled(!Index.isEmpty());
 }
 
 void AwzWidget::editClicked(void)
 {
-	// TODO implement me
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+
+	EditDialog* Dialog = new EditDialog(this);
+
+	Dialog->appendEdit(tr("Name"), filter->index(S.row(), 1, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Comment"), filter->index(S.row(), 2, S.parent()).data().toString());
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return !Map.value(tr("Name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &AwzWidget::editData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
 }
 
+void AwzWidget::addClicked(void)
+{
+	EditDialog* Dialog = new EditDialog(this);
+
+	Dialog->appendEdit(tr("Name"));
+	Dialog->appendEdit(tr("Comment"));
+
+	Dialog->setValidator([] (const QVariantMap& Map) -> bool
+	{
+		return !Map.value(tr("Name")).toString().simplified().isEmpty();
+	});
+
+	Dialog->open();
+
+	connect(Dialog, &EditDialog::onAccept, this, &AwzWidget::appendData);
+	connect(Dialog, &EditDialog::accepted, Dialog, &EditDialog::deleteLater);
+	connect(Dialog, &EditDialog::rejected, Dialog, &EditDialog::deleteLater);
+}
+
+void AwzWidget::remClicked(void)
+{
+	const auto S = ui->tableView->selectionModel()->selectedIndexes().first();
+	emit onRemRow(filter->index(S.row(), 0, S.parent()).data().toInt());
+}

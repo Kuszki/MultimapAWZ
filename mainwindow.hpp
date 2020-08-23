@@ -24,7 +24,6 @@
 #include <QtWidgets>
 #include <QtSql>
 
-#include "commonh.hpp"
 #include "connectdialog.hpp"
 #include "importdialog.hpp"
 #include "importworker.hpp"
@@ -35,6 +34,9 @@
 #include "titlewidget.hpp"
 #include "lotwidget.hpp"
 #include "scanwidget.hpp"
+#include "searchdialog.hpp"
+
+#include "commonh.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,6 +52,8 @@ class MainWindow : public QMainWindow
 		Ui::MainWindow *ui;
 
 		ImportWorker* Worker;
+
+		SearchDialog* Search;
 
 		QDockWidget* awzd;
 		AwzWidget* awzw;
@@ -70,6 +74,7 @@ class MainWindow : public QMainWindow
 		QThread Thread;
 
 		QString treePath;
+		int docIndex = 0;
 
 	public:
 
@@ -87,11 +92,26 @@ class MainWindow : public QMainWindow
 
 		void closeDatabase(void);
 
+		void applyFilter(const QVariantMap& Map);
+		void resetFilter(void);
+
 		void renameFile(const QString& Old,
 					 const QString& Name);
 
 		void startJob(void);
 		void endJob(void);
+
+		void addDoc(const DOKUMENTY& Data);
+		void remDoc(int ID);
+
+		void addLot(const DZIALKI& Data);
+		void remLot(int ID);
+
+		void addOwn(const OSOBY& Data);
+		void remOwn(int ID);
+
+		void addFil(const PLIKI& Data);
+		void remFil(int ID);
 
 	signals:
 

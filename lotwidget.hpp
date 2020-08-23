@@ -29,6 +29,9 @@
 #include "modelfilter.hpp"
 #include "modeldelegate.hpp"
 #include "titlewidget.hpp"
+#include "editdialog.hpp"
+
+#include "commonh.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LotWidget; }
@@ -75,13 +78,22 @@ class LotWidget : public QWidget
 
 	private slots:
 
+		void editData(const QVariantMap& Map);
+		void appendData(const QVariantMap& Map);
+
 		void rowSelected(const QModelIndex& Index);
+		void itemSelected(const QItemSelection& Index);
 
 		void editClicked(void);
+		void addClicked(void);
+		void remClicked(void);
 
 	signals:
 
 		void onIndexChange(int);
+
+		void onAddRow(const DZIALKI&);
+		void onRemRow(int);
 
 };
 

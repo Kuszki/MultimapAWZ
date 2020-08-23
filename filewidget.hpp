@@ -27,10 +27,14 @@
 #include <QSqlRecord>
 #include <QSqlRelationalDelegate>
 #include <QSqlRelationalTableModel>
+#include <QFile>
 
 #include "modelfilter.hpp"
 #include "modeldelegate.hpp"
 #include "titlewidget.hpp"
+#include "editdialog.hpp"
+
+#include "commonh.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FileWidget; }
@@ -70,13 +74,19 @@ class FileWidget : public QWidget
 
 	private slots:
 
+		void editData(const QVariantMap& Map);
+		void appendData(const QVariantMap& Map);
+
 		void rowSelected(const QModelIndex& Index);
+		void itemSelected(const QItemSelection& Index);
 
 		void rowUpdated(const QModelIndex& Index,
 					 const QVariant& Old,
 					 const QVariant& New);
 
 		void editClicked(void);
+		void addClicked(void);
+		void remClicked(void);
 
 	signals:
 
@@ -86,6 +96,9 @@ class FileWidget : public QWidget
 
 		void onFileRename(const QString&,
 					   const QString&);
+
+		void onAddRow(const PLIKI&);
+		void onRemRow(int);
 
 };
 

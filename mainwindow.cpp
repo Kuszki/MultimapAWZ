@@ -41,6 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
 	Worker->moveToThread(&Thread);
 	Thread.start();
 
+	Search = new SearchDialog(Database, this);
+
 	awzw = new AwzWidget(Database, this);
 	awzd = new QDockWidget(tr("Documents"), this);
 	awzd->setWindowIcon(awzw->windowIcon());
@@ -101,10 +103,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::connectActionClicked);
 	connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeDatabase);
+	connect(ui->actionFind, &QAction::triggered, Search, &SearchDialog::open);
 
 	connect(ui->actionImport, &QAction::triggered, this, &MainWindow::importActionClicked);
 
 	connect(Worker, &ImportWorker::onJobEnd, this, &MainWindow::endJob);
+
+	connect(Search, &SearchDialog::onAccept, this, &MainWindow::applyFilter);
+	connect(Search, &SearchDialog::onReset, this, &MainWindow::resetFilter);
 
 	connect(this, &MainWindow::onLogin, awzw, &AwzWidget::setStatus);
 	connect(this, &MainWindow::onLogin, filew, &FileWidget::setStatus);
@@ -112,12 +118,25 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(this, &MainWindow::onLogin, lotw, &LotWidget::setStatus);
 	connect(this, &MainWindow::onLogin, scanw, &ScanWidget::setStatus);
 
+	connect(awzw, &AwzWidget::onIndexChange, [this] (int ID) { docIndex = ID; } );
 	connect(awzw, &AwzWidget::onIndexChange, filew, &FileWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, ownw, &OwnerWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, lotw, &LotWidget::filterList);
 
 	connect(filew, &FileWidget::onFileRename, this, &MainWindow::renameFile);
 	connect(filew, &FileWidget::onFilepathChange, scanw, &ScanWidget::updateImage);
+
+	connect(awzw, &AwzWidget::onAddRow, this, &MainWindow::addDoc);
+	connect(awzw, &AwzWidget::onRemRow, this, &MainWindow::remDoc);
+
+	connect(filew, &FileWidget::onAddRow, this, &MainWindow::addFil);
+	connect(filew, &FileWidget::onRemRow, this, &MainWindow::remFil);
+
+	connect(lotw, &LotWidget::onAddRow, this, &MainWindow::addLot);
+	connect(lotw, &LotWidget::onRemRow, this, &MainWindow::remLot);
+
+	connect(ownw, &OwnerWidget::onAddRow, this, &MainWindow::addOwn);
+	connect(ownw, &OwnerWidget::onRemRow, this, &MainWindow::remOwn);
 }
 
 MainWindow::~MainWindow(void)
@@ -193,6 +212,9 @@ void MainWindow::openDatabase(const QString& Server, const QString& Base, const 
 	Database.setUserName(User);
 	Database.setPassword(Pass);
 
+	// TODO roles and privileges
+	Database.setConnectOptions("ISC_DPB_SQL_ROLE_NAME=ODCZYT");
+
 	if (Server.contains(':')) Database.setPort(Server.section(':', 1).toInt());
 	else Database.setPort(defaultPort);
 
@@ -219,6 +241,114 @@ void MainWindow::closeDatabase(void)
 	emit onLogin(false);
 }
 
+void MainWindow::applyFilter(const QVariantMap& Map)
+{
+	QSqlQuery Query(Database); QSet<int> List;
+
+	if (Map.contains("awz"))
+	{
+		QSet<int> Now;
+
+		Query.prepare("SELECT d.id FROM dokumenty d "
+				    "WHERE UPPER(d.nazwa) LIKE '%' || UPPER(?) || '%'");
+		Query.addBindValue(Map["awz"]);
+
+		if (Query.exec()) while (Query.next())
+		{
+			Now.insert(Query.value(0).toInt());
+		}
+
+		if (List.isEmpty()) List = Now;
+		else List = List & Now;
+	}
+
+	if (Map.contains("lot"))
+	{
+		QSet<int> Now;
+
+		Query.prepare("SELECT d.id_dok FROM dok_dzialki d "
+				    "INNER JOIN dzialki l ON d.id_dzi = l.id "
+				    "WHERE UPPER(l.nazwa) LIKE '%' || UPPER(?) || '%' "
+				    "OR UPPER(l.arkusz || '-' || l.nazwa) LIKE '%' || UPPER(?) || '%'");
+		Query.addBindValue(Map["lot"]);
+		Query.addBindValue(Map["lot"]);
+
+		if (Query.exec()) while (Query.next())
+		{
+			Now.insert(Query.value(0).toInt());
+		}
+
+		if (List.isEmpty()) List = Now;
+		else List = List & Now;
+	}
+
+	if (Map.contains("name"))
+	{
+		QSet<int> Now;
+
+		Query.prepare("SELECT d.id_dok FROM dok_osoby d "
+				    "INNER JOIN osoby l ON d.id_oso = l.id "
+				    "WHERE UPPER(l.nazwisko || ' ' || l.imie) LIKE '%' || UPPER(?) || '%' "
+				    "OR UPPER(l.imie || ' ' || l.nazwisko) LIKE '%' || UPPER(?) || '%'");
+		Query.addBindValue(Map["name"]);
+		Query.addBindValue(Map["name"]);
+
+		if (Query.exec()) while (Query.next())
+		{
+			Now.insert(Query.value(0).toInt());
+		}
+
+		if (List.isEmpty()) List = Now;
+		else List = List & Now;
+	}
+
+	if (Map.contains("comm"))
+	{
+		QSet<int> Now;
+
+		Query.prepare("SELECT d.id_dok FROM dok_dzialki d "
+				    "INNER JOIN dzialki l ON d.id_dzi = l.id "
+				    "INNER JOIN obreby o ON l.id_obrebu = o.id "
+				    "WHERE o.id_gminy = ?");
+		Query.addBindValue(Map["comm"]);
+
+		if (Query.exec()) while (Query.next())
+		{
+			Now.insert(Query.value(0).toInt());
+		}
+
+		if (List.isEmpty()) List = Now;
+		else List = List & Now;
+	}
+
+	if (Map.contains("prec"))
+	{
+		QSet<int> Now;
+
+		Query.prepare("SELECT d.id_dok FROM dok_dzialki d "
+				    "INNER JOIN dzialki l ON d.id_dzi = l.id "
+				    "INNER JOIN obreby o ON l.id_obrebu = o.id "
+				    "WHERE o.id = ?");
+		Query.addBindValue(Map["prec"]);
+
+		if (Query.exec()) while (Query.next())
+		{
+			Now.insert(Query.value(0).toInt());
+		}
+
+		if (List.isEmpty()) List = Now;
+		else List = List & Now;
+	}
+
+	if (List.isEmpty()) awzw->filterList({ -1 });
+	else awzw->filterList(List);
+}
+
+void MainWindow::resetFilter(void)
+{
+	awzw->filterList(QSet<int>());
+}
+
 void MainWindow::renameFile(const QString& Old, const QString& Name)
 {
 	QFile::rename(treePath + '/' + Old, Name);
@@ -232,5 +362,125 @@ void MainWindow::startJob(void)
 void MainWindow::endJob(void)
 {
 	setEnabled(true);
+}
+
+void MainWindow::addDoc(const DOKUMENTY& Data)
+{
+	if (Worker->appendDocs({ Data }))
+		awzw->reloadList();
+}
+
+void MainWindow::remDoc(int ID)
+{
+	if (Worker->removeDocs({ ID }))
+		awzw->reloadList();
+}
+
+void MainWindow::addLot(const DZIALKI& Data)
+{
+	const int cID = Worker->findLots(Data);
+	bool OK = false;
+
+	if (cID != -1)
+	{
+		DOK_DZIALKI rRow = { 0, docIndex, cID };
+		OK = Worker->appendDocLot({ rRow  });
+	}
+	else
+	{
+		const int fID = Worker->generateId(ImportWorker::Lot);
+
+		DOK_DZIALKI rRow = { 0, docIndex, fID };
+		DZIALKI fRow = Data; fRow.id = fID;
+
+		if (Worker->appendLots({ fRow }))
+		{
+			if (Worker->appendDocLot({ rRow })) OK = true;
+			else Worker->removeLots({ fID });
+		}
+	}
+
+	if (OK) lotw->reloadList();
+}
+
+void MainWindow::remLot(int ID)
+{
+	const bool OK = Worker->removeDocLot(docIndex, ID);
+
+	Worker->removeLots({ ID });
+
+	if (OK) lotw->reloadList();
+}
+
+void MainWindow::addOwn(const OSOBY& Data)
+{
+	const int cID = Worker->findOwns(Data);
+	bool OK = false;
+
+	if (cID != -1)
+	{
+		DOK_OSOBY rRow = { 0, docIndex, cID };
+		OK = Worker->appendDocOwn({ rRow  });
+	}
+	else
+	{
+		const int fID = Worker->generateId(ImportWorker::Own);
+
+		DOK_OSOBY rRow = { 0, docIndex, fID };
+		OSOBY fRow = Data; fRow.id = fID;
+
+		if (Worker->appendOwns({ fRow }))
+		{
+			if (Worker->appendDocOwn({ rRow })) OK = true;
+			else Worker->removeDocs({ fID });
+		}
+	}
+
+	if (OK) ownw->reloadList();
+}
+
+void MainWindow::remOwn(int ID)
+{
+	const bool OK = Worker->removeDocOwn(docIndex, ID);
+
+	Worker->removeOwns({ ID });
+
+	if (OK) ownw->reloadList();
+}
+
+void MainWindow::addFil(const PLIKI& Data)
+{
+	const int cID = Worker->findFiles(Data);
+	bool OK = false;
+
+	if (cID != -1)
+	{
+		DOK_PLIKI rRow = { 0, docIndex, cID };
+		OK = Worker->appendDocFiles({ rRow  });
+	}
+	else
+	{
+		const int fID = Worker->generateId(ImportWorker::Fil);
+
+		DOK_PLIKI rRow = { 0, docIndex, fID };
+		PLIKI fRow = Data; fRow.id = fID;
+
+		if (Worker->appendFiles({ fRow }))
+		{
+			if (Worker->appendDocFiles({ rRow })) OK = true;
+			else Worker->removeFiles({ fID });
+		}
+	}
+
+	if (OK) filew->reloadList();
+}
+
+void MainWindow::remFil(int ID)
+{
+	const bool OK = Worker->removeDocFile(docIndex, ID);
+
+	Worker->removeFiles({ ID });
+
+	if (OK) filew->reloadList();
 }
 

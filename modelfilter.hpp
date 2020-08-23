@@ -54,7 +54,8 @@ class ModelFilter : public QSortFilterProxyModel
 	public slots:
 
 		virtual bool setData(const QModelIndex &Index,
-						 const QVariant &Value, int Role) override;
+						 const QVariant &Value,
+						 int Role = Qt::EditRole) override;
 
 	protected:
 

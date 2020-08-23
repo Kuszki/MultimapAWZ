@@ -27,6 +27,10 @@
 #include <QSpinBox>
 #include <QDoubleSpinBox>
 #include <QComboBox>
+#include <QLabel>
+#include <QDateEdit>
+#include <QDateTimeEdit>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {	class EditDialog; }
@@ -37,17 +41,11 @@ class EditDialog : public QDialog
 
 		Q_OBJECT
 
-	public: struct Item
-	{
-		QVariant Id;
-		QString Name;
-
-		QList<Item> List;
-	};
-
-	public: using Items = QList<Item>;
-
 	private:
+
+		std::function<bool (const QVariantMap&)> Validator = nullptr;
+
+		QWidgetList Widgets;
 
 		Ui::EditDialog *ui;
 
@@ -57,13 +55,33 @@ class EditDialog : public QDialog
 		virtual ~EditDialog(void) override;
 
 		QLineEdit* appendEdit(const QString& Name, const QString& Def = QString());
-		QSpinBox* appendSpin(const QString& Name, int Def = 0);
-		QDoubleSpinBox* appendDoubleSpin(const QString& Name, double Def = 0.0);
+		QSpinBox* appendSpin(const QString& Name, int Def = 0, int Min = 0, int Max = 100);
+		QDoubleSpinBox* appendDoubleSpin(const QString& Name, double Def = 0.0, double Min = 0.0, double Max = 100.0);
 		QComboBox* appendCombo(const QString& Name, const QVariantMap& Map, const QVariant& Def = QVariant());
-		QList<QComboBox*> appendCombos(const QString& Name, const Items& List, const QVariantList& Def = QVariantList());
+		QDateEdit* appendDate(const QString& Name, const QDate& Def = QDate::currentDate());
+		QDateTimeEdit* appendDateTime(const QString& Name, const QDateTime& Def = QDateTime::currentDateTime());
 
 		void appendWidget(const QString& Name, QWidget* Widget);
+
 		QWidget* widgetAt(const QString& Name);
+
+		QVariant data(const QString& Name);
+		QVariantMap data(void);
+
+		std::function<bool (const QVariantMap&)> getValidator(void) const;
+		void setValidator(const std::function<bool (const QVariantMap&)>& value);
+
+	public slots:
+
+		virtual void accept(void) override;
+
+	private slots:
+
+		void validateData(void);
+
+	signals:
+
+		void onAccept(const QVariantMap&);
 
 };
 

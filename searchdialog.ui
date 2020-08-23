@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchDialog</class>
+ <widget class="QDialog" name="SearchDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Search</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="find">
+    <normaloff>.</normaloff>.</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lotEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QComboBox" name="commEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="precEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="awzEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Apply|QDialogButtonBox::Close|QDialogButtonBox::Reset</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="commCheck">
+     <property name="text">
+      <string>Community</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="awzCheck">
+     <property name="text">
+      <string>AWZ number</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="nameEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="precCheck">
+     <property name="text">
+      <string>Precinct</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="lotCheck">
+     <property name="text">
+      <string>Lot number</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="nameCheck">
+     <property name="text">
+      <string>Owner</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>awzCheck</tabstop>
+  <tabstop>awzEdit</tabstop>
+  <tabstop>lotCheck</tabstop>
+  <tabstop>lotEdit</tabstop>
+  <tabstop>commCheck</tabstop>
+  <tabstop>commEdit</tabstop>
+  <tabstop>precCheck</tabstop>
+  <tabstop>precEdit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>256</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>awzCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>awzEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>101</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>165</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lotCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lotEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>105</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>55</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>commEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>126</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>precCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>precEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>288</x>
+     <y>157</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>nameEdit</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>264</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>commEdit</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>commIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>391</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>500</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>awzEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>341</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>488</x>
+     <y>30</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lotEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>469</x>
+     <y>52</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameEdit</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>391</x>
+     <y>95</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>573</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>awzCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>13</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>53</x>
+     <y>440</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lotCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>54</x>
+     <y>421</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nameCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>validateData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>76</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>precCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>precCheckToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>58</x>
+     <y>360</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>commIndexChanged(int)</slot>
+  <slot>validateData()</slot>
+  <slot>precCheckToggled(bool)</slot>
+ </slots>
+</ui>
