@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->actionDisconnect->setEnabled(false);
 	ui->actionFind->setEnabled(false);
 	ui->actionImport->setEnabled(false);
+	ui->actionEditenable->setEnabled(false);
 
 	Worker = new ImportWorker(Database);
 	Worker->moveToThread(&Thread);
@@ -71,6 +72,13 @@ MainWindow::MainWindow(QWidget *parent)
 	lotw->setStatus(false);
 	lotd->setWidget(lotw);
 
+	sumw = new SummaryWidget(Database, this);
+	sumd = new QDockWidget(tr("Summary"), this);
+	sumd->setWindowIcon(sumw->windowIcon());
+	sumd->setObjectName("Summary");
+	sumw->setStatus(false);
+	sumd->setWidget(sumw);
+
 	scanw = new ScanWidget(treePath, this);
 	scand = new QDockWidget(tr("Scans"), this);
 	scand->setWindowIcon(scanw->windowIcon());
@@ -82,15 +90,18 @@ MainWindow::MainWindow(QWidget *parent)
 	filew->setTitleWidget(new TitleWidget(filed));
 	ownw->setTitleWidget(new TitleWidget(ownd));
 	lotw->setTitleWidget(new TitleWidget(lotd));
+	sumw->setTitleWidget(new TitleWidget(sumd));
 	scanw->setTitleWidget(new TitleWidget(scand));
 
 	addDockWidget(Qt::LeftDockWidgetArea, awzd);
 	addDockWidget(Qt::RightDockWidgetArea, filed);
 	addDockWidget(Qt::RightDockWidgetArea, ownd);
 	addDockWidget(Qt::RightDockWidgetArea, lotd);
+	addDockWidget(Qt::TopDockWidgetArea, sumd);
 	addDockWidget(Qt::TopDockWidgetArea, scand);
 
 	Settings.beginGroup("Window");
+	setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
 	restoreGeometry(Settings.value("geometry").toByteArray());
 	restoreState(Settings.value("state").toByteArray());
 	Settings.endGroup();
@@ -103,7 +114,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(ui->actionConnect, &QAction::triggered, this, &MainWindow::connectActionClicked);
 	connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeDatabase);
+	connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsActionClicked);
 	connect(ui->actionFind, &QAction::triggered, Search, &SearchDialog::open);
+
+	connect(ui->actionEditenable, &QAction::toggled, awzw, &AwzWidget::setEditable);
+	connect(ui->actionEditenable, &QAction::toggled, filew, &FileWidget::setEditable);
+	connect(ui->actionEditenable, &QAction::toggled, ownw, &OwnerWidget::setEditable);
+	connect(ui->actionEditenable, &QAction::toggled, lotw, &LotWidget::setEditable);
 
 	connect(ui->actionImport, &QAction::triggered, this, &MainWindow::importActionClicked);
 
@@ -116,12 +133,14 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(this, &MainWindow::onLogin, filew, &FileWidget::setStatus);
 	connect(this, &MainWindow::onLogin, ownw, &OwnerWidget::setStatus);
 	connect(this, &MainWindow::onLogin, lotw, &LotWidget::setStatus);
+	connect(this, &MainWindow::onLogin, sumw, &SummaryWidget::setStatus);
 	connect(this, &MainWindow::onLogin, scanw, &ScanWidget::setStatus);
 
 	connect(awzw, &AwzWidget::onIndexChange, [this] (int ID) { docIndex = ID; } );
 	connect(awzw, &AwzWidget::onIndexChange, filew, &FileWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, ownw, &OwnerWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, lotw, &LotWidget::filterList);
+	connect(awzw, &AwzWidget::onIndexChange, sumw, &SummaryWidget::filterList);
 
 	connect(filew, &FileWidget::onFileRename, this, &MainWindow::renameFile);
 	connect(filew, &FileWidget::onFilepathChange, scanw, &ScanWidget::updateImage);
@@ -157,6 +176,25 @@ MainWindow::~MainWindow(void)
 
 	delete Worker;
 	delete ui;
+}
+
+QString MainWindow::getDbRole(void)
+{
+	QSqlQuery Query(Database);
+	Query.prepare("SELECT current_role FROM rdb$database");
+
+	if (Query.exec() && Query.next())
+		return Query.value(0).toString();
+	else return QString();
+}
+
+bool MainWindow::tryConnect(const QString& Role)
+{
+	if (Database.isOpen()) Database.close();
+
+	Database.setConnectOptions(QString("ISC_DPB_SQL_ROLE_NAME=%1").arg(Role));
+
+	return Database.open() && (getDbRole() == Role);
 }
 
 void MainWindow::connectActionClicked(void)
@@ -199,33 +237,60 @@ void MainWindow::importActionClicked(void)
 	connect(Progress, &ProgressDialog::rejected, Progress, &ProgressDialog::deleteLater);
 }
 
+void MainWindow::settingsActionClicked(void)
+{
+	SettingsDialog* Dialog = new SettingsDialog(this); Dialog->open();
+
+	connect(Dialog, &SettingsDialog::onAccept, this, &MainWindow::applySettings);
+	connect(Dialog, &SettingsDialog::accepted, Dialog, &SettingsDialog::deleteLater);
+	connect(Dialog, &SettingsDialog::rejected, Dialog, &SettingsDialog::deleteLater);
+}
+
 void MainWindow::openDatabase(const QString& Server, const QString& Base, const QString& User, const QString& Pass, const QString& Scanpath)
 {
-	static int defaultPort = 0;
+	static int defaultPort = 0; bool OK(false), Edit(false);
 
 	if (!Scanpath.isEmpty()) treePath = Scanpath;
 	if (!defaultPort) defaultPort = Database.port();
 	if (Database.isOpen()) Database.close();
+
+	if (Server.contains(':')) Database.setPort(Server.section(':', 1).toInt());
+	else Database.setPort(defaultPort);
 
 	Database.setHostName(Server.section(':', 0, 0));
 	Database.setDatabaseName(Base);
 	Database.setUserName(User);
 	Database.setPassword(Pass);
 
-	// TODO roles and privileges
-	Database.setConnectOptions("ISC_DPB_SQL_ROLE_NAME=ODCZYT");
+	if (QString(User).toUpper() == "SYSDBA")
+	{
+		Edit = OK = Database.open();
+	}
+	else
+	{
+		if (tryConnect("EDYCJA")) Edit = OK = true;
+		else OK = tryConnect("ODCZYT");
+	}
 
-	if (Server.contains(':')) Database.setPort(Server.section(':', 1).toInt());
-	else Database.setPort(defaultPort);
+	if (OK && Database.isOpen()) emit onLogin(true);
+	else if (!OK && Database.isOpen())
+	{
+		emit onError(tr("Selected user does not have required privileges. Contact with database administrator."));
+	}
+	else
+	{
+		emit onError(Database.lastError().text());
+	}
 
-	if (Database.open()) emit onLogin(true);
-	else emit onError(Database.lastError().text());
+	if (!OK && Database.isOpen()) Database.close();
 
 	ui->actionConnect->setEnabled(!Database.isOpen());
 	ui->actionDisconnect->setEnabled(Database.isOpen());
-	ui->actionImport->setEnabled(Database.isOpen());
-
 	ui->actionFind->setEnabled(Database.isOpen());
+
+	ui->actionImport->setEnabled(Edit);
+	ui->actionEditenable->setEnabled(Edit);
+	ui->actionEditenable->setChecked(false);
 
 	scanw->setPath(Scanpath);
 }
@@ -239,6 +304,14 @@ void MainWindow::closeDatabase(void)
 	ui->actionFind->setEnabled(false);
 
 	emit onLogin(false);
+}
+
+void MainWindow::applySettings(const QVariantMap& Map)
+{
+	awzw->updateView(Map.value("doc").toMap());
+	filew->updateView(Map.value("fil").toMap());
+	lotw->updateView(Map.value("lot").toMap());
+	ownw->updateView(Map.value("own").toMap());
 }
 
 void MainWindow::applyFilter(const QVariantMap& Map)

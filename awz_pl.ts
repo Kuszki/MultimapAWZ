@@ -10,6 +10,16 @@
     </message>
     <message>
         <location filename="awzwidget.ui" line="64"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="awzwidget.ui" line="74"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="awzwidget.ui" line="84"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
@@ -19,18 +29,32 @@
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="81"/>
+        <location filename="awzwidget.cpp" line="104"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="82"/>
+        <location filename="awzwidget.cpp" line="105"/>
+        <location filename="awzwidget.cpp" line="145"/>
+        <location filename="awzwidget.cpp" line="157"/>
+        <location filename="awzwidget.cpp" line="183"/>
+        <location filename="awzwidget.cpp" line="188"/>
+        <location filename="awzwidget.cpp" line="202"/>
+        <location filename="awzwidget.cpp" line="207"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="83"/>
+        <location filename="awzwidget.cpp" line="106"/>
         <source>Comments</source>
+        <translation>Uwagi</translation>
+    </message>
+    <message>
+        <location filename="awzwidget.cpp" line="146"/>
+        <location filename="awzwidget.cpp" line="158"/>
+        <location filename="awzwidget.cpp" line="184"/>
+        <location filename="awzwidget.cpp" line="203"/>
+        <source>Comment</source>
         <translation>Uwagi</translation>
     </message>
 </context>
@@ -83,6 +107,14 @@
     </message>
 </context>
 <context>
+    <name>EditDialog</name>
+    <message>
+        <location filename="editdialog.ui" line="14"/>
+        <source>Edit record</source>
+        <translation>Edycja rekurdu</translation>
+    </message>
+</context>
+<context>
     <name>FileWidget</name>
     <message>
         <location filename="filewidget.ui" line="42"/>
@@ -96,33 +128,64 @@
     </message>
     <message>
         <location filename="filewidget.ui" line="64"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="filewidget.ui" line="75"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="filewidget.ui" line="86"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="90"/>
+        <location filename="filewidget.cpp" line="114"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="91"/>
+        <location filename="filewidget.cpp" line="115"/>
+        <location filename="filewidget.cpp" line="169"/>
+        <location filename="filewidget.cpp" line="252"/>
+        <location filename="filewidget.cpp" line="260"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="92"/>
+        <location filename="filewidget.cpp" line="116"/>
+        <location filename="filewidget.cpp" line="156"/>
+        <location filename="filewidget.cpp" line="170"/>
+        <location filename="filewidget.cpp" line="221"/>
+        <location filename="filewidget.cpp" line="227"/>
+        <location filename="filewidget.cpp" line="253"/>
+        <location filename="filewidget.cpp" line="261"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="93"/>
+        <location filename="filewidget.cpp" line="117"/>
+        <location filename="filewidget.cpp" line="157"/>
+        <location filename="filewidget.cpp" line="171"/>
+        <location filename="filewidget.cpp" line="222"/>
+        <location filename="filewidget.cpp" line="254"/>
         <source>Role</source>
         <translation>Rodzaj</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="94"/>
-        <source>Comments</source>
+        <location filename="filewidget.cpp" line="118"/>
+        <location filename="filewidget.cpp" line="158"/>
+        <location filename="filewidget.cpp" line="172"/>
+        <location filename="filewidget.cpp" line="223"/>
+        <location filename="filewidget.cpp" line="255"/>
+        <source>Comment</source>
         <translation>Uwagi</translation>
+    </message>
+    <message>
+        <source>Comments</source>
+        <translation type="vanished">Uwagi</translation>
     </message>
 </context>
 <context>
@@ -262,56 +325,56 @@
 <context>
     <name>ImportWorker</name>
     <message>
-        <location filename="importworker.cpp" line="488"/>
-        <location filename="importworker.cpp" line="703"/>
-        <location filename="importworker.cpp" line="795"/>
+        <location filename="importworker.cpp" line="911"/>
+        <location filename="importworker.cpp" line="1126"/>
+        <location filename="importworker.cpp" line="1218"/>
         <source>Preparing queries</source>
         <translation>Przygotowywanie kwerend</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="662"/>
+        <location filename="importworker.cpp" line="1085"/>
         <source>Uploading documents</source>
         <translation>Wgrywanie dokumentów</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="666"/>
+        <location filename="importworker.cpp" line="1089"/>
         <source>Uploading communities</source>
         <translation>Wgrywanie gmin</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="670"/>
+        <location filename="importworker.cpp" line="1093"/>
         <source>Uploading precincts</source>
         <translation>Wgrywanie obrębów</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="674"/>
+        <location filename="importworker.cpp" line="1097"/>
         <source>Uploading lots</source>
         <translation>Wgrywanie działek</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="678"/>
+        <location filename="importworker.cpp" line="1101"/>
         <source>Uploading owners</source>
         <translation>Wgrywanie właścicieli</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="682"/>
+        <location filename="importworker.cpp" line="1105"/>
         <source>Uploading lots relations</source>
         <translation>Wgrywanie relacji działek</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="686"/>
+        <location filename="importworker.cpp" line="1109"/>
         <source>Uploading owners relations</source>
         <translation>Wgrywanie relacji właścicieli</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="689"/>
-        <location filename="importworker.cpp" line="786"/>
-        <location filename="importworker.cpp" line="827"/>
+        <location filename="importworker.cpp" line="1112"/>
+        <location filename="importworker.cpp" line="1209"/>
+        <location filename="importworker.cpp" line="1250"/>
         <source>Imported:</source>
         <translation>Zaimportowano:</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="690"/>
+        <location filename="importworker.cpp" line="1113"/>
         <source>%n new ducuments(s)</source>
         <translation>
             <numerusform>%n nowy dokument</numerusform>
@@ -320,7 +383,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="691"/>
+        <location filename="importworker.cpp" line="1114"/>
         <source>%n new communitie(s)</source>
         <translation>
             <numerusform>%n nową gminę</numerusform>
@@ -329,7 +392,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="692"/>
+        <location filename="importworker.cpp" line="1115"/>
         <source>%n new precinct(s)</source>
         <translation>
             <numerusform>%n nowy obręb</numerusform>
@@ -338,7 +401,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="693"/>
+        <location filename="importworker.cpp" line="1116"/>
         <source>%n new lot(s)</source>
         <translation>
             <numerusform>%n nową działkę</numerusform>
@@ -347,7 +410,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="694"/>
+        <location filename="importworker.cpp" line="1117"/>
         <source>%n new owner(s)</source>
         <translation>
             <numerusform>%n nowego właściciela</numerusform>
@@ -356,7 +419,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="695"/>
+        <location filename="importworker.cpp" line="1118"/>
         <source>%n new lot(s) relations</source>
         <translation>
             <numerusform>%n nową relacje działki</numerusform>
@@ -365,7 +428,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="696"/>
+        <location filename="importworker.cpp" line="1119"/>
         <source>%n new owner(s) relations</source>
         <translation>
             <numerusform>%n nową relacje właściciela</numerusform>
@@ -374,17 +437,17 @@
         </translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="779"/>
+        <location filename="importworker.cpp" line="1202"/>
         <source>Uploading files</source>
         <translation>Wgrywanie plików</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="783"/>
+        <location filename="importworker.cpp" line="1206"/>
         <source>Uploading relations</source>
         <translation>Wgrywanie relacji</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="787"/>
+        <location filename="importworker.cpp" line="1210"/>
         <source>%n new file(s)</source>
         <translation>
             <numerusform>%n nowy plik</numerusform>
@@ -393,7 +456,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="788"/>
+        <location filename="importworker.cpp" line="1211"/>
         <source>%n new file(s) relation(s)</source>
         <translation>
             <numerusform>%n nową relacje pliku</numerusform>
@@ -402,12 +465,12 @@
         </translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="824"/>
+        <location filename="importworker.cpp" line="1247"/>
         <source>Uploading dictionary</source>
         <translation>Wgrywanie słownika</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="828"/>
+        <location filename="importworker.cpp" line="1251"/>
         <source>%n row(s)</source>
         <translation>
             <numerusform>%n nowy wpis</numerusform>
@@ -419,44 +482,73 @@
 <context>
     <name>LotWidget</name>
     <message>
-        <location filename="lotwidget.ui" line="42"/>
+        <location filename="lotwidget.ui" line="45"/>
         <source>Reload</source>
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="lotwidget.ui" line="53"/>
+        <location filename="lotwidget.ui" line="56"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="lotwidget.ui" line="64"/>
+        <location filename="lotwidget.ui" line="67"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="lotwidget.ui" line="78"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="lotwidget.ui" line="89"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="86"/>
+        <location filename="lotwidget.cpp" line="97"/>
         <source>All areas</source>
         <translation>Wszystkie obszary</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="130"/>
+        <location filename="lotwidget.cpp" line="154"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="131"/>
+        <location filename="lotwidget.cpp" line="155"/>
+        <location filename="lotwidget.cpp" line="197"/>
+        <location filename="lotwidget.cpp" line="212"/>
+        <location filename="lotwidget.cpp" line="251"/>
+        <location filename="lotwidget.cpp" line="257"/>
+        <location filename="lotwidget.cpp" line="283"/>
+        <location filename="lotwidget.cpp" line="289"/>
         <source>Number</source>
         <translation>Numer</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="132"/>
+        <location filename="lotwidget.cpp" line="156"/>
+        <location filename="lotwidget.cpp" line="198"/>
+        <location filename="lotwidget.cpp" line="213"/>
+        <location filename="lotwidget.cpp" line="252"/>
+        <location filename="lotwidget.cpp" line="284"/>
         <source>Sheet</source>
         <translation>Arkusz</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="133"/>
+        <location filename="lotwidget.cpp" line="157"/>
         <source>Precinct ID</source>
         <translation>Identyfikator obrębu</translation>
+    </message>
+    <message>
+        <location filename="lotwidget.cpp" line="199"/>
+        <location filename="lotwidget.cpp" line="204"/>
+        <location filename="lotwidget.cpp" line="214"/>
+        <location filename="lotwidget.cpp" line="253"/>
+        <location filename="lotwidget.cpp" line="285"/>
+        <source>Precinct</source>
+        <translation>Obręb</translation>
     </message>
 </context>
 <context>
@@ -467,105 +559,123 @@
         <translation>Akta własności ziemi</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="57"/>
-        <location filename="mainwindow.cpp" line="221"/>
         <source>Select document</source>
-        <translation>Wybierz dokument</translation>
+        <translation type="vanished">Wybierz dokument</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="81"/>
+        <location filename="mainwindow.ui" line="43"/>
         <source>Server</source>
         <translation>Serwer</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="92"/>
+        <location filename="mainwindow.ui" line="52"/>
         <source>Data</source>
         <translation>Dane</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="108"/>
+        <location filename="mainwindow.ui" line="61"/>
+        <source>View</source>
+        <translation>Widok</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="75"/>
         <source>Connect</source>
         <translation>Połącz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="111"/>
+        <location filename="mainwindow.ui" line="78"/>
         <source>Connect to database</source>
         <translation>Połącz z bazą danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="114"/>
+        <location filename="mainwindow.ui" line="81"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="123"/>
+        <location filename="mainwindow.ui" line="90"/>
         <source>Disconnect</source>
         <translation>Rozłącz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="126"/>
+        <location filename="mainwindow.ui" line="93"/>
         <source>Disconncet from database</source>
         <translation>Rozłącz z bazą danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="129"/>
+        <location filename="mainwindow.ui" line="96"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="138"/>
+        <location filename="mainwindow.ui" line="105"/>
         <source>Find</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="141"/>
+        <location filename="mainwindow.ui" line="108"/>
         <source>Find data</source>
         <translation>Szukaj danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="144"/>
+        <location filename="mainwindow.ui" line="111"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="153"/>
+        <location filename="mainwindow.ui" line="120"/>
         <source>Import data</source>
         <translation>Importuj dane</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="165"/>
+        <location filename="mainwindow.ui" line="132"/>
         <source>Enable edit</source>
         <translation>Włącz edycje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="174"/>
+        <location filename="mainwindow.ui" line="141"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="183"/>
+        <location filename="mainwindow.ui" line="150"/>
         <source>Exit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="43"/>
+        <location filename="mainwindow.cpp" line="48"/>
         <source>Documents</source>
         <translation>Dokumenty</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="50"/>
+        <location filename="mainwindow.cpp" line="55"/>
         <source>Files</source>
         <translation>Pliki</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="57"/>
+        <location filename="mainwindow.cpp" line="62"/>
         <source>Owners</source>
         <translation>Właściciele</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="64"/>
+        <location filename="mainwindow.cpp" line="69"/>
         <source>Lots</source>
         <translation>Działki</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="76"/>
+        <source>Summary</source>
+        <translation>Podsumowanie</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="83"/>
+        <source>Scans</source>
+        <translation>Skany</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="268"/>
+        <source>Selected user does not have required privileges. Contact with database administrator.</source>
+        <translation>Wybrany użytkownik nie posiada odpowiednich oprawnień. Skontaktuj się z lokalnym administratorem.</translation>
     </message>
 </context>
 <context>
@@ -582,31 +692,65 @@
     </message>
     <message>
         <location filename="ownerwidget.ui" line="67"/>
+        <source>Add</source>
+        <translation>Dodaj</translation>
+    </message>
+    <message>
+        <location filename="ownerwidget.ui" line="78"/>
+        <source>Remove</source>
+        <translation>Usuń</translation>
+    </message>
+    <message>
+        <location filename="ownerwidget.ui" line="89"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="84"/>
+        <location filename="ownerwidget.cpp" line="110"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="85"/>
+        <location filename="ownerwidget.cpp" line="111"/>
+        <location filename="ownerwidget.cpp" line="150"/>
+        <location filename="ownerwidget.cpp" line="164"/>
+        <location filename="ownerwidget.cpp" line="192"/>
+        <location filename="ownerwidget.cpp" line="200"/>
+        <location filename="ownerwidget.cpp" line="217"/>
+        <location filename="ownerwidget.cpp" line="225"/>
         <source>Name</source>
         <translation>Imię</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="86"/>
+        <location filename="ownerwidget.cpp" line="112"/>
+        <location filename="ownerwidget.cpp" line="151"/>
+        <location filename="ownerwidget.cpp" line="165"/>
+        <location filename="ownerwidget.cpp" line="193"/>
+        <location filename="ownerwidget.cpp" line="201"/>
+        <location filename="ownerwidget.cpp" line="218"/>
+        <location filename="ownerwidget.cpp" line="226"/>
         <source>Surname</source>
         <translation>Nazwisko</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="87"/>
+        <location filename="ownerwidget.cpp" line="113"/>
+        <location filename="ownerwidget.cpp" line="152"/>
+        <location filename="ownerwidget.cpp" line="166"/>
+        <location filename="ownerwidget.cpp" line="194"/>
+        <location filename="ownerwidget.cpp" line="202"/>
+        <location filename="ownerwidget.cpp" line="219"/>
+        <location filename="ownerwidget.cpp" line="227"/>
         <source>Father name</source>
         <translation>Imię ojca</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="88"/>
+        <location filename="ownerwidget.cpp" line="114"/>
+        <location filename="ownerwidget.cpp" line="153"/>
+        <location filename="ownerwidget.cpp" line="167"/>
+        <location filename="ownerwidget.cpp" line="195"/>
+        <location filename="ownerwidget.cpp" line="203"/>
+        <location filename="ownerwidget.cpp" line="220"/>
+        <location filename="ownerwidget.cpp" line="228"/>
         <source>Mother name</source>
         <translation>Imię matki</translation>
     </message>
@@ -619,9 +763,177 @@
         <translation>Postęp zadania</translation>
     </message>
     <message>
-        <location filename="progressdialog.ui" line="47"/>
+        <location filename="progressdialog.ui" line="24"/>
         <source>Performing actions...</source>
         <translation>Przeprowadzanie akcji...</translation>
+    </message>
+</context>
+<context>
+    <name>ScanWidget</name>
+    <message>
+        <location filename="scanwidget.ui" line="54"/>
+        <source>Login into database</source>
+        <translation>Zaloguj się do bazy danych</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="70"/>
+        <source>Fit zoom</source>
+        <translation>Dopasuj rozmiar do okna</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="81"/>
+        <source>Original size</source>
+        <translation>Rozmiar oryginalny</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="92"/>
+        <source>Zoom in</source>
+        <translation>Powiększ</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="103"/>
+        <source>Zoom out</source>
+        <translation>Zmniejsz</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="114"/>
+        <source>Rotate left</source>
+        <translation>Obróć w lewo</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="125"/>
+        <source>Rotate right</source>
+        <translation>Obróć w prawo</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="136"/>
+        <source>Print</source>
+        <translation>Drukuj</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.ui" line="147"/>
+        <source>Open directory</source>
+        <translation>Otwórz katalog</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.cpp" line="91"/>
+        <source>File %1 doesn&apos;t exist</source>
+        <translation>Plik %1 nie istnieje</translation>
+    </message>
+    <message>
+        <location filename="scanwidget.cpp" line="121"/>
+        <source>Select document to preview</source>
+        <translation>Wybierz dokument do wyświetlenia</translation>
+    </message>
+</context>
+<context>
+    <name>SearchDialog</name>
+    <message>
+        <location filename="searchdialog.ui" line="14"/>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="68"/>
+        <source>Community</source>
+        <translation>Gmina</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="75"/>
+        <source>AWZ number</source>
+        <translation>Numer AWZ</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="92"/>
+        <source>Precinct</source>
+        <translation>Obręb</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="112"/>
+        <source>Lot number</source>
+        <translation>Numer działki</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="119"/>
+        <source>Owner</source>
+        <translation>Właściciel</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <location filename="settingsdialog.ui" line="14"/>
+        <source>View settings</source>
+        <translation>Ustawienia wyświetlania</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="38"/>
+        <source>Documents</source>
+        <translation>Dokumenty</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="44"/>
+        <location filename="settingsdialog.ui" line="89"/>
+        <source>Show comments</source>
+        <translation>Pokaż uwagi</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="69"/>
+        <source>Files</source>
+        <translation>Pliki</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="75"/>
+        <source>Show path</source>
+        <translation>Pokaż ścieżkę</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="82"/>
+        <source>Show role</source>
+        <translation>Pokaż rodzaj</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="114"/>
+        <source>Lots</source>
+        <translation>Działki</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="120"/>
+        <source>Show sheet</source>
+        <translation>Pokaż arkusz</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="145"/>
+        <source>Owners</source>
+        <translation>Właściciele</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="151"/>
+        <source>Show father name</source>
+        <translation>Pokaż imię ojca</translation>
+    </message>
+    <message>
+        <location filename="settingsdialog.ui" line="158"/>
+        <source>Show mother name</source>
+        <translation>Pokaż imię matki</translation>
+    </message>
+</context>
+<context>
+    <name>SummaryWidget</name>
+    <message>
+        <location filename="summarywidget.ui" line="20"/>
+        <source>Owners</source>
+        <translation>Właściciele</translation>
+    </message>
+    <message>
+        <location filename="summarywidget.ui" line="39"/>
+        <source>Lots</source>
+        <translation>Działki</translation>
+    </message>
+    <message>
+        <location filename="summarywidget.ui" line="58"/>
+        <source>Files</source>
+        <translation>Pliki</translation>
     </message>
 </context>
 <context>

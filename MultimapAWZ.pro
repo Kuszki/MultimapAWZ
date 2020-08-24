@@ -22,6 +22,7 @@ SOURCES += \
 	scanwidget.cpp \
 	searchdialog.cpp \
 	settingsdialog.cpp \
+	summarywidget.cpp \
 	titlewidget.cpp
 
 HEADERS += \
@@ -41,6 +42,7 @@ HEADERS += \
 	scanwidget.hpp \
 	searchdialog.hpp \
 	settingsdialog.hpp \
+	summarywidget.hpp \
 	titlewidget.hpp
 
 FORMS += \
@@ -56,6 +58,7 @@ FORMS += \
 	scanwidget.ui \
 	searchdialog.ui \
 	settingsdialog.ui \
+	summarywidget.ui \
 	titlewidget.ui
 
 TRANSLATIONS += \

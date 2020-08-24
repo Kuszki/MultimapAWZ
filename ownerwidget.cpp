@@ -26,7 +26,16 @@ const QString OwnerWidget::filterStr = "OSOBY.ID IN (SELECT J.ID_OSO FROM DOK_OS
 OwnerWidget::OwnerWidget(QSqlDatabase& Db, QWidget *parent)
 : QWidget(parent), Database(Db), ui(new Ui::OwnerWidget)
 {
-	ui->setupUi(this);
+	ui->setupUi(this); setEditable(false);
+
+	hiddenCols = { 0, 3, 4 };
+
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Owners");
+	if (Settings.value("Father", false).toBool()) hiddenCols.remove(3);
+	if (Settings.value("Mother", false).toBool()) hiddenCols.remove(4);
+	Settings.endGroup();
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 1, 2 });
@@ -117,7 +126,7 @@ void OwnerWidget::setStatus(bool Enabled)
 
 		filter->setSourceModel(model);
 
-		ui->tableView->hideColumn(0);
+		for (const auto& i : hiddenCols) ui->tableView->hideColumn(i);
 	}
 	else if (model)
 	{
@@ -126,6 +135,41 @@ void OwnerWidget::setStatus(bool Enabled)
 		model->deleteLater();
 		model = nullptr;
 	}
+}
+
+void OwnerWidget::setEditable(bool Enabled)
+{
+	const auto Edit = Enabled ? QTableView::AllEditTriggers &
+						   QTableView::EditKeyPressed
+						 : QTableView::NoEditTriggers;
+
+	ui->addButton->setVisible(Enabled);
+	ui->remButton->setVisible(Enabled);
+	ui->editButton->setVisible(Enabled);
+
+	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+}
+
+void OwnerWidget::updateView(const QVariantMap& Map)
+{
+	if (Map.contains("fath"))
+	{
+		const bool En = Map.value("fath").toBool();
+
+		if (En) hiddenCols.remove(3);
+		else hiddenCols.insert(3);
+	}
+
+	if (Map.contains("moth"))
+	{
+		const bool En = Map.value("moth").toBool();
+
+		if (En) hiddenCols.remove(4);
+		else hiddenCols.insert(4);
+	}
+
+	for (int i = 0; i < ui->tableView->model()->columnCount(); ++i)
+		ui->tableView->setColumnHidden(i, hiddenCols.contains(i));
 }
 
 void OwnerWidget::editData(const QVariantMap& Map)

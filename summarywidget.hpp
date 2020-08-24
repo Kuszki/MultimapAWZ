@@ -18,68 +18,47 @@
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-#ifndef SCANWIDGET_HPP
-#define SCANWIDGET_HPP
+#ifndef SUMMARYWIDGET_HPP
+#define SUMMARYWIDGET_HPP
 
 #include <QWidget>
-#include <QPixmap>
-#include <QWheelEvent>
+#include <QSqlDatabase>
+#include <QSqlQuery>
 
 #include "titlewidget.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {	class ScanWidget; }
+namespace Ui {	class SummaryWidget; }
 QT_END_NAMESPACE
 
-class ScanWidget : public QWidget
+class SummaryWidget : public QWidget
 {
 
 		Q_OBJECT
 
 	private:
 
-		QString Path;
-		QPixmap Image;
+		QSqlDatabase& Database;
 
-		double Scale = 1.0;
-		int Rotation = 0;
+		Ui::SummaryWidget *ui;
 
-		Ui::ScanWidget *ui;
+		int lastID = 0;
 
 	public:
 
-		explicit ScanWidget(const QString& path = QString(),
-						QWidget *parent = nullptr);
-		virtual ~ScanWidget(void) override;
+		explicit SummaryWidget(QSqlDatabase& Db, QWidget *parent = nullptr);
+		virtual ~SummaryWidget(void) override;
 
 		void setTitleWidget(TitleWidget* W);
 
 	public slots:
 
-		void updateImage(const QString& Src);
+		void filterList(int ID);
 
-		void setPath(const QString& P);
+		void reloadList(void);
 
 		void setStatus(bool Enabled);
 
-	protected:
-
-		virtual void wheelEvent(QWheelEvent* Event) override;
-
-	private slots:
-
-		void zoomInClicked(void);
-		void zoomOutClicked(void);
-		void zoomOrgClicked(void);
-		void zoomFitClicked(void);
-
-		void rotateLeftClicked(void);
-		void rotateRightClicked(void);
-
-		void printDocClicked(void);
-
-		void openDirClicked(void);
-
 };
 
-#endif // SCANWIDGET_HPP
+#endif // SUMMARYWIDGET_HPP

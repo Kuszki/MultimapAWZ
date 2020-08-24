@@ -14,7 +14,8 @@
    <string>View settings</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="view-sort-ascending"/>
+   <iconset theme="view-sort-ascending">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -172,14 +173,6 @@
         </spacer>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="sumTab">
-      <attribute name="icon">
-       <iconset theme="document-print-preview"/>
-      </attribute>
-      <attribute name="title">
-       <string>Summary</string>
-      </attribute>
      </widget>
     </widget>
    </item>

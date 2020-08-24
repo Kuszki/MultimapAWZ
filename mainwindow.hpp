@@ -35,6 +35,8 @@
 #include "lotwidget.hpp"
 #include "scanwidget.hpp"
 #include "searchdialog.hpp"
+#include "summarywidget.hpp"
+#include "settingsdialog.hpp"
 
 #include "commonh.hpp"
 
@@ -67,6 +69,9 @@ class MainWindow : public QMainWindow
 		QDockWidget* lotd;
 		LotWidget* lotw;
 
+		QDockWidget* sumd;
+		SummaryWidget* sumw;
+
 		QDockWidget* scand;
 		ScanWidget* scanw;
 
@@ -81,16 +86,24 @@ class MainWindow : public QMainWindow
 		explicit MainWindow(QWidget* parent = nullptr);
 		virtual ~MainWindow(void) override;
 
+	protected:
+
+		QString getDbRole(void);
+		bool tryConnect(const QString& Role);
+
 	private slots:
 
 		void connectActionClicked(void);
 		void importActionClicked(void);
+		void settingsActionClicked(void);
 
 		void openDatabase(const QString& Server, const QString& Base,
 					   const QString& User, const QString& Pass,
 					   const QString& Scanpath);
 
 		void closeDatabase(void);
+
+		void applySettings(const QVariantMap& Map);
 
 		void applyFilter(const QVariantMap& Map);
 		void resetFilter(void);

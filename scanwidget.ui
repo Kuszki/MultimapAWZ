@@ -11,7 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="scanner"/>
+   <iconset theme="scanner">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -136,17 +137,6 @@
        </property>
        <property name="icon">
         <iconset theme="document-print">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="saveButton">
-       <property name="text">
-        <string>Save changes</string>
-       </property>
-       <property name="icon">
-        <iconset theme="document-save">
          <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
@@ -277,22 +267,6 @@
     <hint type="destinationlabel">
      <x>318</x>
      <y>447</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>saveButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ScanWidget</receiver>
-   <slot>saveRotClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>320</x>
-     <y>224</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>360</x>
-     <y>459</y>
     </hint>
    </hints>
   </connection>

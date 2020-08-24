@@ -50,6 +50,7 @@ class FileWidget : public QWidget
 		static const QString filterStr;
 
 		QSqlDatabase& Database;
+		QSet<int> hiddenCols;
 
 		ModelFilter* filter = nullptr;
 		QSqlRelationalTableModel* model = nullptr;
@@ -71,6 +72,9 @@ class FileWidget : public QWidget
 		void reloadList(void);
 
 		void setStatus(bool Enabled);
+		void setEditable(bool Enabled);
+
+		void updateView(const QVariantMap& Map);
 
 	private slots:
 

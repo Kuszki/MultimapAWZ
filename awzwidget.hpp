@@ -44,6 +44,7 @@ class AwzWidget : public QWidget
 	private:
 
 		QSqlDatabase& Database;
+		QSet<int> hiddenCols;
 
 		ModelFilter* filter = nullptr;
 		QSqlTableModel* model = nullptr;
@@ -65,6 +66,9 @@ class AwzWidget : public QWidget
 		void reloadList(void);
 
 		void setStatus(bool Enabled);
+		void setEditable(bool Enabled);
+
+		void updateView(const QVariantMap& Map);
 
 	private slots:
 

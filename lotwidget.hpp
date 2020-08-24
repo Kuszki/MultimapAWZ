@@ -47,6 +47,7 @@ class LotWidget : public QWidget
 		static const QString filterStr;
 
 		QSqlDatabase& Database;
+		QSet<int> hiddenCols;
 
 		ModelFilter* filter = nullptr;
 		QSqlTableModel* model = nullptr;
@@ -74,7 +75,11 @@ class LotWidget : public QWidget
 		void reloadList(void);
 
 		void selectComm(int Index);
+
 		void setStatus(bool Enabled);
+		void setEditable(bool Enabled);
+
+		void updateView(const QVariantMap& Map);
 
 	private slots:
 

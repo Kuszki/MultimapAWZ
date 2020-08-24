@@ -22,6 +22,8 @@
 #define SETTINGSDIALOG_HPP
 
 #include <QDialog>
+#include <QSettings>
+#include <QVariant>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {	class SettingsDialog; }
@@ -40,6 +42,14 @@ class SettingsDialog : public QDialog
 
 		explicit SettingsDialog(QWidget* parent = nullptr);
 		virtual ~SettingsDialog(void) override;
+
+	public slots:
+
+		virtual void accept(void) override;
+
+	signals:
+
+		void onAccept(const QVariantMap&);
 
 };
 

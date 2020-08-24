@@ -17,7 +17,7 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.     *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-#include <QDebug>
+
 #include "filewidget.hpp"
 #include "ui_filewidget.h"
 
@@ -26,7 +26,17 @@ const QString FileWidget::filterStr = "PLIKI.ID IN (SELECT J.ID_PLI FROM DOK_PLI
 FileWidget::FileWidget(QSqlDatabase& Db, QWidget *parent)
 : QWidget(parent), Database(Db), ui(new Ui::FileWidget)
 {
-	ui->setupUi(this);
+	ui->setupUi(this); setEditable(false);
+
+	hiddenCols = { 0, 1, 3, 4 };
+
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Files");
+	if (Settings.value("Path", false).toBool()) hiddenCols.remove(1);
+	if (Settings.value("Role", true).toBool()) hiddenCols.remove(3);
+	if (Settings.value("Comment", false).toBool()) hiddenCols.remove(4);
+	Settings.endGroup();
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 2, 3, 4 });
@@ -122,8 +132,8 @@ void FileWidget::setStatus(bool Enabled)
 		filter->setSourceModel(model);
 
 		ui->tableView->setItemDelegate(new ModelDelegate(ui->tableView));
-		ui->tableView->hideColumn(0);
-		ui->tableView->hideColumn(1);
+
+		for (const auto& i : hiddenCols) ui->tableView->hideColumn(i);
 	}
 	else if (model)
 	{
@@ -132,6 +142,49 @@ void FileWidget::setStatus(bool Enabled)
 		model->deleteLater();
 		model = nullptr;
 	}
+}
+
+void FileWidget::setEditable(bool Enabled)
+{
+	const auto Edit = Enabled ? QTableView::AllEditTriggers &
+						   QTableView::EditKeyPressed
+						 : QTableView::NoEditTriggers;
+
+	ui->addButton->setVisible(Enabled);
+	ui->remButton->setVisible(Enabled);
+	ui->editButton->setVisible(Enabled);
+
+	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+}
+
+void FileWidget::updateView(const QVariantMap& Map)
+{
+	if (Map.contains("path"))
+	{
+		const bool En = Map.value("path").toBool();
+
+		if (En) hiddenCols.remove(1);
+		else hiddenCols.insert(1);
+	}
+
+	if (Map.contains("role"))
+	{
+		const bool En = Map.value("role").toBool();
+
+		if (En) hiddenCols.remove(3);
+		else hiddenCols.insert(3);
+	}
+
+	if (Map.contains("comm"))
+	{
+		const bool En = Map.value("comm").toBool();
+
+		if (En) hiddenCols.remove(4);
+		else hiddenCols.insert(4);
+	}
+
+	for (int i = 0; i < ui->tableView->model()->columnCount(); ++i)
+		ui->tableView->setColumnHidden(i, hiddenCols.contains(i));
 }
 
 void FileWidget::editData(const QVariantMap& Map)

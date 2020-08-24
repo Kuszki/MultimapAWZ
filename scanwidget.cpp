@@ -34,7 +34,6 @@ ScanWidget::ScanWidget(const QString& path, QWidget *parent)
 	ui->rotleftButton->setEnabled(false);
 	ui->printButton->setEnabled(false);
 	ui->opendirButton->setEnabled(false);
-	ui->saveButton->setEnabled(false);
 }
 
 ScanWidget::~ScanWidget(void)
@@ -67,9 +66,6 @@ void ScanWidget::setTitleWidget(TitleWidget* W)
 
 	ui->horizontalLayout->removeWidget(ui->opendirButton);
 	W->addRightWidget(ui->opendirButton);
-
-	ui->horizontalLayout->removeWidget(ui->saveButton);
-	W->addRightWidget(ui->saveButton);
 
 	ui->horizontalLayout->deleteLater();
 }
@@ -121,7 +117,6 @@ void ScanWidget::setStatus(bool Enabled)
 	ui->rotleftButton->setEnabled(false);
 	ui->printButton->setEnabled(false);
 	ui->opendirButton->setEnabled(false);
-	ui->saveButton->setEnabled(false);
 
 	if (Enabled) ui->label->setText(tr("Select document to preview"));
 	else
@@ -180,8 +175,6 @@ void ScanWidget::rotateLeftClicked(void)
 
 	ui->label->setPixmap(Image.scaledToHeight(int(Scale* Image.height()))
 					 .transformed(QTransform().rotate(Rotation)));
-
-	ui->saveButton->setEnabled(Rotation);
 }
 
 void ScanWidget::rotateRightClicked(void)
@@ -190,15 +183,6 @@ void ScanWidget::rotateRightClicked(void)
 
 	ui->label->setPixmap(Image.scaledToHeight(int(Scale* Image.height()))
 					 .transformed(QTransform().rotate(Rotation)));
-
-	ui->saveButton->setEnabled(Rotation);
-}
-
-void ScanWidget::saveRotClicked(void)
-{
-	// TODO implement me
-
-	auto Img = Image.transformed(QTransform().rotate(Rotation));
 }
 
 void ScanWidget::printDocClicked(void)

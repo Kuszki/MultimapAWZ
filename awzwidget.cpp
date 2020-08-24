@@ -24,7 +24,15 @@
 AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 : QWidget(parent), Database(Db), ui(new Ui::AwzWidget)
 {
-	ui->setupUi(this);
+	ui->setupUi(this); setEditable(false);
+
+	hiddenCols = { 0, 2 };
+
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Documents");
+	if (Settings.value("Comment", false).toBool()) hiddenCols.remove(2);
+	Settings.endGroup();
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 1, 2 });
@@ -111,8 +119,7 @@ void AwzWidget::setStatus(bool Enabled)
 
 		filter->setSourceModel(model);
 
-		ui->tableView->hideColumn(0);
-		ui->tableView->hideColumn(2);
+		for (const auto& i : hiddenCols) ui->tableView->hideColumn(i);
 	}
 	else if (model)
 	{
@@ -121,6 +128,33 @@ void AwzWidget::setStatus(bool Enabled)
 		model->deleteLater();
 		model = nullptr;
 	}
+}
+
+void AwzWidget::setEditable(bool Enabled)
+{
+	const auto Edit = Enabled ? QTableView::AllEditTriggers &
+						   QTableView::EditKeyPressed
+						 : QTableView::NoEditTriggers;
+
+	ui->addButton->setVisible(Enabled);
+	ui->remButton->setVisible(Enabled);
+	ui->editButton->setVisible(Enabled);
+
+	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+}
+
+void AwzWidget::updateView(const QVariantMap& Map)
+{
+	if (Map.contains("comm"))
+	{
+		const bool En = Map.value("comm").toBool();
+
+		if (En) hiddenCols.remove(2);
+		else hiddenCols.insert(2);
+	}
+
+	for (int i = 0; i < ui->tableView->model()->columnCount(); ++i)
+		ui->tableView->setColumnHidden(i, hiddenCols.contains(i));
 }
 
 void AwzWidget::editData(const QVariantMap& Map)

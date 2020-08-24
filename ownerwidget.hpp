@@ -47,6 +47,7 @@ class OwnerWidget : public QWidget
 		static const QString filterStr;
 
 		QSqlDatabase& Database;
+		QSet<int> hiddenCols;
 
 		ModelFilter* filter = nullptr;
 		QSqlTableModel* model = nullptr;
@@ -68,6 +69,9 @@ class OwnerWidget : public QWidget
 		void reloadList(void);
 
 		void setStatus(bool Enabled);
+		void setEditable(bool Enabled);
+
+		void updateView(const QVariantMap& Map);
 
 	private slots:
 

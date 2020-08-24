@@ -26,7 +26,15 @@ const QString LotWidget::filterStr = "DZIALKI.ID IN (SELECT J.ID_DZI FROM DOK_DZ
 LotWidget::LotWidget(QSqlDatabase& Db, QWidget *parent)
 : QWidget(parent), Database(Db), ui(new Ui::LotWidget)
 {
-	ui->setupUi(this);
+	ui->setupUi(this); setEditable(false);
+
+	hiddenCols = { 0, 2, 3 };
+
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Lots");
+	if (Settings.value("Sheet", true).toBool()) hiddenCols.remove(2);
+	Settings.endGroup();
 
 	filter = new ModelFilter(this);
 	filter->setSearchedColumns({ 1, 2, 3 });
@@ -51,7 +59,7 @@ LotWidget::LotWidget(QSqlDatabase& Db, QWidget *parent)
 		   this, &LotWidget::itemSelected);
 }
 
-LotWidget::~LotWidget()
+LotWidget::~LotWidget(void)
 {
 	delete ui;
 }
@@ -160,8 +168,7 @@ void LotWidget::setStatus(bool Enabled)
 
 		filter->setSourceModel(model);
 
-		ui->tableView->hideColumn(0);
-		ui->tableView->hideColumn(3);
+		for (const auto& i : hiddenCols) ui->tableView->hideColumn(i);
 	}
 	else if (model)
 	{
@@ -171,6 +178,33 @@ void LotWidget::setStatus(bool Enabled)
 		model->deleteLater();
 		model = nullptr;
 	}
+}
+
+void LotWidget::setEditable(bool Enabled)
+{
+	const auto Edit = Enabled ? QTableView::AllEditTriggers &
+						   QTableView::EditKeyPressed
+						 : QTableView::NoEditTriggers;
+
+	ui->addButton->setVisible(Enabled);
+	ui->remButton->setVisible(Enabled);
+	ui->editButton->setVisible(Enabled);
+
+	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+}
+
+void LotWidget::updateView(const QVariantMap& Map)
+{
+	if (Map.contains("sheet"))
+	{
+		const bool En = Map.value("sheet").toBool();
+
+		if (En) hiddenCols.remove(2);
+		else hiddenCols.insert(2);
+	}
+
+	for (int i = 0; i < ui->tableView->model()->columnCount(); ++i)
+		ui->tableView->setColumnHidden(i, hiddenCols.contains(i));
 }
 
 void LotWidget::editData(const QVariantMap& Map)
