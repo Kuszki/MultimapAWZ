@@ -46,31 +46,16 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 	ui->ownFatherCheck->setChecked(Settings.value("Father", false).toBool());
 	ui->ownMatherCheck->setChecked(Settings.value("Mother", false).toBool());
 	Settings.endGroup();
+
+	connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults),
+		   &QPushButton::clicked, this, &SettingsDialog::reset);
+
+	connect(ui->buttonBox->button(QDialogButtonBox::Discard),
+		   &QPushButton::clicked, this, &SettingsDialog::reject);
 }
 
 SettingsDialog::~SettingsDialog(void)
 {
-	QSettings Settings("Multimap", "AWZ");
-
-	Settings.beginGroup("Documents");
-	Settings.setValue("Comment", ui->docCommentCheck->isChecked());
-	Settings.endGroup();
-
-	Settings.beginGroup("Files");
-	Settings.setValue("Path", ui->filePathCheck->isChecked());
-	Settings.setValue("Role", ui->fileRoleCheck->isChecked());
-	Settings.setValue("Comment", ui->fileCommentCheck->isChecked());
-	Settings.endGroup();
-
-	Settings.beginGroup("Lots");
-	Settings.setValue("Sheet", ui->lotSheetCheck->isChecked());
-	Settings.endGroup();
-
-	Settings.beginGroup("Owners");
-	Settings.setValue("Father", ui->ownFatherCheck->isChecked());
-	Settings.setValue("Mother", ui->ownMatherCheck->isChecked());
-	Settings.endGroup();
-
 	delete ui;
 }
 
@@ -106,5 +91,43 @@ void SettingsDialog::accept(void)
 	Map.insert("lot", Lot);
 	Map.insert("own", Own);
 
-	emit onAccept(Map);
+	emit onAccept(Map); save();
+}
+
+void SettingsDialog::reset(void)
+{
+	ui->docCommentCheck->setChecked(false);
+
+	ui->filePathCheck->setChecked(false);
+	ui->fileRoleCheck->setChecked(true);
+	ui->fileCommentCheck->setChecked(false);
+
+	ui->lotSheetCheck->setChecked(true);
+
+	ui->ownFatherCheck->setChecked(false);
+	ui->ownMatherCheck->setChecked(false);
+}
+
+void SettingsDialog::save(void)
+{
+	QSettings Settings("Multimap", "AWZ");
+
+	Settings.beginGroup("Documents");
+	Settings.setValue("Comment", ui->docCommentCheck->isChecked());
+	Settings.endGroup();
+
+	Settings.beginGroup("Files");
+	Settings.setValue("Path", ui->filePathCheck->isChecked());
+	Settings.setValue("Role", ui->fileRoleCheck->isChecked());
+	Settings.setValue("Comment", ui->fileCommentCheck->isChecked());
+	Settings.endGroup();
+
+	Settings.beginGroup("Lots");
+	Settings.setValue("Sheet", ui->lotSheetCheck->isChecked());
+	Settings.endGroup();
+
+	Settings.beginGroup("Owners");
+	Settings.setValue("Father", ui->ownFatherCheck->isChecked());
+	Settings.setValue("Mother", ui->ownMatherCheck->isChecked());
+	Settings.endGroup();
 }

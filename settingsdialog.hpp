@@ -24,6 +24,7 @@
 #include <QDialog>
 #include <QSettings>
 #include <QVariant>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {	class SettingsDialog; }
@@ -46,6 +47,9 @@ class SettingsDialog : public QDialog
 	public slots:
 
 		virtual void accept(void) override;
+
+		void reset(void);
+		void save(void);
 
 	signals:
 

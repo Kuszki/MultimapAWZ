@@ -29,31 +29,31 @@
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="104"/>
+        <location filename="awzwidget.cpp" line="112"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="105"/>
-        <location filename="awzwidget.cpp" line="145"/>
-        <location filename="awzwidget.cpp" line="157"/>
-        <location filename="awzwidget.cpp" line="183"/>
-        <location filename="awzwidget.cpp" line="188"/>
-        <location filename="awzwidget.cpp" line="202"/>
-        <location filename="awzwidget.cpp" line="207"/>
+        <location filename="awzwidget.cpp" line="113"/>
+        <location filename="awzwidget.cpp" line="166"/>
+        <location filename="awzwidget.cpp" line="178"/>
+        <location filename="awzwidget.cpp" line="204"/>
+        <location filename="awzwidget.cpp" line="209"/>
+        <location filename="awzwidget.cpp" line="223"/>
+        <location filename="awzwidget.cpp" line="228"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="106"/>
+        <location filename="awzwidget.cpp" line="114"/>
         <source>Comments</source>
         <translation>Uwagi</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="146"/>
-        <location filename="awzwidget.cpp" line="158"/>
-        <location filename="awzwidget.cpp" line="184"/>
-        <location filename="awzwidget.cpp" line="203"/>
+        <location filename="awzwidget.cpp" line="167"/>
+        <location filename="awzwidget.cpp" line="179"/>
+        <location filename="awzwidget.cpp" line="205"/>
+        <location filename="awzwidget.cpp" line="224"/>
         <source>Comment</source>
         <translation>Uwagi</translation>
     </message>
@@ -142,44 +142,44 @@
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="114"/>
+        <location filename="filewidget.cpp" line="124"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="115"/>
-        <location filename="filewidget.cpp" line="169"/>
-        <location filename="filewidget.cpp" line="252"/>
-        <location filename="filewidget.cpp" line="260"/>
+        <location filename="filewidget.cpp" line="125"/>
+        <location filename="filewidget.cpp" line="209"/>
+        <location filename="filewidget.cpp" line="292"/>
+        <location filename="filewidget.cpp" line="300"/>
         <source>Path</source>
         <translation>Ścieżka</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="116"/>
-        <location filename="filewidget.cpp" line="156"/>
-        <location filename="filewidget.cpp" line="170"/>
-        <location filename="filewidget.cpp" line="221"/>
-        <location filename="filewidget.cpp" line="227"/>
-        <location filename="filewidget.cpp" line="253"/>
+        <location filename="filewidget.cpp" line="126"/>
+        <location filename="filewidget.cpp" line="196"/>
+        <location filename="filewidget.cpp" line="210"/>
         <location filename="filewidget.cpp" line="261"/>
+        <location filename="filewidget.cpp" line="267"/>
+        <location filename="filewidget.cpp" line="293"/>
+        <location filename="filewidget.cpp" line="301"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="117"/>
-        <location filename="filewidget.cpp" line="157"/>
-        <location filename="filewidget.cpp" line="171"/>
-        <location filename="filewidget.cpp" line="222"/>
-        <location filename="filewidget.cpp" line="254"/>
+        <location filename="filewidget.cpp" line="127"/>
+        <location filename="filewidget.cpp" line="197"/>
+        <location filename="filewidget.cpp" line="211"/>
+        <location filename="filewidget.cpp" line="262"/>
+        <location filename="filewidget.cpp" line="294"/>
         <source>Role</source>
         <translation>Rodzaj</translation>
     </message>
     <message>
-        <location filename="filewidget.cpp" line="118"/>
-        <location filename="filewidget.cpp" line="158"/>
-        <location filename="filewidget.cpp" line="172"/>
-        <location filename="filewidget.cpp" line="223"/>
-        <location filename="filewidget.cpp" line="255"/>
+        <location filename="filewidget.cpp" line="128"/>
+        <location filename="filewidget.cpp" line="198"/>
+        <location filename="filewidget.cpp" line="212"/>
+        <location filename="filewidget.cpp" line="263"/>
+        <location filename="filewidget.cpp" line="295"/>
         <source>Comment</source>
         <translation>Uwagi</translation>
     </message>
@@ -507,46 +507,46 @@
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="97"/>
+        <location filename="lotwidget.cpp" line="105"/>
         <source>All areas</source>
         <translation>Wszystkie obszary</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="154"/>
+        <location filename="lotwidget.cpp" line="162"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="155"/>
-        <location filename="lotwidget.cpp" line="197"/>
-        <location filename="lotwidget.cpp" line="212"/>
-        <location filename="lotwidget.cpp" line="251"/>
-        <location filename="lotwidget.cpp" line="257"/>
-        <location filename="lotwidget.cpp" line="283"/>
-        <location filename="lotwidget.cpp" line="289"/>
+        <location filename="lotwidget.cpp" line="163"/>
+        <location filename="lotwidget.cpp" line="218"/>
+        <location filename="lotwidget.cpp" line="233"/>
+        <location filename="lotwidget.cpp" line="272"/>
+        <location filename="lotwidget.cpp" line="278"/>
+        <location filename="lotwidget.cpp" line="304"/>
+        <location filename="lotwidget.cpp" line="310"/>
         <source>Number</source>
         <translation>Numer</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="156"/>
-        <location filename="lotwidget.cpp" line="198"/>
-        <location filename="lotwidget.cpp" line="213"/>
-        <location filename="lotwidget.cpp" line="252"/>
-        <location filename="lotwidget.cpp" line="284"/>
+        <location filename="lotwidget.cpp" line="164"/>
+        <location filename="lotwidget.cpp" line="219"/>
+        <location filename="lotwidget.cpp" line="234"/>
+        <location filename="lotwidget.cpp" line="273"/>
+        <location filename="lotwidget.cpp" line="305"/>
         <source>Sheet</source>
         <translation>Arkusz</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="157"/>
+        <location filename="lotwidget.cpp" line="165"/>
         <source>Precinct ID</source>
         <translation>Identyfikator obrębu</translation>
     </message>
     <message>
-        <location filename="lotwidget.cpp" line="199"/>
-        <location filename="lotwidget.cpp" line="204"/>
-        <location filename="lotwidget.cpp" line="214"/>
-        <location filename="lotwidget.cpp" line="253"/>
-        <location filename="lotwidget.cpp" line="285"/>
+        <location filename="lotwidget.cpp" line="220"/>
+        <location filename="lotwidget.cpp" line="225"/>
+        <location filename="lotwidget.cpp" line="235"/>
+        <location filename="lotwidget.cpp" line="274"/>
+        <location filename="lotwidget.cpp" line="306"/>
         <source>Precinct</source>
         <translation>Obręb</translation>
     </message>
@@ -673,7 +673,7 @@
         <translation>Skany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="268"/>
+        <location filename="mainwindow.cpp" line="278"/>
         <source>Selected user does not have required privileges. Contact with database administrator.</source>
         <translation>Wybrany użytkownik nie posiada odpowiednich oprawnień. Skontaktuj się z lokalnym administratorem.</translation>
     </message>
@@ -706,51 +706,51 @@
         <translation>Szybkie wyszukiwanie</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="110"/>
+        <location filename="ownerwidget.cpp" line="119"/>
         <source>ID</source>
         <translation>Identyfikator</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="111"/>
-        <location filename="ownerwidget.cpp" line="150"/>
-        <location filename="ownerwidget.cpp" line="164"/>
-        <location filename="ownerwidget.cpp" line="192"/>
-        <location filename="ownerwidget.cpp" line="200"/>
-        <location filename="ownerwidget.cpp" line="217"/>
-        <location filename="ownerwidget.cpp" line="225"/>
+        <location filename="ownerwidget.cpp" line="120"/>
+        <location filename="ownerwidget.cpp" line="181"/>
+        <location filename="ownerwidget.cpp" line="195"/>
+        <location filename="ownerwidget.cpp" line="223"/>
+        <location filename="ownerwidget.cpp" line="231"/>
+        <location filename="ownerwidget.cpp" line="248"/>
+        <location filename="ownerwidget.cpp" line="256"/>
         <source>Name</source>
         <translation>Imię</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="112"/>
-        <location filename="ownerwidget.cpp" line="151"/>
-        <location filename="ownerwidget.cpp" line="165"/>
-        <location filename="ownerwidget.cpp" line="193"/>
-        <location filename="ownerwidget.cpp" line="201"/>
-        <location filename="ownerwidget.cpp" line="218"/>
-        <location filename="ownerwidget.cpp" line="226"/>
+        <location filename="ownerwidget.cpp" line="121"/>
+        <location filename="ownerwidget.cpp" line="182"/>
+        <location filename="ownerwidget.cpp" line="196"/>
+        <location filename="ownerwidget.cpp" line="224"/>
+        <location filename="ownerwidget.cpp" line="232"/>
+        <location filename="ownerwidget.cpp" line="249"/>
+        <location filename="ownerwidget.cpp" line="257"/>
         <source>Surname</source>
         <translation>Nazwisko</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="113"/>
-        <location filename="ownerwidget.cpp" line="152"/>
-        <location filename="ownerwidget.cpp" line="166"/>
-        <location filename="ownerwidget.cpp" line="194"/>
-        <location filename="ownerwidget.cpp" line="202"/>
-        <location filename="ownerwidget.cpp" line="219"/>
-        <location filename="ownerwidget.cpp" line="227"/>
+        <location filename="ownerwidget.cpp" line="122"/>
+        <location filename="ownerwidget.cpp" line="183"/>
+        <location filename="ownerwidget.cpp" line="197"/>
+        <location filename="ownerwidget.cpp" line="225"/>
+        <location filename="ownerwidget.cpp" line="233"/>
+        <location filename="ownerwidget.cpp" line="250"/>
+        <location filename="ownerwidget.cpp" line="258"/>
         <source>Father name</source>
         <translation>Imię ojca</translation>
     </message>
     <message>
-        <location filename="ownerwidget.cpp" line="114"/>
-        <location filename="ownerwidget.cpp" line="153"/>
-        <location filename="ownerwidget.cpp" line="167"/>
-        <location filename="ownerwidget.cpp" line="195"/>
-        <location filename="ownerwidget.cpp" line="203"/>
-        <location filename="ownerwidget.cpp" line="220"/>
-        <location filename="ownerwidget.cpp" line="228"/>
+        <location filename="ownerwidget.cpp" line="123"/>
+        <location filename="ownerwidget.cpp" line="184"/>
+        <location filename="ownerwidget.cpp" line="198"/>
+        <location filename="ownerwidget.cpp" line="226"/>
+        <location filename="ownerwidget.cpp" line="234"/>
+        <location filename="ownerwidget.cpp" line="251"/>
+        <location filename="ownerwidget.cpp" line="259"/>
         <source>Mother name</source>
         <translation>Imię matki</translation>
     </message>
