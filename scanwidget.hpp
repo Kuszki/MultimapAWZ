@@ -23,7 +23,9 @@
 
 #include <QWidget>
 #include <QPixmap>
+#include <QFileInfo>
 #include <QWheelEvent>
+#include <QDesktopServices>
 
 #include "titlewidget.hpp"
 
@@ -38,7 +40,7 @@ class ScanWidget : public QWidget
 
 	private:
 
-		QString Path;
+		QString Path, File, Dir;
 		QPixmap Image;
 
 		double Scale = 1.0;
@@ -75,8 +77,6 @@ class ScanWidget : public QWidget
 
 		void rotateLeftClicked(void);
 		void rotateRightClicked(void);
-
-		void printDocClicked(void);
 
 		void openDirClicked(void);
 

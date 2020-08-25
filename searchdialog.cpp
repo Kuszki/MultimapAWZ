@@ -93,12 +93,12 @@ void SearchDialog::commIndexChanged(int Index)
 
 void SearchDialog::precCheckToggled(bool Enable)
 {
-	if (Enable) ui->commCheck->setEnabled(true);
+	if (Enable) ui->commCheck->setChecked(true);
 }
 
 void SearchDialog::commCheckToggled(bool Enable)
 {
-	if (!Enable) ui->precCheck->setEnabled(false);
+	if (!Enable) ui->precCheck->setChecked(false);
 }
 
 void SearchDialog::validateData(void)

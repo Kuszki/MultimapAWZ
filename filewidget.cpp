@@ -146,15 +146,13 @@ void FileWidget::setStatus(bool Enabled)
 
 void FileWidget::setEditable(bool Enabled)
 {
-	const auto Edit = Enabled ? QTableView::AllEditTriggers &
-						   QTableView::EditKeyPressed
-						 : QTableView::NoEditTriggers;
-
 	ui->addButton->setVisible(Enabled);
 	ui->remButton->setVisible(Enabled);
 	ui->editButton->setVisible(Enabled);
 
-	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+	ui->tableView->setEditTriggers(Enabled ? QTableView::DoubleClicked |
+									 QTableView::EditKeyPressed
+								    : QTableView::NoEditTriggers);
 }
 
 void FileWidget::updateView(const QVariantMap& Map)

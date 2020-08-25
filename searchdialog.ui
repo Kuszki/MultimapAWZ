@@ -374,10 +374,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>commCheck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>SearchDialog</receiver>
+   <slot>commCheckToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>113</x>
+     <y>114</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>513</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>commIndexChanged(int)</slot>
   <slot>validateData()</slot>
   <slot>precCheckToggled(bool)</slot>
+  <slot>commCheckToggled(bool)</slot>
  </slots>
 </ui>

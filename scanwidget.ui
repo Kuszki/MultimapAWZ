@@ -131,17 +131,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="printButton">
-       <property name="text">
-        <string>Print</string>
-       </property>
-       <property name="icon">
-        <iconset theme="document-print">
-         <normaloff>.</normaloff>.</iconset>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QToolButton" name="opendirButton">
        <property name="text">
         <string>Open directory</string>
@@ -165,8 +154,8 @@
    <slot>zoomFitClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>29</x>
-     <y>221</y>
+     <x>54</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>26</x>
@@ -181,8 +170,8 @@
    <slot>zoomOrgClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>80</x>
-     <y>225</y>
+     <x>105</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>104</x>
@@ -197,8 +186,8 @@
    <slot>zoomInClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>111</x>
-     <y>221</y>
+     <x>156</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>152</x>
@@ -213,8 +202,8 @@
    <slot>zoomOutClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>159</x>
-     <y>225</y>
+     <x>207</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>173</x>
@@ -229,8 +218,8 @@
    <slot>rotateLeftClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>194</x>
-     <y>222</y>
+     <x>258</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>196</x>
@@ -245,28 +234,12 @@
    <slot>rotateRightClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>237</x>
-     <y>226</y>
+     <x>309</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>254</x>
      <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>printButton</sender>
-   <signal>clicked()</signal>
-   <receiver>ScanWidget</receiver>
-   <slot>printDocClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>276</x>
-     <y>216</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>318</x>
-     <y>447</y>
     </hint>
    </hints>
   </connection>
@@ -277,8 +250,8 @@
    <slot>openDirClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>359</x>
-     <y>225</y>
+     <x>360</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>392</x>
@@ -296,6 +269,5 @@
   <slot>rotateRightClicked()</slot>
   <slot>saveRotClicked()</slot>
   <slot>openDirClicked()</slot>
-  <slot>printDocClicked()</slot>
  </slots>
 </ui>

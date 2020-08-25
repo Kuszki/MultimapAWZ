@@ -182,15 +182,13 @@ void LotWidget::setStatus(bool Enabled)
 
 void LotWidget::setEditable(bool Enabled)
 {
-	const auto Edit = Enabled ? QTableView::AllEditTriggers &
-						   QTableView::EditKeyPressed
-						 : QTableView::NoEditTriggers;
-
 	ui->addButton->setVisible(Enabled);
 	ui->remButton->setVisible(Enabled);
 	ui->editButton->setVisible(Enabled);
 
-	ui->tableView->setEditTriggers(QTableView::EditTriggers(Edit));
+	ui->tableView->setEditTriggers(Enabled ? QTableView::DoubleClicked |
+									 QTableView::EditKeyPressed
+								    : QTableView::NoEditTriggers);
 }
 
 void LotWidget::updateView(const QVariantMap& Map)

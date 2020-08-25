@@ -32,7 +32,6 @@ ScanWidget::ScanWidget(const QString& path, QWidget *parent)
 	ui->zomoutButton->setEnabled(false);
 	ui->rotrightButton->setEnabled(false);
 	ui->rotleftButton->setEnabled(false);
-	ui->printButton->setEnabled(false);
 	ui->opendirButton->setEnabled(false);
 }
 
@@ -61,9 +60,6 @@ void ScanWidget::setTitleWidget(TitleWidget* W)
 	ui->horizontalLayout->removeWidget(ui->rotleftButton);
 	W->addRightWidget(ui->rotleftButton);
 
-	ui->horizontalLayout->removeWidget(ui->printButton);
-	W->addRightWidget(ui->printButton);
-
 	ui->horizontalLayout->removeWidget(ui->opendirButton);
 	W->addRightWidget(ui->opendirButton);
 
@@ -72,7 +68,9 @@ void ScanWidget::setTitleWidget(TitleWidget* W)
 
 void ScanWidget::updateImage(const QString& Src)
 {
-	const QString File = Path + "/" + Src;
+	File = Path + "/" + Src;
+	Dir = QFileInfo(File).path();
+
 	const bool Img = QFile(File).exists();
 
 	if (Img)
@@ -98,7 +96,6 @@ void ScanWidget::updateImage(const QString& Src)
 	ui->zomoutButton->setEnabled(Img);
 	ui->rotrightButton->setEnabled(Img);
 	ui->rotleftButton->setEnabled(Img);
-	ui->printButton->setEnabled(Img);
 	ui->opendirButton->setEnabled(Img);
 }
 
@@ -115,7 +112,6 @@ void ScanWidget::setStatus(bool Enabled)
 	ui->zomoutButton->setEnabled(false);
 	ui->rotrightButton->setEnabled(false);
 	ui->rotleftButton->setEnabled(false);
-	ui->printButton->setEnabled(false);
 	ui->opendirButton->setEnabled(false);
 
 	if (Enabled) ui->label->setText(tr("Select document to preview"));
@@ -185,12 +181,7 @@ void ScanWidget::rotateRightClicked(void)
 					 .transformed(QTransform().rotate(Rotation)));
 }
 
-void ScanWidget::printDocClicked(void)
-{
-	// TODO implement me
-}
-
 void ScanWidget::openDirClicked(void)
 {
-	// TODO implement me
+	QDesktopServices::openUrl(QUrl::fromLocalFile(Dir));
 }
