@@ -98,7 +98,7 @@
   </action>
   <action name="actionFind">
    <property name="icon">
-    <iconset theme="find">
+    <iconset theme="edit-find">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
@@ -143,7 +143,7 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="exit">
+    <iconset theme="application-exit">
      <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">

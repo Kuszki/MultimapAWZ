@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="document">
+   <iconset theme="text-editor">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -42,7 +42,7 @@
         <string>Reload</string>
        </property>
        <property name="icon">
-        <iconset theme="reload">
+        <iconset theme="view-refresh">
          <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
@@ -64,7 +64,8 @@
         <string>Add</string>
        </property>
        <property name="icon">
-        <iconset theme="list-add"/>
+        <iconset theme="list-add">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>
@@ -74,7 +75,8 @@
         <string>Remove</string>
        </property>
        <property name="icon">
-        <iconset theme="list-remove"/>
+        <iconset theme="list-remove">
+         <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>
      </item>

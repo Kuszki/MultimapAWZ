@@ -31,7 +31,7 @@
      </property>
      <widget class="QWidget" name="docTab">
       <attribute name="icon">
-       <iconset theme="document">
+       <iconset theme="text-editor">
         <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">

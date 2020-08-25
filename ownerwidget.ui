@@ -36,16 +36,13 @@
    </item>
    <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
      <item>
       <widget class="QToolButton" name="reloadButton">
        <property name="text">
         <string>Reload</string>
        </property>
        <property name="icon">
-        <iconset theme="reload">
+        <iconset theme="view-refresh">
          <normaloff>.</normaloff>.</iconset>
        </property>
       </widget>

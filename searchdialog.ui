@@ -14,7 +14,7 @@
    <string>Search</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="find">
+   <iconset theme="edit-find">
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
