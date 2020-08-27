@@ -144,6 +144,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	connect(filew, &FileWidget::onFileRename, this, &MainWindow::renameFile);
 	connect(filew, &FileWidget::onFilepathChange, scanw, &ScanWidget::updateImage);
+	connect(filew, &FileWidget::onFilepathChange, sumw, &SummaryWidget::updateImage);
 
 	connect(awzw, &AwzWidget::onAddRow, this, &MainWindow::addDoc);
 	connect(awzw, &AwzWidget::onRemRow, this, &MainWindow::remDoc);
@@ -293,6 +294,7 @@ void MainWindow::openDatabase(const QString& Server, const QString& Base, const 
 	ui->actionEditenable->setChecked(false);
 
 	scanw->setPath(Scanpath);
+	sumw->setPath(Scanpath);
 }
 
 void MainWindow::closeDatabase(void)
@@ -323,7 +325,9 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 		QSet<int> Now;
 
 		Query.prepare("SELECT d.id FROM dokumenty d "
-				    "WHERE UPPER(d.nazwa) LIKE '%' || UPPER(?) || '%'");
+				    "WHERE UPPER(d.nazwa) LIKE '%' || UPPER(?) || '%' "
+				    "OR UPPER(d.oznaczenie) LIKE '%' || UPPER(?) || '%'");
+		Query.addBindValue(Map["awz"]);
 		Query.addBindValue(Map["awz"]);
 
 		if (Query.exec()) while (Query.next())

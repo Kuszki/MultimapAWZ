@@ -35,7 +35,7 @@ QList<DOKUMENTY> ImportWorker::loadDocs(void)
 	QSqlQuery Query(Database);
 
 	Query.setForwardOnly(true);
-	Query.prepare("SELECT id, nazwa, opis FROM dokumenty");
+	Query.prepare("SELECT id, nazwa, oznaczenie, opis FROM dokumenty");
 
 	if (Query.exec()) while (Query.next())
 	{
@@ -43,7 +43,8 @@ QList<DOKUMENTY> ImportWorker::loadDocs(void)
 		{
 			Query.value(0).toInt(),
 			Query.value(1).toString(),
-			Query.value(2).toString()
+			Query.value(2).toString(),
+			Query.value(3).toString()
 		});
 	}
 
@@ -408,12 +409,13 @@ int ImportWorker::appendDocs(const QList<DOKUMENTY>& List)
 
 	QSqlQuery Query(Database); int Count(0);
 
-	Query.prepare("INSERT INTO dokumenty (id, nazwa, opis) VALUES (?, ?, ?)");
+	Query.prepare("INSERT INTO dokumenty (id, nazwa, oznaczenie, opis) VALUES (?, ?, ?, ?)");
 
 	for (const auto& i : List)
 	{
 		Query.addBindValue(i.id ? i.id : QVariant());
 		Query.addBindValue(i.nazwa.isEmpty() ? QVariant() : i.nazwa);
+		Query.addBindValue(i.oznaczenie.isEmpty() ? QVariant() : i.oznaczenie);
 		Query.addBindValue(i.opis.isEmpty() ? QVariant() : i.opis);
 
 		if (Query.exec()) ++Count;
@@ -953,7 +955,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 
 		int commID(0), precID(0), owCol(Roles[ROLES::OSOBY]);
 
-		DOKUMENTY Dk = { 0, List[Roles[ROLES::NUMER]], List[Roles[ROLES::UWAGI]] };
+		DOKUMENTY Dk = { 0, List[Roles[ROLES::NUMER]], List[Roles[ROLES::OZNACZENIE]], List[Roles[ROLES::UWAGI]] };
 
 		const auto isDoc = hasItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa) ?
 			getItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa).id :

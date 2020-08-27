@@ -34,7 +34,36 @@ SummaryWidget::~SummaryWidget(void)
 
 void SummaryWidget::setTitleWidget(TitleWidget* W)
 {
+	file = new QToolButton(this);
+	file->setText(tr("Open document"));
+	file->setIcon(QIcon::fromTheme("document-new"));
+	file->setEnabled(false);
 
+	W->addRightWidget(file);
+
+	dir = new QToolButton(this);
+	dir->setText(tr("Open folder"));
+	dir->setIcon(QIcon::fromTheme("folder-new"));
+	dir->setEnabled(false);
+
+	W->addRightWidget(dir);
+
+	connect(file, &QToolButton::clicked, this, &SummaryWidget::fileButtonClicked);
+	connect(dir, &QToolButton::clicked, this, &SummaryWidget::dirButtonClicked);
+}
+
+void SummaryWidget::updateImage(const QString& Src)
+{
+	File = Path + "/" + Src;
+	Dir = QFileInfo(File).path();
+
+	file->setEnabled(QFile(File).exists());
+	dir->setEnabled(QDir(Dir).exists());
+}
+
+void SummaryWidget::setPath(const QString& P)
+{
+	Path = P;
 }
 
 void SummaryWidget::filterList(int ID)
@@ -116,4 +145,14 @@ void SummaryWidget::reloadList(void)
 void SummaryWidget::setStatus(bool Enabled)
 {
 	setEnabled(Enabled);
+}
+
+void SummaryWidget::dirButtonClicked(void)
+{
+	QDesktopServices::openUrl(QUrl::fromLocalFile(Dir));
+}
+
+void SummaryWidget::fileButtonClicked(void)
+{
+	QDesktopServices::openUrl(QUrl::fromLocalFile(File));
 }

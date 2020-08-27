@@ -57,6 +57,7 @@ void ImportDialog::accept(void)
 		case 0:
 		{
 			Roles.insert(ROLES::NUMER, ui->docNameSpin->value() - 1);
+			Roles.insert(ROLES::OZNACZENIE, ui->docMarkSpin->value() - 1);
 			Roles.insert(ROLES::GMINA, ui->docCommunitySpin->value() - 1);
 			Roles.insert(ROLES::OBREB, ui->docPrecinctSpin->value() - 1);
 			Roles.insert(ROLES::DZIALKI, ui->docLootSpin->value() - 1);
@@ -106,13 +107,14 @@ void ImportDialog::checkData(void)
 								 ui->lseparatorEdit->text();
 
 			Roles.insert(ui->docNameSpin->value());
+			Roles.insert(ui->docMarkSpin->value());
 			Roles.insert(ui->docCommunitySpin->value());
 			Roles.insert(ui->docPrecinctSpin->value());
 			Roles.insert(ui->docLootSpin->value());
 			Roles.insert(ui->docOwnerSpin->value());
 			Roles.insert(ui->docCommentSpin->value());
 
-			OK = OK && (Roles.size() == 6) && (fSep != lSep);
+			OK = OK && (Roles.size() == 7) && (fSep != lSep);
 
 			for (const auto& i : Roles)
 				OK = OK && (i <= ui->docOwnerSpin->value());

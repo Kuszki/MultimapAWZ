@@ -24,6 +24,11 @@
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QFileInfo>
+#include <QDesktopServices>
+#include <QToolButton>
+#include <QUrl>
+#include <QDir>
 
 #include "titlewidget.hpp"
 
@@ -38,7 +43,11 @@ class SummaryWidget : public QWidget
 
 	private:
 
+		QString Path, File, Dir;
 		QSqlDatabase& Database;
+
+		QToolButton* file;
+		QToolButton* dir;
 
 		Ui::SummaryWidget *ui;
 
@@ -53,11 +62,19 @@ class SummaryWidget : public QWidget
 
 	public slots:
 
+		void updateImage(const QString& Src);
+		void setPath(const QString& P);
+
 		void filterList(int ID);
 
 		void reloadList(void);
 
 		void setStatus(bool Enabled);
+
+	private slots:
+
+		void dirButtonClicked(void);
+		void fileButtonClicked(void);
 
 };
 

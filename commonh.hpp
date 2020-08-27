@@ -31,6 +31,7 @@ enum class ROLES
 	OBREB,
 	NUMER,
 	DZIALKI,
+	OZNACZENIE,
 	UWAGI,
 	OSOBY,
 	ROLA
@@ -40,6 +41,7 @@ struct DOKUMENTY
 {
 	qint32 id;
 	QString nazwa;
+	QString oznaczenie;
 	QString opis;
 };
 
