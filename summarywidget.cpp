@@ -54,12 +54,20 @@ void SummaryWidget::setTitleWidget(TitleWidget* W)
 	connect(dir, &QToolButton::clicked, this, &SummaryWidget::dirButtonClicked);
 }
 
-void SummaryWidget::updateImage(const QString& Src)
+void SummaryWidget::updateFile(const QString& Src)
 {
 	File = Path + "/" + Src;
 	Dir = QFileInfo(File).path();
 
 	file->setEnabled(QFile(File).exists());
+	dir->setEnabled(QDir(Dir).exists());
+}
+
+void SummaryWidget::updateDir(const QString& Src)
+{
+	Dir = Path + "/" + Src;
+
+	file->setEnabled(false);
 	dir->setEnabled(QDir(Dir).exists());
 }
 

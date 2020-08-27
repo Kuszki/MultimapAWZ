@@ -85,6 +85,7 @@ class AwzWidget : public QWidget
 	signals:
 
 		void onIndexChange(int);
+		void onDirChange(const QString&);
 
 		void onAddRow(const DOKUMENTY&);
 		void onRemRow(int);

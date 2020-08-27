@@ -181,8 +181,9 @@ void OwnerWidget::editData(const QVariantMap& Map)
 	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Father name")]);
 	filter->setData(filter->index(S.row(), 4, S.parent()), Map[tr("Mother name")]);
 
-	model->setEditStrategy(QSqlTableModel::OnFieldChange);
 	model->submitAll();
+
+	model->setEditStrategy(QSqlTableModel::OnFieldChange);
 }
 
 void OwnerWidget::appendData(const QVariantMap& Map)

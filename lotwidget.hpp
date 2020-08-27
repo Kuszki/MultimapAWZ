@@ -24,7 +24,7 @@
 #include <QWidget>
 #include <QSqlDatabase>
 #include <QSqlQuery>
-#include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
 
 #include "modelfilter.hpp"
 #include "modeldelegate.hpp"
@@ -50,9 +50,7 @@ class LotWidget : public QWidget
 		QSet<int> hiddenCols;
 
 		ModelFilter* filter = nullptr;
-		QSqlTableModel* model = nullptr;
-
-		int lastIndex = 0;
+		QSqlRelationalTableModel* model = nullptr;
 
 		Ui::LotWidget *ui;
 
@@ -64,17 +62,11 @@ class LotWidget : public QWidget
 
 		void setTitleWidget(TitleWidget* W);
 
-	private:
-
-		void prepareList(int ID);
-
 	public slots:
 
 		void filterList(int ID);
 
 		void reloadList(void);
-
-		void selectComm(int Index);
 
 		void setStatus(bool Enabled);
 		void setEditable(bool Enabled);

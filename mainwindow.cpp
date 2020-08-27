@@ -141,10 +141,11 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(awzw, &AwzWidget::onIndexChange, ownw, &OwnerWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, lotw, &LotWidget::filterList);
 	connect(awzw, &AwzWidget::onIndexChange, sumw, &SummaryWidget::filterList);
+	connect(awzw, &AwzWidget::onDirChange, sumw, &SummaryWidget::updateDir);
 
 	connect(filew, &FileWidget::onFileRename, this, &MainWindow::renameFile);
 	connect(filew, &FileWidget::onFilepathChange, scanw, &ScanWidget::updateImage);
-	connect(filew, &FileWidget::onFilepathChange, sumw, &SummaryWidget::updateImage);
+	connect(filew, &FileWidget::onFilepathChange, sumw, &SummaryWidget::updateFile);
 
 	connect(awzw, &AwzWidget::onAddRow, this, &MainWindow::addDoc);
 	connect(awzw, &AwzWidget::onRemRow, this, &MainWindow::remDoc);

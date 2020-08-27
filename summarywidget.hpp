@@ -62,7 +62,9 @@ class SummaryWidget : public QWidget
 
 	public slots:
 
-		void updateImage(const QString& Src);
+		void updateFile(const QString& Src);
+		void updateDir(const QString& Src);
+
 		void setPath(const QString& P);
 
 		void filterList(int ID);

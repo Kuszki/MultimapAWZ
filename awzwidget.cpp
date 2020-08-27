@@ -167,8 +167,9 @@ void AwzWidget::editData(const QVariantMap& Map)
 	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Mark")]);
 	filter->setData(filter->index(S.row(), 4, S.parent()), Map[tr("Comment")]);
 
-	model->setEditStrategy(QSqlTableModel::OnFieldChange);
 	model->submitAll();
+
+	model->setEditStrategy(QSqlTableModel::OnFieldChange);
 }
 
 void AwzWidget::appendData(const QVariantMap& Map)
@@ -188,8 +189,10 @@ void AwzWidget::rowSelected(const QModelIndex& Index)
 	if (!model) return;
 
 	const auto id = filter->index(Index.row(), 0, Index.parent()).data();
+	const auto pa = filter->index(Index.row(), 2, Index.parent()).data();
 
 	emit onIndexChange(id.toInt());
+	emit onDirChange(pa.toString());
 }
 
 void AwzWidget::itemSelected(const QItemSelection& Index)

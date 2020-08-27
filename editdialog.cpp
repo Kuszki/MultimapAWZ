@@ -210,11 +210,7 @@ QVariantMap EditDialog::data(void)
 
 		if (auto W = dynamic_cast<QComboBox*>(Widget))
 		{
-			const auto Text = W->currentText();
-			const int Index = W->findText(Text);
-
-			if (Index == -1) Map.insert(Name, Text);
-			else Map.insert(Name, W->itemData(Index));
+			Map.insert(Name, W->currentData());
 		}
 		else if (auto W = dynamic_cast<QLineEdit*>(Widget))
 		{
