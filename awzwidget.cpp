@@ -26,7 +26,7 @@ AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 {
 	ui->setupUi(this); setEditable(false);
 
-	hiddenCols = { 0, 3 };
+	hiddenCols = { 0, 2, 4 };
 
 	QSettings Settings("Multimap", "AWZ");
 
@@ -111,8 +111,9 @@ void AwzWidget::setStatus(bool Enabled)
 
 		model->setHeaderData(0, Qt::Horizontal, tr("ID"));
 		model->setHeaderData(1, Qt::Horizontal, tr("Name"));
-		model->setHeaderData(2, Qt::Horizontal, tr("Mark"));
-		model->setHeaderData(3, Qt::Horizontal, tr("Comments"));
+		model->setHeaderData(2, Qt::Horizontal, tr("Path"));
+		model->setHeaderData(3, Qt::Horizontal, tr("Mark"));
+		model->setHeaderData(4, Qt::Horizontal, tr("Comments"));
 
 		model->setEditStrategy(QSqlTableModel::OnFieldChange);
 
@@ -163,8 +164,8 @@ void AwzWidget::editData(const QVariantMap& Map)
 	model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
 	filter->setData(filter->index(S.row(), 1, S.parent()), Map[tr("Name")]);
-	filter->setData(filter->index(S.row(), 2, S.parent()), Map[tr("Mark")]);
-	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Comment")]);
+	filter->setData(filter->index(S.row(), 3, S.parent()), Map[tr("Mark")]);
+	filter->setData(filter->index(S.row(), 4, S.parent()), Map[tr("Comment")]);
 
 	model->setEditStrategy(QSqlTableModel::OnFieldChange);
 	model->submitAll();
@@ -176,6 +177,7 @@ void AwzWidget::appendData(const QVariantMap& Map)
 	{
 		0,
 		Map[tr("Name")].toString().simplified(),
+		Map[tr("Path")].toString().simplified(),
 		Map[tr("Mark")].toString().simplified(),
 		Map[tr("Comment")].toString().simplified()
 	});
@@ -203,12 +205,15 @@ void AwzWidget::editClicked(void)
 	EditDialog* Dialog = new EditDialog(this);
 
 	Dialog->appendEdit(tr("Name"), filter->index(S.row(), 1, S.parent()).data().toString());
-	Dialog->appendEdit(tr("Mark"), filter->index(S.row(), 2, S.parent()).data().toString());
-	Dialog->appendEdit(tr("Comment"), filter->index(S.row(), 3, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Path"), filter->index(S.row(), 2, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Mark"), filter->index(S.row(), 3, S.parent()).data().toString());
+	Dialog->appendEdit(tr("Comment"), filter->index(S.row(), 4, S.parent()).data().toString());
 
 	Dialog->setValidator([] (const QVariantMap& Map) -> bool
 	{
-		return !Map.value(tr("Name")).toString().simplified().isEmpty();
+		return
+			!Map.value(tr("Name")).toString().simplified().isEmpty() &&
+			!Map.value(tr("Path")).toString().simplified().isEmpty();
 	});
 
 	Dialog->open();
@@ -223,12 +228,15 @@ void AwzWidget::addClicked(void)
 	EditDialog* Dialog = new EditDialog(this);
 
 	Dialog->appendEdit(tr("Name"));
+	Dialog->appendEdit(tr("Path"));
 	Dialog->appendEdit(tr("Mark"));
 	Dialog->appendEdit(tr("Comment"));
 
 	Dialog->setValidator([] (const QVariantMap& Map) -> bool
 	{
-		return !Map.value(tr("Name")).toString().simplified().isEmpty();
+		return
+			!Map.value(tr("Name")).toString().simplified().isEmpty() &&
+			!Map.value(tr("Path")).toString().simplified().isEmpty();
 	});
 
 	Dialog->open();

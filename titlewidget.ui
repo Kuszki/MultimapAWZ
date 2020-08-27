@@ -77,21 +77,29 @@
    </item>
    <item>
     <widget class="QToolButton" name="viewButton">
+     <property name="toolTip">
+      <string>Undock or maximize the dock window</string>
+     </property>
      <property name="text">
       <string>Dock</string>
      </property>
      <property name="icon">
-      <iconset theme="go-top"/>
+      <iconset theme="go-top">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QToolButton" name="closeButton">
+     <property name="toolTip">
+      <string>Close the dock window</string>
+     </property>
      <property name="text">
       <string>Close</string>
      </property>
      <property name="icon">
-      <iconset theme="window-close"/>
+      <iconset theme="window-close">
+       <normaloff>.</normaloff>.</iconset>
      </property>
     </widget>
    </item>

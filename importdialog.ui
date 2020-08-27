@@ -58,7 +58,137 @@
        <string>Import documents</string>
       </attribute>
       <layout class="QGridLayout" name="docsTabLayout">
+       <item row="10" column="0" colspan="2">
+        <spacer name="docVerticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="docMarkSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QSpinBox" name="docOwnerSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>8</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="docNameLabel">
+         <property name="text">
+          <string>Document name index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docNameSpin</cstring>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="0">
+        <widget class="QLabel" name="docCommunityLabel">
+         <property name="text">
+          <string>Community index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docCommunitySpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="docNameSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="lseparatorLabel">
+         <property name="text">
+          <string>Lot separator</string>
+         </property>
+         <property name="buddy">
+          <cstring>lseparatorEdit</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="docLootSpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>6</number>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="docCommunitySpin">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="lseparatorEdit">
+         <property name="placeholderText">
+          <string>Default (&quot;,&quot;)</string>
+         </property>
+         <property name="clearButtonEnabled">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="docMarkLabel">
+         <property name="text">
+          <string>Additional mark index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docMarkSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="docCommentLabel">
+         <property name="text">
+          <string>Comments index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docCommentSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="docOwnerLabel">
+         <property name="text">
+          <string>Owners start index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docOwnerSpin</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
         <widget class="QLabel" name="docPrecinctLabel">
          <property name="text">
           <string>Precinct index</string>
@@ -68,13 +198,23 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QSpinBox" name="docOwnerSpin">
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="docPrecinctSpin">
          <property name="minimum">
           <number>1</number>
          </property>
          <property name="value">
-          <number>7</number>
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="docLotLabel">
+         <property name="text">
+          <string>Lots index</string>
+         </property>
+         <property name="buddy">
+          <cstring>docLootSpin</cstring>
          </property>
         </widget>
        </item>
@@ -106,153 +246,33 @@
          </item>
         </layout>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QSpinBox" name="docCommentSpin">
          <property name="minimum">
           <number>1</number>
          </property>
          <property name="value">
-          <number>6</number>
+          <number>7</number>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="docOwnerLabel">
+       <item row="3" column="0">
+        <widget class="QLabel" name="docPathIndex">
          <property name="text">
-          <string>Owners start index</string>
+          <string>Path index</string>
          </property>
          <property name="buddy">
-          <cstring>docOwnerSpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="docNameSpin">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QSpinBox" name="docPrecinctSpin">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>4</number>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QLabel" name="lseparatorLabel">
-         <property name="text">
-          <string>Lot separator</string>
-         </property>
-         <property name="buddy">
-          <cstring>lseparatorEdit</cstring>
+          <cstring>docPathSpin</cstring>
          </property>
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QSpinBox" name="docCommunitySpin">
+        <widget class="QSpinBox" name="docPathSpin">
          <property name="minimum">
           <number>1</number>
          </property>
          <property name="value">
           <number>3</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="docCommunityLabel">
-         <property name="text">
-          <string>Community index</string>
-         </property>
-         <property name="buddy">
-          <cstring>docCommunitySpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="lseparatorEdit">
-         <property name="placeholderText">
-          <string>Default (&quot;,&quot;)</string>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="docCommentLabel">
-         <property name="text">
-          <string>Comments index</string>
-         </property>
-         <property name="buddy">
-          <cstring>docCommentSpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QSpinBox" name="docLootSpin">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="docLotLabel">
-         <property name="text">
-          <string>Lots index</string>
-         </property>
-         <property name="buddy">
-          <cstring>docLootSpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="docNameLabel">
-         <property name="text">
-          <string>Document name index</string>
-         </property>
-         <property name="buddy">
-          <cstring>docNameSpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0" colspan="2">
-        <spacer name="docVerticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="docMarkLabel">
-         <property name="text">
-          <string>Additional mark index</string>
-         </property>
-         <property name="buddy">
-          <cstring>docMarkSpin</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="docMarkSpin">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>2</number>
          </property>
         </widget>
        </item>
@@ -486,6 +506,7 @@
   <tabstop>documentButton</tabstop>
   <tabstop>docNameSpin</tabstop>
   <tabstop>docMarkSpin</tabstop>
+  <tabstop>docPathSpin</tabstop>
   <tabstop>docCommunitySpin</tabstop>
   <tabstop>docPrecinctSpin</tabstop>
   <tabstop>docLootSpin</tabstop>
@@ -594,7 +615,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>133</y>
+     <y>163</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -610,7 +631,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>163</y>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -626,7 +647,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>193</y>
+     <y>223</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -642,7 +663,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>223</y>
+     <y>253</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -658,7 +679,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>253</y>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -690,7 +711,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>483</x>
-     <y>284</y>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>499</x>
@@ -887,6 +908,22 @@
     <hint type="destinationlabel">
      <x>760</x>
      <y>86</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>docPathSpin</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ImportDialog</receiver>
+   <slot>checkData()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>460</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>767</x>
+     <y>125</y>
     </hint>
    </hints>
   </connection>

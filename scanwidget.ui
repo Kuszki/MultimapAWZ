@@ -66,6 +66,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="fitButton">
+       <property name="toolTip">
+        <string>Fit content to window</string>
+       </property>
        <property name="text">
         <string>Fit zoom</string>
        </property>
@@ -77,6 +80,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="orgButton">
+       <property name="toolTip">
+        <string>Original content size</string>
+       </property>
        <property name="text">
         <string>Original size</string>
        </property>
@@ -88,6 +94,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="zominButton">
+       <property name="toolTip">
+        <string>Zoom content</string>
+       </property>
        <property name="text">
         <string>Zoom in</string>
        </property>
@@ -99,6 +108,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="zomoutButton">
+       <property name="toolTip">
+        <string>Unzoom content</string>
+       </property>
        <property name="text">
         <string>Zoom out</string>
        </property>
@@ -110,6 +122,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="rotleftButton">
+       <property name="toolTip">
+        <string>Rotate content left</string>
+       </property>
        <property name="text">
         <string>Rotate left</string>
        </property>
@@ -121,6 +136,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="rotrightButton">
+       <property name="toolTip">
+        <string>Rotate content right</string>
+       </property>
        <property name="text">
         <string>Rotate right</string>
        </property>
@@ -132,6 +150,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="opendirButton">
+       <property name="toolTip">
+        <string>Open content directory</string>
+       </property>
        <property name="text">
         <string>Open directory</string>
        </property>

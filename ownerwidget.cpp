@@ -33,8 +33,8 @@ OwnerWidget::OwnerWidget(QSqlDatabase& Db, QWidget *parent)
 	QSettings Settings("Multimap", "AWZ");
 
 	Settings.beginGroup("Owners");
-	if (Settings.value("Father", false).toBool()) hiddenCols.remove(3);
-	if (Settings.value("Mother", false).toBool()) hiddenCols.remove(4);
+	if (Settings.value("Father", true).toBool()) hiddenCols.remove(3);
+	if (Settings.value("Mother", true).toBool()) hiddenCols.remove(4);
 	Settings.endGroup();
 
 	filter = new ModelFilter(this);

@@ -34,7 +34,7 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 
 	Settings.beginGroup("Files");
 	ui->filePathCheck->setChecked(Settings.value("Path", false).toBool());
-	ui->fileRoleCheck->setChecked(Settings.value("Role", true).toBool());
+	ui->fileRoleCheck->setChecked(Settings.value("Role", false).toBool());
 	ui->fileCommentCheck->setChecked(Settings.value("Comment", false).toBool());
 	Settings.endGroup();
 
@@ -43,8 +43,8 @@ SettingsDialog::SettingsDialog(QWidget *parent)
 	Settings.endGroup();
 
 	Settings.beginGroup("Owners");
-	ui->ownFatherCheck->setChecked(Settings.value("Father", false).toBool());
-	ui->ownMatherCheck->setChecked(Settings.value("Mother", false).toBool());
+	ui->ownFatherCheck->setChecked(Settings.value("Father", true).toBool());
+	ui->ownMatherCheck->setChecked(Settings.value("Mother", true).toBool());
 	Settings.endGroup();
 
 	connect(ui->buttonBox->button(QDialogButtonBox::RestoreDefaults),

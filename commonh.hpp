@@ -41,6 +41,7 @@ struct DOKUMENTY
 {
 	qint32 id;
 	QString nazwa;
+	QString katalog;
 	QString oznaczenie;
 	QString opis;
 };

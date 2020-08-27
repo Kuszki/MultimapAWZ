@@ -34,7 +34,7 @@ FileWidget::FileWidget(QSqlDatabase& Db, QWidget *parent)
 
 	Settings.beginGroup("Files");
 	if (Settings.value("Path", false).toBool()) hiddenCols.remove(1);
-	if (Settings.value("Role", true).toBool()) hiddenCols.remove(3);
+	if (Settings.value("Role", false).toBool()) hiddenCols.remove(3);
 	if (Settings.value("Comment", false).toBool()) hiddenCols.remove(4);
 	Settings.endGroup();
 

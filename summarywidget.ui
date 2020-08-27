@@ -11,7 +11,8 @@
    </rect>
   </property>
   <property name="windowIcon">
-   <iconset theme="mail-mark-read"/>
+   <iconset theme="mail-mark-read">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

@@ -38,6 +38,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QToolButton" name="reloadButton">
+       <property name="toolTip">
+        <string>Reload data</string>
+       </property>
        <property name="text">
         <string>Reload</string>
        </property>
@@ -49,6 +52,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="editButton">
+       <property name="toolTip">
+        <string>Edit row</string>
+       </property>
        <property name="text">
         <string>Edit</string>
        </property>
@@ -60,6 +66,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="addButton">
+       <property name="toolTip">
+        <string>Add row</string>
+       </property>
        <property name="text">
         <string>Add</string>
        </property>
@@ -71,6 +80,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="remButton">
+       <property name="toolTip">
+        <string>Remove row</string>
+       </property>
        <property name="text">
         <string>Remove</string>
        </property>

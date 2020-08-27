@@ -37,6 +37,7 @@ void SummaryWidget::setTitleWidget(TitleWidget* W)
 	file = new QToolButton(this);
 	file->setText(tr("Open document"));
 	file->setIcon(QIcon::fromTheme("document-new"));
+	file->setToolTip(tr("Open document file"));
 	file->setEnabled(false);
 
 	W->addRightWidget(file);
@@ -44,6 +45,7 @@ void SummaryWidget::setTitleWidget(TitleWidget* W)
 	dir = new QToolButton(this);
 	dir->setText(tr("Open folder"));
 	dir->setIcon(QIcon::fromTheme("folder-new"));
+	dir->setToolTip(tr("Open document folder"));
 	dir->setEnabled(false);
 
 	W->addRightWidget(dir);
