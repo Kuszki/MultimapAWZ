@@ -14,12 +14,12 @@
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="awzwidget.ui" line="74"/>
+        <location filename="awzwidget.ui" line="75"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="awzwidget.ui" line="84"/>
+        <location filename="awzwidget.ui" line="86"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
@@ -35,25 +35,34 @@
     </message>
     <message>
         <location filename="awzwidget.cpp" line="113"/>
-        <location filename="awzwidget.cpp" line="164"/>
-        <location filename="awzwidget.cpp" line="176"/>
-        <location filename="awzwidget.cpp" line="202"/>
-        <location filename="awzwidget.cpp" line="207"/>
-        <location filename="awzwidget.cpp" line="221"/>
-        <location filename="awzwidget.cpp" line="226"/>
+        <location filename="awzwidget.cpp" line="165"/>
+        <location filename="awzwidget.cpp" line="178"/>
+        <location filename="awzwidget.cpp" line="205"/>
+        <location filename="awzwidget.cpp" line="211"/>
+        <location filename="awzwidget.cpp" line="225"/>
+        <location filename="awzwidget.cpp" line="231"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="awzwidget.cpp" line="114"/>
+        <location filename="awzwidget.cpp" line="166"/>
+        <location filename="awzwidget.cpp" line="179"/>
+        <location filename="awzwidget.cpp" line="206"/>
+        <location filename="awzwidget.cpp" line="226"/>
+        <source>Mark</source>
+        <translation>Oznaczenie</translation>
+    </message>
+    <message>
+        <location filename="awzwidget.cpp" line="115"/>
         <source>Comments</source>
         <translation>Uwagi</translation>
     </message>
     <message>
-        <location filename="awzwidget.cpp" line="165"/>
-        <location filename="awzwidget.cpp" line="177"/>
-        <location filename="awzwidget.cpp" line="203"/>
-        <location filename="awzwidget.cpp" line="222"/>
+        <location filename="awzwidget.cpp" line="167"/>
+        <location filename="awzwidget.cpp" line="180"/>
+        <location filename="awzwidget.cpp" line="207"/>
+        <location filename="awzwidget.cpp" line="227"/>
         <source>Comment</source>
         <translation>Uwagi</translation>
     </message>
@@ -201,70 +210,70 @@
         <translation>Importuj dokumenty</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="64"/>
+        <location filename="importdialog.ui" line="219"/>
         <source>Document name index</source>
         <translation>Indeks nazwy dokumentu</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="82"/>
+        <location filename="importdialog.ui" line="92"/>
         <source>Path to documents list</source>
         <translation>Ścieżka pliku z listą dokumentów</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="89"/>
-        <location filename="importdialog.ui" line="328"/>
-        <location filename="importdialog.ui" line="427"/>
+        <location filename="importdialog.ui" line="99"/>
+        <location filename="importdialog.ui" line="348"/>
+        <location filename="importdialog.ui" line="447"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="102"/>
+        <location filename="importdialog.ui" line="64"/>
         <source>Precinct index</source>
         <translation>Indeks obrębu</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="132"/>
-        <location filename="importdialog.ui" line="341"/>
+        <location filename="importdialog.ui" line="189"/>
+        <location filename="importdialog.ui" line="361"/>
         <source>Comments index</source>
         <translation>Indeks uwag</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="152"/>
+        <location filename="importdialog.ui" line="169"/>
         <source>Community index</source>
         <translation>Indeks gminy</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="179"/>
+        <location filename="importdialog.ui" line="209"/>
         <source>Lots index</source>
         <translation>Indeks działek</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="199"/>
+        <location filename="importdialog.ui" line="122"/>
         <source>Owners start index</source>
         <translation>Indeks właścicieli</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="209"/>
+        <location filename="importdialog.ui" line="149"/>
         <source>Lot separator</source>
         <translation>Separator działek</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="219"/>
+        <location filename="importdialog.ui" line="179"/>
         <source>Default (&quot;,&quot;)</source>
         <translation>Domyślnie (&quot;,&quot;)</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="247"/>
+        <location filename="importdialog.ui" line="267"/>
         <source>Import scans</source>
         <translation>Importuj pliki</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="303"/>
+        <location filename="importdialog.ui" line="323"/>
         <source>Document index</source>
         <translation>Indeks nazwy dokumentu</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="283"/>
+        <location filename="importdialog.ui" line="303"/>
         <source>Path index</source>
         <translation>Indeks ścieżki do pliku</translation>
     </message>
@@ -274,50 +283,55 @@
         <translation>Importuj dane</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="321"/>
-        <location filename="importdialog.ui" line="420"/>
+        <location filename="importdialog.ui" line="242"/>
+        <source>Additional mark index</source>
+        <translation>Indeks oznaczenia</translation>
+    </message>
+    <message>
+        <location filename="importdialog.ui" line="341"/>
+        <location filename="importdialog.ui" line="440"/>
         <source>Path to scan files list</source>
         <translation>Ścieżka pliku z listą skanów</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="351"/>
+        <location filename="importdialog.ui" line="371"/>
         <source>Role index</source>
         <translation>Indeks rodzaju</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="376"/>
+        <location filename="importdialog.ui" line="396"/>
         <source>Import dictionary</source>
         <translation>Importuj słownik</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="440"/>
+        <location filename="importdialog.ui" line="460"/>
         <source>Name index</source>
         <translation>Indeks nazwy</translation>
     </message>
     <message>
-        <location filename="importdialog.ui" line="450"/>
+        <location filename="importdialog.ui" line="470"/>
         <source>ID index</source>
         <translation>Indeks identyfikatora</translation>
     </message>
     <message>
-        <location filename="importdialog.cpp" line="150"/>
+        <location filename="importdialog.cpp" line="152"/>
         <source>Open documents list</source>
         <translation>Otwórz listę dokumentów</translation>
     </message>
     <message>
-        <location filename="importdialog.cpp" line="151"/>
-        <location filename="importdialog.cpp" line="159"/>
-        <location filename="importdialog.cpp" line="167"/>
+        <location filename="importdialog.cpp" line="153"/>
+        <location filename="importdialog.cpp" line="161"/>
+        <location filename="importdialog.cpp" line="169"/>
         <source>Text files (*.txt);;CSV files (*.csv)</source>
         <translation>Pliki tekstowe (*.txt);;Pliki CSV (*.csv)</translation>
     </message>
     <message>
-        <location filename="importdialog.cpp" line="158"/>
+        <location filename="importdialog.cpp" line="160"/>
         <source>Open files list</source>
         <translation>Otwórz listę skanów</translation>
     </message>
     <message>
-        <location filename="importdialog.cpp" line="166"/>
+        <location filename="importdialog.cpp" line="168"/>
         <source>Open dictionary list</source>
         <translation>Otwórz listę słownika</translation>
     </message>
@@ -325,56 +339,56 @@
 <context>
     <name>ImportWorker</name>
     <message>
-        <location filename="importworker.cpp" line="911"/>
-        <location filename="importworker.cpp" line="1126"/>
-        <location filename="importworker.cpp" line="1218"/>
+        <location filename="importworker.cpp" line="913"/>
+        <location filename="importworker.cpp" line="1128"/>
+        <location filename="importworker.cpp" line="1220"/>
         <source>Preparing queries</source>
         <translation>Przygotowywanie kwerend</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1085"/>
+        <location filename="importworker.cpp" line="1087"/>
         <source>Uploading documents</source>
         <translation>Wgrywanie dokumentów</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1089"/>
+        <location filename="importworker.cpp" line="1091"/>
         <source>Uploading communities</source>
         <translation>Wgrywanie gmin</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1093"/>
+        <location filename="importworker.cpp" line="1095"/>
         <source>Uploading precincts</source>
         <translation>Wgrywanie obrębów</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1097"/>
+        <location filename="importworker.cpp" line="1099"/>
         <source>Uploading lots</source>
         <translation>Wgrywanie działek</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1101"/>
+        <location filename="importworker.cpp" line="1103"/>
         <source>Uploading owners</source>
         <translation>Wgrywanie właścicieli</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1105"/>
+        <location filename="importworker.cpp" line="1107"/>
         <source>Uploading lots relations</source>
         <translation>Wgrywanie relacji działek</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1109"/>
+        <location filename="importworker.cpp" line="1111"/>
         <source>Uploading owners relations</source>
         <translation>Wgrywanie relacji właścicieli</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1112"/>
-        <location filename="importworker.cpp" line="1209"/>
-        <location filename="importworker.cpp" line="1250"/>
+        <location filename="importworker.cpp" line="1114"/>
+        <location filename="importworker.cpp" line="1211"/>
+        <location filename="importworker.cpp" line="1252"/>
         <source>Imported:</source>
         <translation>Zaimportowano:</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1113"/>
+        <location filename="importworker.cpp" line="1115"/>
         <source>%n new ducuments(s)</source>
         <translation>
             <numerusform>%n nowy dokument</numerusform>
@@ -383,7 +397,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1114"/>
+        <location filename="importworker.cpp" line="1116"/>
         <source>%n new communitie(s)</source>
         <translation>
             <numerusform>%n nową gminę</numerusform>
@@ -392,7 +406,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1115"/>
+        <location filename="importworker.cpp" line="1117"/>
         <source>%n new precinct(s)</source>
         <translation>
             <numerusform>%n nowy obręb</numerusform>
@@ -401,7 +415,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1116"/>
+        <location filename="importworker.cpp" line="1118"/>
         <source>%n new lot(s)</source>
         <translation>
             <numerusform>%n nową działkę</numerusform>
@@ -410,7 +424,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1117"/>
+        <location filename="importworker.cpp" line="1119"/>
         <source>%n new owner(s)</source>
         <translation>
             <numerusform>%n nowego właściciela</numerusform>
@@ -419,7 +433,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1118"/>
+        <location filename="importworker.cpp" line="1120"/>
         <source>%n new lot(s) relations</source>
         <translation>
             <numerusform>%n nową relacje działki</numerusform>
@@ -428,7 +442,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1119"/>
+        <location filename="importworker.cpp" line="1121"/>
         <source>%n new owner(s) relations</source>
         <translation>
             <numerusform>%n nową relacje właściciela</numerusform>
@@ -437,17 +451,17 @@
         </translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1202"/>
+        <location filename="importworker.cpp" line="1204"/>
         <source>Uploading files</source>
         <translation>Wgrywanie plików</translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1206"/>
+        <location filename="importworker.cpp" line="1208"/>
         <source>Uploading relations</source>
         <translation>Wgrywanie relacji</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1210"/>
+        <location filename="importworker.cpp" line="1212"/>
         <source>%n new file(s)</source>
         <translation>
             <numerusform>%n nowy plik</numerusform>
@@ -456,7 +470,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1211"/>
+        <location filename="importworker.cpp" line="1213"/>
         <source>%n new file(s) relation(s)</source>
         <translation>
             <numerusform>%n nową relacje pliku</numerusform>
@@ -465,12 +479,12 @@
         </translation>
     </message>
     <message>
-        <location filename="importworker.cpp" line="1247"/>
+        <location filename="importworker.cpp" line="1249"/>
         <source>Uploading dictionary</source>
         <translation>Wgrywanie słownika</translation>
     </message>
     <message numerus="yes">
-        <location filename="importworker.cpp" line="1251"/>
+        <location filename="importworker.cpp" line="1253"/>
         <source>%n row(s)</source>
         <translation>
             <numerusform>%n nowy wpis</numerusform>
@@ -673,7 +687,7 @@
         <translation>Skany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="278"/>
+        <location filename="mainwindow.cpp" line="279"/>
         <source>Selected user does not have required privileges. Contact with database administrator.</source>
         <translation>Wybrany użytkownik nie posiada odpowiednich oprawnień. Skontaktuj się z lokalnym administratorem.</translation>
     </message>
@@ -681,27 +695,27 @@
 <context>
     <name>OwnerWidget</name>
     <message>
-        <location filename="ownerwidget.ui" line="45"/>
+        <location filename="ownerwidget.ui" line="42"/>
         <source>Reload</source>
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="ownerwidget.ui" line="56"/>
+        <location filename="ownerwidget.ui" line="53"/>
         <source>Edit</source>
         <translation>Edytuj</translation>
     </message>
     <message>
-        <location filename="ownerwidget.ui" line="67"/>
+        <location filename="ownerwidget.ui" line="64"/>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
     <message>
-        <location filename="ownerwidget.ui" line="78"/>
+        <location filename="ownerwidget.ui" line="75"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="ownerwidget.ui" line="89"/>
+        <location filename="ownerwidget.ui" line="86"/>
         <source>Quick search</source>
         <translation>Szybkie wyszukiwanie</translation>
     </message>
@@ -933,6 +947,16 @@
         <location filename="summarywidget.ui" line="58"/>
         <source>Files</source>
         <translation>Pliki</translation>
+    </message>
+    <message>
+        <location filename="summarywidget.cpp" line="38"/>
+        <source>Open document</source>
+        <translation>Otwórz dokument</translation>
+    </message>
+    <message>
+        <location filename="summarywidget.cpp" line="45"/>
+        <source>Open folder</source>
+        <translation>Otwórz folder</translation>
     </message>
 </context>
 <context>
