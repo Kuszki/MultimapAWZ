@@ -79,26 +79,17 @@ MainWindow::MainWindow(QWidget *parent)
 	sumw->setStatus(false);
 	sumd->setWidget(sumw);
 
-	scanw = new ScanWidget(treePath, this);
-	scand = new QDockWidget(tr("Scans"), this);
-	scand->setWindowIcon(scanw->windowIcon());
-	scand->setObjectName("Scans");
-	scanw->setStatus(false);
-	scand->setWidget(scanw);
-
 	awzw->setTitleWidget(new TitleWidget(awzd));
 	filew->setTitleWidget(new TitleWidget(filed));
 	ownw->setTitleWidget(new TitleWidget(ownd));
 	lotw->setTitleWidget(new TitleWidget(lotd));
 	sumw->setTitleWidget(new TitleWidget(sumd));
-	scanw->setTitleWidget(new TitleWidget(scand));
 
 	addDockWidget(Qt::LeftDockWidgetArea, awzd);
 	addDockWidget(Qt::RightDockWidgetArea, filed);
 	addDockWidget(Qt::RightDockWidgetArea, ownd);
 	addDockWidget(Qt::RightDockWidgetArea, lotd);
 	addDockWidget(Qt::TopDockWidgetArea, sumd);
-	addDockWidget(Qt::TopDockWidgetArea, scand);
 
 	Settings.beginGroup("Window");
 	setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::TabPosition::North);
@@ -134,7 +125,6 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(this, &MainWindow::onLogin, ownw, &OwnerWidget::setStatus);
 	connect(this, &MainWindow::onLogin, lotw, &LotWidget::setStatus);
 	connect(this, &MainWindow::onLogin, sumw, &SummaryWidget::setStatus);
-	connect(this, &MainWindow::onLogin, scanw, &ScanWidget::setStatus);
 
 	connect(awzw, &AwzWidget::onIndexChange, [this] (int ID) { docIndex = ID; } );
 	connect(awzw, &AwzWidget::onIndexChange, filew, &FileWidget::filterList);
@@ -144,7 +134,6 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(awzw, &AwzWidget::onDirChange, sumw, &SummaryWidget::updateDir);
 
 	connect(filew, &FileWidget::onFileRename, this, &MainWindow::renameFile);
-	connect(filew, &FileWidget::onFilepathChange, scanw, &ScanWidget::updateImage);
 	connect(filew, &FileWidget::onFilepathChange, sumw, &SummaryWidget::updateFile);
 
 	connect(awzw, &AwzWidget::onAddRow, this, &MainWindow::addDoc);
@@ -294,7 +283,6 @@ void MainWindow::openDatabase(const QString& Server, const QString& Base, const 
 	ui->actionEditenable->setEnabled(Edit);
 	ui->actionEditenable->setChecked(false);
 
-	scanw->setPath(Scanpath);
 	sumw->setPath(Scanpath);
 }
 

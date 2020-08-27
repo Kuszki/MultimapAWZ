@@ -72,9 +72,6 @@ class MainWindow : public QMainWindow
 		QDockWidget* sumd;
 		SummaryWidget* sumw;
 
-		QDockWidget* scand;
-		ScanWidget* scanw;
-
 		QSqlDatabase Database;
 		QThread Thread;
 
