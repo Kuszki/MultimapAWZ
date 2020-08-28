@@ -22,6 +22,7 @@
 #define MAINWINDOW_HPP
 
 #include <QtWidgets>
+#include <QtCore>
 #include <QtSql>
 
 #include "connectdialog.hpp"
@@ -93,6 +94,7 @@ class MainWindow : public QMainWindow
 		void connectActionClicked(void);
 		void importActionClicked(void);
 		void settingsActionClicked(void);
+		void helpActionClicked(void);
 
 		void openDatabase(const QString& Server, const QString& Base,
 					   const QString& User, const QString& Pass,

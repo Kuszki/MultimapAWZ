@@ -107,6 +107,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui->actionDisconnect, &QAction::triggered, this, &MainWindow::closeDatabase);
 	connect(ui->actionSettings, &QAction::triggered, this, &MainWindow::settingsActionClicked);
 	connect(ui->actionFind, &QAction::triggered, Search, &SearchDialog::open);
+	connect(ui->actionManual, &QAction::triggered, this, &MainWindow::helpActionClicked);
 
 	connect(ui->actionEditenable, &QAction::toggled, awzw, &AwzWidget::setEditable);
 	connect(ui->actionEditenable, &QAction::toggled, filew, &FileWidget::setEditable);
@@ -235,6 +236,11 @@ void MainWindow::settingsActionClicked(void)
 	connect(Dialog, &SettingsDialog::onAccept, this, &MainWindow::applySettings);
 	connect(Dialog, &SettingsDialog::accepted, Dialog, &SettingsDialog::deleteLater);
 	connect(Dialog, &SettingsDialog::rejected, Dialog, &SettingsDialog::deleteLater);
+}
+
+void MainWindow::helpActionClicked(void)
+{
+	QDesktopServices::openUrl(QUrl::fromUserInput("Instrukcja.pdf", QDir::currentPath()));
 }
 
 void MainWindow::openDatabase(const QString& Server, const QString& Base, const QString& User, const QString& Pass, const QString& Scanpath)

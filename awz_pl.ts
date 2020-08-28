@@ -666,69 +666,84 @@
         <translation>Widok</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="75"/>
+        <location filename="mainwindow.ui" line="67"/>
+        <source>Help</source>
+        <translation>Pomoc</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="82"/>
         <source>Connect</source>
         <translation>Połącz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="78"/>
+        <location filename="mainwindow.ui" line="85"/>
         <source>Connect to database</source>
         <translation>Połącz z bazą danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="81"/>
+        <location filename="mainwindow.ui" line="88"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="90"/>
+        <location filename="mainwindow.ui" line="97"/>
         <source>Disconnect</source>
         <translation>Rozłącz</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="93"/>
+        <location filename="mainwindow.ui" line="100"/>
         <source>Disconncet from database</source>
         <translation>Rozłącz z bazą danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="96"/>
+        <location filename="mainwindow.ui" line="103"/>
         <source>Ctrl+Q</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="105"/>
+        <location filename="mainwindow.ui" line="112"/>
         <source>Find</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="108"/>
+        <location filename="mainwindow.ui" line="115"/>
         <source>Find data</source>
         <translation>Szukaj danych</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="111"/>
+        <location filename="mainwindow.ui" line="118"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="120"/>
+        <location filename="mainwindow.ui" line="127"/>
         <source>Import data</source>
         <translation>Importuj dane</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="132"/>
+        <location filename="mainwindow.ui" line="139"/>
         <source>Enable edit</source>
         <translation>Włącz edycje</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="141"/>
+        <location filename="mainwindow.ui" line="148"/>
         <source>Settings</source>
         <translation>Ustawienia</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="150"/>
+        <location filename="mainwindow.ui" line="157"/>
         <source>Exit</source>
         <translation>Zakończ</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="165"/>
+        <source>Manual</source>
+        <translation>Instrukcja</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="168"/>
+        <source>F1</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="48"/>
@@ -760,7 +775,7 @@
         <translation type="vanished">Skany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="269"/>
+        <location filename="mainwindow.cpp" line="274"/>
         <source>Selected user does not have required privileges. Contact with database administrator.</source>
         <translation>Wybrany użytkownik nie posiada odpowiednich oprawnień. Skontaktuj się z lokalnym administratorem.</translation>
     </message>
@@ -1082,12 +1097,12 @@
         <translation>Właściciele</translation>
     </message>
     <message>
-        <location filename="summarywidget.ui" line="40"/>
+        <location filename="summarywidget.ui" line="43"/>
         <source>Lots</source>
         <translation>Działki</translation>
     </message>
     <message>
-        <location filename="summarywidget.ui" line="59"/>
+        <location filename="summarywidget.ui" line="65"/>
         <source>Files</source>
         <translation>Pliki</translation>
     </message>
