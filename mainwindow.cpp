@@ -334,9 +334,7 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 
 		Query.prepare("SELECT d.id_dok FROM dok_dzialki d "
 				    "INNER JOIN dzialki l ON d.id_dzi = l.id "
-				    "WHERE UPPER(l.nazwa) LIKE '%' || UPPER(?) || '%' "
-				    "OR UPPER(l.arkusz || '-' || l.nazwa) LIKE '%' || UPPER(?) || '%'");
-		Query.addBindValue(Map["lot"]);
+				    "WHERE UPPER(COALESCE(l.arkusz || '-' || l.numer, l.numer)) LIKE '%' || UPPER(?) || '%'");
 		Query.addBindValue(Map["lot"]);
 
 		if (Query.exec()) while (Query.next())

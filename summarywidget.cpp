@@ -102,7 +102,7 @@ void SummaryWidget::reloadList(void)
 
 	if (Query.exec()) while (Query.next())
 	{
-		O.append(QString("* %1 %2 (%3, %4)")
+		O.append(QString("<li>%1 %2 (%3, %4)</li>")
 			    .arg(Query.value(0).toString())
 			    .arg(Query.value(1).toString())
 			    .arg(Query.value(2).toString())
@@ -131,7 +131,7 @@ void SummaryWidget::reloadList(void)
 
 	if (Query.exec()) while (Query.next())
 	{
-		F.append(QString("* %1 - %2 %3")
+		F.append(QString("<li><a href='%2'>%1</a> %3</li>")
 			    .arg(Query.value(0).toString())
 			    .arg(Query.value(1).toString())
 			    .arg(Query.value(2).toString()));
@@ -139,17 +139,17 @@ void SummaryWidget::reloadList(void)
 
 	for (auto i = Ll.constBegin(); i != Ll.constEnd(); ++i)
 	{
-		L.append(QString("* %1: %2").arg(i.key()).arg(i.value().join(", ")));
+		L.append(QString("<li>%1: %2</li>").arg(i.key()).arg(i.value().join(", ")));
 	}
 
-	ui->ownLabel->setTextFormat(Qt::MarkdownText);
-	ui->ownLabel->setText(O.join('\n'));
+	ui->ownLabel->setTextFormat(Qt::RichText);
+	ui->ownLabel->setText("<ul>" + O.join('\n') + "</ul>");
 
-	ui->lotLabel->setTextFormat(Qt::MarkdownText);
-	ui->lotLabel->setText(L.join('\n'));
+	ui->lotLabel->setTextFormat(Qt::RichText);
+	ui->lotLabel->setText("<ul>" + L.join('\n') + "</ul>");
 
-	ui->fileLabel->setTextFormat(Qt::MarkdownText);
-	ui->fileLabel->setText(F.join('\n'));
+	ui->fileLabel->setTextFormat(Qt::RichText);
+	ui->fileLabel->setText("<ul>" + F.join('\n') + "</ul>");
 }
 
 void SummaryWidget::setStatus(bool Enabled)

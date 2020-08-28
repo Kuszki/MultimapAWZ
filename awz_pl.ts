@@ -81,7 +81,7 @@
         <location filename="awzwidget.cpp" line="212"/>
         <location filename="awzwidget.cpp" line="235"/>
         <source>Mark</source>
-        <translation>Oznaczenie</translation>
+        <translation>Dodatkowe oznaczenie</translation>
     </message>
     <message>
         <location filename="awzwidget.cpp" line="116"/>
@@ -756,12 +756,11 @@
         <translation>Podsumowanie</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="83"/>
         <source>Scans</source>
-        <translation>Skany</translation>
+        <translation type="vanished">Skany</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="280"/>
+        <location filename="mainwindow.cpp" line="269"/>
         <source>Selected user does not have required privileges. Contact with database administrator.</source>
         <translation>Wybrany użytkownik nie posiada odpowiednich oprawnień. Skontaktuj się z lokalnym administratorem.</translation>
     </message>
