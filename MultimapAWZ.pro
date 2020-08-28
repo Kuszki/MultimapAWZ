@@ -1,4 +1,4 @@
-QT			+=	core gui widgets concurrent sql network qml
+QT			+=	core gui widgets sql
 
 TARGET		=	AWZ
 TEMPLATE		=	app
