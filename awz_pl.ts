@@ -331,7 +331,7 @@
         <location filename="importdialog.ui" line="262"/>
         <location filename="importdialog.ui" line="323"/>
         <source>Path index</source>
-        <translation>Indeks ścieżki do pliku</translation>
+        <translation>Indeks ścieżki</translation>
     </message>
     <message>
         <location filename="importdialog.ui" line="14"/>

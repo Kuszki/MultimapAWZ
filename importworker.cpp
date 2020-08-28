@@ -1024,7 +1024,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 									    Dz.id_obrebu == l.id_obrebu)
 				Dz.id = l.id;
 
-			if (!Dz.id)
+			if (!Dz.id && Dz.id_obrebu && !Dz.numer.isEmpty())
 			{
 				Dz.id = getID(genLotId).toInt();
 				addLots.append(Dz);
@@ -1037,7 +1037,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 										 Dd.id_dzi == l.id_dzi)
 				Dd.id = l.id;
 
-			if (!Dd.id)
+			if (!Dd.id && Dd.id_dzi && Dd.id_dok)
 			{
 				Dd.id = getID(genDocLotId).toInt();
 				addDocLot.append(Dd);
@@ -1062,7 +1062,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 									    Os.im_matki == l.im_matki)
 				Os.id = l.id;
 
-			if (!Os.id)
+			if (!Os.id && !Os.imie.isEmpty() && !Os.nazwisko.isEmpty())
 			{
 				Os.id = getID(genOwnId).toInt();
 				addOwns.append(Os);
@@ -1075,7 +1075,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 										 Do.id_oso == l.id_oso)
 				Do.id = l.id;
 
-			if (!Do.id)
+			if (!Do.id && Do.id_oso && Do.id_dok)
 			{
 				Do.id = getID(genDocOwnId).toInt();
 				addDocOwn.append(Do);
