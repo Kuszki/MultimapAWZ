@@ -131,15 +131,15 @@ void SummaryWidget::reloadList(void)
 
 	if (Query.exec()) while (Query.next())
 	{
-		F.append(QString("<li><a href='%2'>%1</a> %3</li>")
+		F.append(QString("<li><a href='file:///%2'>%1</a> %3</li>")
 			    .arg(Query.value(0).toString())
-			    .arg(Query.value(1).toString())
+			    .arg(Path + "/" + Query.value(1).toString())
 			    .arg(Query.value(2).toString()));
 	}
 
 	for (auto i = Ll.constBegin(); i != Ll.constEnd(); ++i)
 	{
-		L.append(QString("<li>%1: %2</li>").arg(i.key()).arg(i.value().join(", ")));
+		L.append(QString("<li><u>%1</u>: %2</li>").arg(i.key()).arg(i.value().join(", ")));
 	}
 
 	ui->ownLabel->setTextFormat(Qt::RichText);

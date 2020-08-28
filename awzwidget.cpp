@@ -31,11 +31,11 @@ AwzWidget::AwzWidget(QSqlDatabase& Db, QWidget* parent)
 	QSettings Settings("Multimap", "AWZ");
 
 	Settings.beginGroup("Documents");
-	if (Settings.value("Comment", false).toBool()) hiddenCols.remove(2);
+	if (Settings.value("Comment", false).toBool()) hiddenCols.remove(4);
 	Settings.endGroup();
 
 	filter = new ModelFilter(this);
-	filter->setSearchedColumns({ 1, 2 });
+	filter->setSearchedColumns({ 1, 3, 4 });
 	filter->setReadonlyColumns({ 0 });
 
 	ui->tableView->model()->deleteLater();
@@ -149,8 +149,8 @@ void AwzWidget::updateView(const QVariantMap& Map)
 	{
 		const bool En = Map.value("comm").toBool();
 
-		if (En) hiddenCols.remove(3);
-		else hiddenCols.insert(3);
+		if (En) hiddenCols.remove(4);
+		else hiddenCols.insert(4);
 	}
 
 	for (int i = 0; i < ui->tableView->model()->columnCount(); ++i)

@@ -975,27 +975,42 @@
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="searchdialog.ui" line="68"/>
+        <location filename="searchdialog.ui" line="56"/>
+        <source>Search part</source>
+        <translation>Szukaj fragmentu</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="61"/>
+        <source>Search match</source>
+        <translation>Szukaj dokładnie</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="76"/>
         <source>Community</source>
         <translation>Gmina</translation>
     </message>
     <message>
-        <location filename="searchdialog.ui" line="75"/>
+        <location filename="searchdialog.ui" line="120"/>
         <source>AWZ number</source>
         <translation>Numer AWZ</translation>
     </message>
     <message>
-        <location filename="searchdialog.ui" line="92"/>
+        <location filename="searchdialog.ui" line="140"/>
+        <source>Search type</source>
+        <translation>Tryb wyszukiwania</translation>
+    </message>
+    <message>
+        <location filename="searchdialog.ui" line="48"/>
         <source>Precinct</source>
         <translation>Obręb</translation>
     </message>
     <message>
-        <location filename="searchdialog.ui" line="112"/>
+        <location filename="searchdialog.ui" line="69"/>
         <source>Lot number</source>
         <translation>Numer działki</translation>
     </message>
     <message>
-        <location filename="searchdialog.ui" line="119"/>
+        <location filename="searchdialog.ui" line="24"/>
         <source>Owner</source>
         <translation>Właściciel</translation>
     </message>

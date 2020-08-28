@@ -307,24 +307,23 @@ void MainWindow::applySettings(const QVariantMap& Map)
 
 void MainWindow::applyFilter(const QVariantMap& Map)
 {
-	QSqlQuery Query(Database); QSet<int> List;
+	QSqlQuery Query(Database); QSet<int> List; bool F(false);
 
 	if (Map.contains("awz"))
 	{
 		QSet<int> Now;
 
 		Query.prepare("SELECT d.id FROM dokumenty d "
-				    "WHERE UPPER(d.nazwa) LIKE '%' || UPPER(?) || '%' "
-				    "OR UPPER(d.oznaczenie) LIKE '%' || UPPER(?) || '%'");
-		Query.addBindValue(Map["awz"]);
-		Query.addBindValue(Map["awz"]);
+				    "WHERE UPPER(d.nazwa) LIKE UPPER(:p) "
+				    "OR UPPER(d.oznaczenie) LIKE UPPER(:p)");
+		Query.bindValue(":p", Map["awz"]);
 
 		if (Query.exec()) while (Query.next())
 		{
 			Now.insert(Query.value(0).toInt());
 		}
 
-		if (List.isEmpty()) List = Now;
+		if (!F) { List = Now; F = true; }
 		else List = List & Now;
 	}
 
@@ -334,7 +333,7 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 
 		Query.prepare("SELECT d.id_dok FROM dok_dzialki d "
 				    "INNER JOIN dzialki l ON d.id_dzi = l.id "
-				    "WHERE UPPER(COALESCE(l.arkusz || '-' || l.numer, l.numer)) LIKE '%' || UPPER(?) || '%'");
+				    "WHERE UPPER(COALESCE(l.arkusz || '-' || l.numer, l.numer)) LIKE UPPER(?)");
 		Query.addBindValue(Map["lot"]);
 
 		if (Query.exec()) while (Query.next())
@@ -342,7 +341,7 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 			Now.insert(Query.value(0).toInt());
 		}
 
-		if (List.isEmpty()) List = Now;
+		if (!F) { List = Now; F = true; }
 		else List = List & Now;
 	}
 
@@ -352,17 +351,18 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 
 		Query.prepare("SELECT d.id_dok FROM dok_osoby d "
 				    "INNER JOIN osoby l ON d.id_oso = l.id "
-				    "WHERE UPPER(l.nazwisko || ' ' || l.imie) LIKE '%' || UPPER(?) || '%' "
-				    "OR UPPER(l.imie || ' ' || l.nazwisko) LIKE '%' || UPPER(?) || '%'");
-		Query.addBindValue(Map["name"]);
-		Query.addBindValue(Map["name"]);
+				    "WHERE UPPER(l.nazwisko || ' ' || l.imie) LIKE UPPER(:p) "
+				    "OR UPPER(l.imie || ' ' || l.nazwisko) LIKE UPPER(:p) "
+				    "OR UPPER(l.imie) LIKE UPPER(:p) "
+				    "OR UPPER(l.nazwisko) LIKE UPPER(:p)");
+		Query.bindValue(":p", Map["name"]);
 
 		if (Query.exec()) while (Query.next())
 		{
 			Now.insert(Query.value(0).toInt());
 		}
 
-		if (List.isEmpty()) List = Now;
+		if (!F) { List = Now; F = true; }
 		else List = List & Now;
 	}
 
@@ -381,7 +381,7 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 			Now.insert(Query.value(0).toInt());
 		}
 
-		if (List.isEmpty()) List = Now;
+		if (!F) { List = Now; F = true; }
 		else List = List & Now;
 	}
 
@@ -400,7 +400,7 @@ void MainWindow::applyFilter(const QVariantMap& Map)
 			Now.insert(Query.value(0).toInt());
 		}
 
-		if (List.isEmpty()) List = Now;
+		if (!F) { List = Now; F = true; }
 		else List = List & Now;
 	}
 

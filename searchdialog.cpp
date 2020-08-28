@@ -65,11 +65,12 @@ void SearchDialog::open(void)
 
 void SearchDialog::accept(void)
 {
+	const QString F = ui->typeCombo->currentIndex() ? "%1" : "%%1%";
 	QDialog::accept(); QVariantMap Map;
 
-	if (ui->awzEdit->isEnabled()) Map.insert("awz", ui->awzEdit->text().simplified());
-	if (ui->lotEdit->isEnabled()) Map.insert("lot", ui->lotEdit->text().simplified());
-	if (ui->nameEdit->isEnabled()) Map.insert("name", ui->nameEdit->text().simplified());
+	if (ui->awzEdit->isEnabled()) Map.insert("awz", F.arg(ui->awzEdit->text().simplified()));
+	if (ui->lotEdit->isEnabled()) Map.insert("lot", F.arg(ui->lotEdit->text().simplified()));
+	if (ui->nameEdit->isEnabled()) Map.insert("name", F.arg(ui->nameEdit->text().simplified()));
 	if (ui->commEdit->isEnabled()) Map.insert("comm", ui->commEdit->currentData());
 	if (ui->precEdit->isEnabled()) Map.insert("prec", ui->precEdit->currentData());
 

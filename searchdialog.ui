@@ -18,8 +18,15 @@
     <normaloff>.</normaloff>.</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lotEdit">
+   <item row="3" column="0">
+    <widget class="QCheckBox" name="nameCheck">
+     <property name="text">
+      <string>Owner</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="nameEdit">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -35,20 +42,65 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QComboBox" name="precEdit">
-     <property name="enabled">
-      <bool>false</bool>
+   <item row="5" column="0">
+    <widget class="QCheckBox" name="precCheck">
+     <property name="text">
+      <string>Precinct</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
+    <widget class="QComboBox" name="typeCombo">
+     <item>
+      <property name="text">
+       <string>Search part</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Search match</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QCheckBox" name="lotCheck">
+     <property name="text">
+      <string>Lot number</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="commCheck">
+     <property name="text">
+      <string>Community</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
     <widget class="QLineEdit" name="awzEdit">
      <property name="enabled">
       <bool>false</bool>
      </property>
      <property name="clearButtonEnabled">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lotEdit">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QComboBox" name="precEdit">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -62,38 +114,14 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QCheckBox" name="commCheck">
-     <property name="text">
-      <string>Community</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QCheckBox" name="awzCheck">
      <property name="text">
       <string>AWZ number</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="nameEdit">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="clearButtonEnabled">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QCheckBox" name="precCheck">
-     <property name="text">
-      <string>Precinct</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="2">
+   <item row="6" column="0" colspan="2">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -106,27 +134,26 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0">
-    <widget class="QCheckBox" name="lotCheck">
+   <item row="0" column="0">
+    <widget class="QLabel" name="typeLabel">
      <property name="text">
-      <string>Lot number</string>
+      <string>Search type</string>
      </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QCheckBox" name="nameCheck">
-     <property name="text">
-      <string>Owner</string>
+     <property name="buddy">
+      <cstring>typeCombo</cstring>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>typeCombo</tabstop>
   <tabstop>awzCheck</tabstop>
   <tabstop>awzEdit</tabstop>
   <tabstop>lotCheck</tabstop>
   <tabstop>lotEdit</tabstop>
+  <tabstop>nameCheck</tabstop>
+  <tabstop>nameEdit</tabstop>
   <tabstop>commCheck</tabstop>
   <tabstop>commEdit</tabstop>
   <tabstop>precCheck</tabstop>
