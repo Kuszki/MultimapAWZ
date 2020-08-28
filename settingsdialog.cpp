@@ -99,13 +99,13 @@ void SettingsDialog::reset(void)
 	ui->docCommentCheck->setChecked(false);
 
 	ui->filePathCheck->setChecked(false);
-	ui->fileRoleCheck->setChecked(true);
+	ui->fileRoleCheck->setChecked(false);
 	ui->fileCommentCheck->setChecked(false);
 
 	ui->lotSheetCheck->setChecked(true);
 
-	ui->ownFatherCheck->setChecked(false);
-	ui->ownMatherCheck->setChecked(false);
+	ui->ownFatherCheck->setChecked(true);
+	ui->ownMatherCheck->setChecked(true);
 }
 
 void SettingsDialog::save(void)
