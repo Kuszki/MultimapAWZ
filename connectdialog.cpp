@@ -76,7 +76,7 @@ void ConnectDialog::edited(void)
 
 void ConnectDialog::openpath(void)
 {
-	const QString Path = QFileDialog::getExistingDirectory(this, tr("Select scans directory"));
+	const QString Path = QFileDialog::getExistingDirectory(this, tr("Select scans directory"), ui->Path->text());
 
 	if (!Path.isEmpty()) ui->Path->setText(Path);
 }

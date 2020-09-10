@@ -1180,7 +1180,7 @@ int ImportWorker::importScans(const QString& Path, const QMap<ROLES, int>& Roles
 									Pl.id_rodzaju == l.id_rodzaju)
 			Pl.id = l.id;
 
-		if (!Pl.id)
+		if (!Pl.id && Pl.id_rodzaju && !Pl.nazwa.isEmpty() && !Pl.katalog.isEmpty())
 		{
 			Pl.id = getID(genFileId).toInt();
 			addFiles.append(Pl);
@@ -1193,7 +1193,7 @@ int ImportWorker::importScans(const QString& Path, const QMap<ROLES, int>& Roles
 									 Dp.id_pli == l.id_pli)
 			Dp.id = l.id;
 
-		if (!Dp.id)
+		if (!Dp.id && Dp.id_pli && Dp.id_dok)
 		{
 			Dp.id = getID(genDocFilId).toInt();
 			addDocFil.append(Dp);

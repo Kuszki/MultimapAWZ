@@ -131,9 +131,9 @@ void SummaryWidget::reloadList(void)
 
 	if (Query.exec()) while (Query.next())
 	{
-		F.append(QString("<li><a href='file:///%2'>%1</a> %3</li>")
+		F.append(QString("<li><a href='%1'>%2</a> %3</li>")
+			    .arg(QUrl::fromLocalFile(Path + "/" + Query.value(1).toString()).toString())
 			    .arg(Query.value(0).toString())
-			    .arg(Path + "/" + Query.value(1).toString())
 			    .arg(Query.value(2).toString()));
 	}
 
