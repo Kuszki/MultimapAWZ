@@ -81,6 +81,7 @@ void AwzWidget::filterList(const QSet<int>& List)
 
 	if (model) filter->setFilterIndexes(List);
 	if (model && !model->rowCount()) model->select();
+	while (model && model->canFetchMore()) model->fetchMore();
 }
 
 void AwzWidget::reloadList(void)
@@ -89,6 +90,7 @@ void AwzWidget::reloadList(void)
 	ui->remButton->setEnabled(false);
 
 	if (model) model->select();
+	while (model && model->canFetchMore()) model->fetchMore();
 
 	emit onIndexChange(-1);
 }
@@ -122,6 +124,7 @@ void AwzWidget::setStatus(bool Enabled)
 		filter->setSourceModel(model);
 
 		for (const auto& i : hiddenCols) ui->tableView->hideColumn(i);
+		while (model->canFetchMore()) model->fetchMore();
 	}
 	else if (model)
 	{
