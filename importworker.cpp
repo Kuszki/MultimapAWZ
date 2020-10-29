@@ -963,8 +963,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 					  List[Roles[ROLES::UWAGI]] };
 
 		const auto isDoc = hasItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa) ?
-			getItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa).id :
-			Dk.nazwa.toInt();
+			getItemByField(oldDocs, Dk.nazwa, &DOKUMENTY::nazwa).id : 0;
 
 		if (isDoc) Dk.id = isDoc;
 		else
@@ -975,8 +974,7 @@ int ImportWorker::importSheets(const QString& Path, const QMap<ROLES, int>& Role
 		}
 
 		commID = hasItemByField(oldComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa) ?
-			getItemByField(oldComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa).id :
-			List[Roles[ROLES::GMINA]].toInt();
+			getItemByField(oldComms, List[Roles[ROLES::GMINA]], &GMINY::nazwa).id : 0;
 
 		if (!commID)
 		{
@@ -1166,12 +1164,10 @@ int ImportWorker::importScans(const QString& Path, const QMap<ROLES, int>& Roles
 		QFileInfo Info(QString(List[Roles[ROLES::PLIK]]).replace("\\", "/"));
 
 		const auto docID = hasItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa) ?
-			getItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa).id :
-			List[Roles[ROLES::NUMER]].toInt();
+			getItemByField(dictDocs, List[Roles[ROLES::NUMER]], &DOKUMENTY::nazwa).id : 0;
 
 		const auto rolID = hasItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa) ?
-			getItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa).id :
-			List[Roles[ROLES::ROLA]].toInt();
+			getItemByField(dictRoles, List[Roles[ROLES::ROLA]], &RODZAJEDOK::nazwa).id : 0;
 
 		PLIKI Pl = { 0, Info.path(), Info.fileName(), rolID, List[Roles[ROLES::UWAGI]] };
 
