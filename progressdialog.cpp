@@ -57,12 +57,6 @@ void ProgressDialog::open(void)
 void ProgressDialog::startAction(const QString& Action)
 {
 	ui->jobLabel->setText(Action);
-
-	ui->mainProgress->setRange(0, 0);
-	ui->mainProgress->setVisible(true);
-
-	ui->minorProgress->setRange(0, 0);
-	ui->minorProgress->setVisible(false);
 }
 
 void ProgressDialog::startProcess(int a, int b)
@@ -79,7 +73,7 @@ void ProgressDialog::updateProcess(int n)
 void ProgressDialog::startSubprocess(int a, int b)
 {
 	ui->minorProgress->setRange(a, b);
-	ui->minorProgress->setVisible(true);
+	ui->minorProgress->setVisible(a != b);
 }
 
 void ProgressDialog::updateSubprocess(int n)
